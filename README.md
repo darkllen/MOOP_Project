@@ -26,7 +26,7 @@ MOOP class team project
 
 Run/Debug Configurations -> Working directory `PATH_TO_QT_FOLDER\5.15.1\msvc2019_64\bin`
 
-### Settings
+###### Settings
 
 - Build, Execution, Deployment
   
@@ -36,7 +36,7 @@ Run/Debug Configurations -> Working directory `PATH_TO_QT_FOLDER\5.15.1\msvc2019
   
   - CMake -> CMake options:  `PATH_TO_QT_FOLDER\5.15.1\msvc2019_64\`
 
-QtDesigner integratation *(optional)*
+###### QtDesigner integratation *(optional)*
 
              Settings -> Tools -> External Tools
 
