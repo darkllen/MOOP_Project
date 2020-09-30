@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
-        <file>blue_screen.png</file>
+        <file>green_background.png</file>
+		<file>blue_screen.png</file>
     </qresource>
 </RCC>

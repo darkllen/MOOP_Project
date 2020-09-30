@@ -23,10 +23,11 @@ void setLooks(QMainWindow& m, QApplication& a, Ui::MainWindowForm& mwf){
     m.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
     a.setStyle(QStyleFactory::create("Fusion"));
 
-//    QPixmap bkgnd(":/blue_screen.png");
-//    bkgnd = bkgnd.scaled(m.size(), Qt::IgnoreAspectRatio);
-//    QPalette palette;
-//    palette.setBrush(QPalette::Background, bkgnd);
+    QPixmap bkgnd(":/green_background.png");
+    bkgnd = bkgnd.scaled(m.size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    m.setPalette(palette);
 
     mwf.display->setStyleSheet(" border-image: url(:/blue_screen.png) 0 0 0 0 stretch stretch; border-width: 0px;");
 }
