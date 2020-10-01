@@ -88,6 +88,9 @@
                   <height>40</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>       &gt;</string>
                 </property>
@@ -106,6 +109,9 @@
                   <width>50</width>
                   <height>40</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string>       &gt;</string>
@@ -126,6 +132,9 @@
                   <height>40</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>       &gt;</string>
                 </property>
@@ -145,6 +154,9 @@
                   <height>40</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>       &gt;</string>
                 </property>
@@ -153,7 +165,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QWidget" name="display" native="true">
+             <widget class="QWebEngineView" name="display">
               <property name="minimumSize">
                <size>
                 <width>350</width>
@@ -165,6 +177,11 @@
                 <width>350</width>
                 <height>280</height>
                </size>
+              </property>
+              <property name="url">
+               <url>
+                <string>about:blank</string>
+               </url>
               </property>
              </widget>
             </item>
@@ -218,6 +235,9 @@
                   <height>40</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>&lt;       </string>
                 </property>
@@ -236,6 +256,9 @@
                   <width>50</width>
                   <height>40</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string>&lt;       </string>
@@ -261,6 +284,9 @@
                   <width>50</width>
                   <height>40</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="layoutDirection">
                  <enum>Qt::LeftToRight</enum>
@@ -289,6 +315,9 @@
                   <width>50</width>
                   <height>40</height>
                  </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string>&lt;       </string>
@@ -1497,6 +1526,13 @@
    <addaction name="menuExit"/>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QWidget</extends>
+   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
