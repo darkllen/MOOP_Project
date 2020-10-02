@@ -1058,7 +1058,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="palette">
@@ -1535,4 +1535,7 @@
  </customwidgets>
  <resources/>
  <connections/>
+ <slots>
+  <slot>on_n1_keypad_btn_clicked()</slot>
+ </slots>
 </ui>
