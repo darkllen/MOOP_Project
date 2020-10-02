@@ -14,6 +14,8 @@ MOOP class team project
   
   - Qt Debug Information Files
   
+  - Qt WebEngine
+  
   - Sources *(optional)*
 
 - CMake >= 3.16
