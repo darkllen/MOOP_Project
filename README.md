@@ -36,7 +36,7 @@ Run/Debug Configurations -> Working directory `PATH_TO_QT_FOLDER\5.15.1\msvc2019
     
     Add Visual Studio and select amd64 as Architecture. CLion should automatically find all required file paths.
   
-  - CMake -> CMake options:  `PATH_TO_QT_FOLDER\5.15.1\msvc2019_64\`
+  - CMake -> CMake options:  `-DCMAKE_PREFIX_PATH=PATH_TO_QT_FOLDER\5.15.1\msvc2019_64\`
 
 ##### QtDesigner integratation *(optional)*
 
