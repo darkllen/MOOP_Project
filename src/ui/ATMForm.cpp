@@ -2,7 +2,7 @@
 // Created by Lemonderon on 02.10.2020.
 //
 
-#include <QDebug>
+#include <QWebChannel>
 
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
@@ -165,4 +165,10 @@ void ATMForm::on_d2l_btn_clicked() {
 
 void ATMForm::on_d3l_btn_clicked() {
     qDebug() << "d3l";
+}
+QWebEngineView &ATMForm::getWebView() {
+    return *(ui->display);
+}
+QWebEnginePage &ATMForm::getWebPage() {
+    return *(ui->display->page());
 }

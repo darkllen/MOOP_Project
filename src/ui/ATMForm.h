@@ -7,6 +7,8 @@
 
 #include <QWidget>
 #include <QMainWindow>
+#include <QtWebEngineWidgets/QWebEngineView>
+#include "../WebClass.h"
 
 namespace Ui {
     class MainWindowForm;
@@ -18,6 +20,9 @@ Q_OBJECT
 public:
     explicit ATMForm(QMainWindow *mw);
     ~ATMForm() override;
+
+    QWebEngineView &getWebView();
+    QWebEnginePage &getWebPage();
 
 private slots:
     void on_n000_keypad_btn_clicked();
