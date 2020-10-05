@@ -8,7 +8,8 @@
 #include <QWidget>
 #include <QMainWindow>
 #include <QtWebEngineWidgets/QWebEngineView>
-#include "../WebClass.h"
+
+#include "../model/ATM.h"
 
 namespace Ui {
     class MainWindowForm;
@@ -17,8 +18,15 @@ namespace Ui {
 class ATMForm : public QWidget {
 Q_OBJECT
 
+private:
+    void configureSignalAndSlots();
+    void setMainWindowBackground(QMainWindow &mw);
+
+    Ui::MainWindowForm *ui;
+    ATM *atm_;
+
 public:
-    explicit ATMForm(QMainWindow *mw);
+    explicit ATMForm(QMainWindow &mw, ATM &atm);
     ~ATMForm() override;
 
     QWebEngineView &getWebView();
@@ -37,6 +45,7 @@ private slots:
     void on_n8_keypad_btn_clicked();
     void on_n9_keypad_btn_clicked();
     void on_dot_keypad_btn_clicked();
+
     void on_cancel_keypad_btn_clicked();
     void on_clear_keypad_btn_clicked();
     void on_enter_keypad_btn_clicked();
@@ -55,12 +64,6 @@ private slots:
     void on_d1l_btn_clicked();
     void on_d2l_btn_clicked();
     void on_d3l_btn_clicked();
-
-private:
-    void configureSignalAndSlots();
-    void setMainWindowBackground(QMainWindow *mw);
-
-    Ui::MainWindowForm *ui;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMFORM_H

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(MOOP_ATM_Project)
 
 set(CMAKE_CXX_STANDARD 17)
-set(SOURCE_FILES src/main.cpp src/ui/ATMForm.cpp src/ui/ATMForm.h src/WebClass.h)
+set(SOURCE_FILES src/main.cpp src/ui/ATMForm.cpp src/ui/ATMForm.h src/controller/ATMIO.cpp src/controller/ATMIO.h src/model/ATM.cpp src/model/ATM.h)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
