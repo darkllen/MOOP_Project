@@ -7,47 +7,47 @@
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
 
-ATMForm::ATMForm(QMainWindow& mw, ATM& atm) : QWidget(), ui(new Ui::MainWindowForm), atm_(&atm) {
-    ui->setupUi(&mw);
+ATMForm::ATMForm(QMainWindow& mw, ATMIO& atm_io) : QWidget(), ui_(new Ui::MainWindowForm), atm_io_(&atm_io) {
+    ui_->setupUi(&mw);
     configureSignalAndSlots();
     setMainWindowBackground(mw);
 }
 
 ATMForm::~ATMForm() {
-    delete ui;
+    delete ui_;
 }
 
 void ATMForm::configureSignalAndSlots() {
-    connect(ui->n000_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n000_keypad_btn_clicked);
-    connect(ui->n0_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n0_keypad_btn_clicked);
-    connect(ui->n1_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n1_keypad_btn_clicked);
-    connect(ui->n2_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n2_keypad_btn_clicked);
-    connect(ui->n3_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n3_keypad_btn_clicked);
-    connect(ui->n4_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n4_keypad_btn_clicked);
-    connect(ui->n5_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n5_keypad_btn_clicked);
-    connect(ui->n6_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n6_keypad_btn_clicked);
-    connect(ui->n7_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n7_keypad_btn_clicked);
-    connect(ui->n8_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n8_keypad_btn_clicked);
-    connect(ui->n9_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n9_keypad_btn_clicked);
-    connect(ui->dot_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_dot_keypad_btn_clicked);
-    connect(ui->cancel_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_cancel_keypad_btn_clicked);
-    connect(ui->clear_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_clear_keypad_btn_clicked);
-    connect(ui->enter_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_enter_keypad_btn_clicked);
-    connect(ui->empty_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_empty_keypad_btn_clicked);
+    connect(ui_->n000_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n000_keypad_btn_clicked);
+    connect(ui_->n0_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n0_keypad_btn_clicked);
+    connect(ui_->n1_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n1_keypad_btn_clicked);
+    connect(ui_->n2_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n2_keypad_btn_clicked);
+    connect(ui_->n3_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n3_keypad_btn_clicked);
+    connect(ui_->n4_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n4_keypad_btn_clicked);
+    connect(ui_->n5_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n5_keypad_btn_clicked);
+    connect(ui_->n6_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n6_keypad_btn_clicked);
+    connect(ui_->n7_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n7_keypad_btn_clicked);
+    connect(ui_->n8_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n8_keypad_btn_clicked);
+    connect(ui_->n9_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_n9_keypad_btn_clicked);
+    connect(ui_->dot_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_dot_keypad_btn_clicked);
+    connect(ui_->cancel_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_cancel_keypad_btn_clicked);
+    connect(ui_->clear_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_clear_keypad_btn_clicked);
+    connect(ui_->enter_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_enter_keypad_btn_clicked);
+    connect(ui_->empty_keypad_btn, &QPushButton::clicked, this, &ATMForm::on_empty_keypad_btn_clicked);
 
-    connect(ui->receipt_btn, &QPushButton::clicked, this, &ATMForm::on_receipt_btn_clicked);
-    connect(ui->card_reader_btn, &QPushButton::clicked, this, &ATMForm::on_card_reader_btn_clicked);
-    connect(ui->dispenser_btn, &QPushButton::clicked, this, &ATMForm::on_dispenser_btn_clicked);
+    connect(ui_->receipt_btn, &QPushButton::clicked, this, &ATMForm::on_receipt_btn_clicked);
+    connect(ui_->card_reader_btn, &QPushButton::clicked, this, &ATMForm::on_card_reader_btn_clicked);
+    connect(ui_->dispenser_btn, &QPushButton::clicked, this, &ATMForm::on_dispenser_btn_clicked);
 
-    connect(ui->d0r_btn, &QPushButton::clicked, this, &ATMForm::on_d0r_btn_clicked);
-    connect(ui->d1r_btn, &QPushButton::clicked, this, &ATMForm::on_d1r_btn_clicked);
-    connect(ui->d2r_btn, &QPushButton::clicked, this, &ATMForm::on_d2r_btn_clicked);
-    connect(ui->d3r_btn, &QPushButton::clicked, this, &ATMForm::on_d3r_btn_clicked);
+    connect(ui_->d0r_btn, &QPushButton::clicked, this, &ATMForm::on_d0r_btn_clicked);
+    connect(ui_->d1r_btn, &QPushButton::clicked, this, &ATMForm::on_d1r_btn_clicked);
+    connect(ui_->d2r_btn, &QPushButton::clicked, this, &ATMForm::on_d2r_btn_clicked);
+    connect(ui_->d3r_btn, &QPushButton::clicked, this, &ATMForm::on_d3r_btn_clicked);
 
-    connect(ui->d0l_btn, &QPushButton::clicked, this, &ATMForm::on_d0l_btn_clicked);
-    connect(ui->d1l_btn, &QPushButton::clicked, this, &ATMForm::on_d1l_btn_clicked);
-    connect(ui->d2l_btn, &QPushButton::clicked, this, &ATMForm::on_d2l_btn_clicked);
-    connect(ui->d3l_btn, &QPushButton::clicked, this, &ATMForm::on_d3l_btn_clicked);
+    connect(ui_->d0l_btn, &QPushButton::clicked, this, &ATMForm::on_d0l_btn_clicked);
+    connect(ui_->d1l_btn, &QPushButton::clicked, this, &ATMForm::on_d1l_btn_clicked);
+    connect(ui_->d2l_btn, &QPushButton::clicked, this, &ATMForm::on_d2l_btn_clicked);
+    connect(ui_->d3l_btn, &QPushButton::clicked, this, &ATMForm::on_d3l_btn_clicked);
 }
 
 void ATMForm::setMainWindowBackground(QMainWindow &mw) {
@@ -194,8 +194,8 @@ void ATMForm::on_d3l_btn_clicked() {
     atm_->getIO().sideDisplayBtnInput(ATMIO::DisplaySideBtn::L3);
 }
 QWebEngineView &ATMForm::getWebView() {
-    return *(ui->display);
+    return *(ui_->display);
 }
 QWebEnginePage &ATMForm::getWebPage() {
-    return *(ui->display->page());
+    return *(ui_->display->page());
 }

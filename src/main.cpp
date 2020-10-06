@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
     ATM atm;
     QMainWindow mw;
-    ATMForm form(mw, atm);
+    ATMForm form(mw, atm.getIO());
     mw.show();
 
     return QApplication::exec();

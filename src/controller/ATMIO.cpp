@@ -28,3 +28,11 @@ void ATMIO::dispenserOutput() {
 void ATMIO::cardReaderOutput() {
     //TODO: Needs implementation
 }
+
+void ATMIO::displayOutput(ATMIO::DisplayState) {
+    //TODO: Needs implementation
+}
+
+void ATMIO::displayPower(ATMIO::DisplayPowerState powerState) {
+    //TODO: Needs implementation
+}

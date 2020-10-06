@@ -23,6 +23,12 @@ public:
     enum ControlBtn {
         Cancel, Clear, Enter, Empty
     };
+    enum DisplayPowerState{
+        ON, OFF
+    };
+    enum DisplayState{
+
+    };
 
     void dialPadInput(DialPadBtn btn);
     void dialPadControlInput(ControlBtn btn);
@@ -34,6 +40,8 @@ private slots:
     void printReceiptOutput();
     void dispenserOutput();
     void cardReaderOutput();
+    void displayOutput(DisplayState);
+    void displayPower(DisplayPowerState powerState);
 
 signals:
     //TODO: decide the proper logic for communication with JS
