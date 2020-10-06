@@ -22,7 +22,7 @@ private:
     void configureSignalAndSlots();
     void setMainWindowBackground(QMainWindow &mw);
 
-    Ui::MainWindowForm *ui_;
+    Ui::MainWindowForm *ui;
     ATMIO *atm_io_;
 
 public:
