@@ -20,12 +20,15 @@ public:
     enum DisplaySideBtn {
         L0, L1, L2, L3, R0, R1, R2, R3
     };
+
     enum ControlBtn {
         Cancel, Clear, Enter, Empty
     };
+
     enum DisplayPowerState{
         ON, OFF
     };
+
     enum DisplayState{
 
     };
