@@ -6,6 +6,7 @@
 #define MOOP_ATM_PROJECT_TRANSACTIONMANAGER_H
 class Account;
 class AccountManaging;
+class Transaction;
 class TransactionManager{
 private:
 
@@ -16,7 +17,7 @@ public:
     const Transaction& createTransaction(const Date&, const Account&, const Accoun&, int);
     const Transaction& createTransaction(const Date&, const Account&, const Accoun&, int, const Date&);
     const Transaction& createTransaction(const Date&, int, bool);
-    const Transaction& createTransaction(const Date&, ValueChanged, int, int);
+    const Transaction& createTransaction(const Date&, AccountManaging::ValueChanged, int, int);
 
 
 
