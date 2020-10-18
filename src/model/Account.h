@@ -4,7 +4,7 @@ private:
 	std::string ownerName_;
 	std::string IBAN_;
 public:
-	Account(std::string, std::string);
+	Account(const std::string&, const std::string&);
 	size_t getCardPIN();
 	size_t getBank();
 };

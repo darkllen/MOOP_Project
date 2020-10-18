@@ -1,5 +1,5 @@
 class Account;
 class CheckingAccount: public Account {
 public:
-	CheckingAccount(std::string, std::string);
+	CheckingAccount(const std::string&, const std::string&);
 };
