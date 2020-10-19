@@ -21,7 +21,8 @@ int main(int argc, char *argv[]) {
 //    ATMQtUiController qtUiController(mw);
 //    ATMController *controller = &qtUiController;
     ATMController *controller = new ATMQtUiController(mw);
-    ATM atm;
+    ATMInfo atmInfo(0, "", "");
+    ATM atm(atmInfo, 0);
     ATMIO *io = new ATMIO(atm, *controller);
 
 

@@ -9,7 +9,8 @@
 #include <QMainWindow>
 #include <QtWebEngineWidgets/QWebEngineView>
 
-#include "../model/ATM.h"
+#include "../models/ATM.h"
+#include "../controllers/ATMQtUiController.h"
 
 namespace Ui {
     class MainWindowForm;

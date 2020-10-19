@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui_ version="4.0">
+<ui version="4.0">
  <class>MainWindowForm</class>
  <widget class="QMainWindow" name="MainWindowForm">
   <property name="geometry">
@@ -1538,4 +1538,4 @@
  <slots>
   <slot>on_n1_keypad_btn_clicked()</slot>
  </slots>
-</ui_>
+</ui>
