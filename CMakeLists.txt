@@ -6,26 +6,36 @@ set(SOURCE_FILES
         src/main.cpp
         src/ui/ATMForm.cpp
         src/ui/ATMForm.h
-        src/controller/ATMQtUiController.cpp
-        src/controller/ATMQtUiController.h
-        src/controller/AccountActions.h
-        src/controller/ATMController.h
-        src/controller/Maintenence.h
-        src/mediator/ATMIO.h
-        src/mediator/ATMIO.cpp
-        src/model/ATM.cpp
-        src/model/ATM.h
-        src/model/TransactionManager.h
-        src/model/Transaction.h
-        src/model/Cash.h
-        src/model/AccountManaging.h
-        src/model/OneTimeTransfer.h
-        src/model/RegularTransfer.h
-        src/exception/ATMException.h
-        src/exception/HardwareException.h
-        src/exception/DBException.h
-        src/exception/TransactionException.h
-        src/exception/IOException.h
+        src/controllers/AccountActions.h
+        src/controllers/ATMController.h
+        src/controllers/ATMQtUiController.cpp
+        src/controllers/ATMQtUiController.h
+        src/controllers/CardPinCheck.h
+        src/controllers/Maintenance.h
+        src/exceptions/ATMException.h
+        src/exceptions/DBException.h
+        src/exceptions/HardwareException.h
+        src/exceptions/IOException.h
+        src/exceptions/TransactionException.h
+        src/mediators/ATMIO.cpp
+        src/mediators/ATMIO.h
+        src/models/Account.h
+        src/models/AccountManaging.h
+        src/models/ATM.cpp
+        src/models/ATM.h
+        src/models/ATMEvent.h
+        src/models/ATMInfo.h
+        src/models/Bank.h
+        src/models/Cash.h
+        src/models/CheckingAccount.h
+        src/models/Customer.h
+        src/models/DebitCard.h
+        src/models/OneTimeTransfer.h
+        src/models/RegularTransfer.h
+        src/models/SavingAccount.h
+        src/models/SessionManager.h
+        src/models/Transaction.h
+        src/models/TransactionManager.h
         )
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)

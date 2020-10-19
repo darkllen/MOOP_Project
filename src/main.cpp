@@ -6,8 +6,10 @@
 #include <QStyleFactory>
 #include <QMainWindow>
 
+#include "controllers/ATMQtUiController.h"
+#include "models/ATM.h"
 #include "ui/ATMForm.h"
-#include "mediator/ATMIO.h"
+
 
 int main(int argc, char *argv[]) {
     QApplication qtApp(argc, argv);
