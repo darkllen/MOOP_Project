@@ -5,12 +5,12 @@
 
 class ATMInfo {
 private:
-    unsigned int serialNumber_;
+    ATM_SERIAL_N_T serialNumber_;
     std::string location_;
     std::string managedBy_;
-    unsigned int availableCashAmount_;
+
 public:
-    ATMInfo(unsigned int, std::string, std::string, unsigned int);
+    ATMInfo(ATM_SERIAL_N_T, std::string, std::string, ATM_SERIAL_N_T);
 };
 
 #endif //MOOP_ATM_PROJECT_ATMINFO_H

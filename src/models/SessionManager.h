@@ -7,9 +7,9 @@
 class SessionManager {
 private:
     static unsigned int maxIdleTime_;
-    QDateTime lastActionTime_;
+    QDateTime * lastActionTime_;
 public:
-    SessionManager(time_t);
+    SessionManager();
     ~SessionManager();
 
     bool checkExpiration();

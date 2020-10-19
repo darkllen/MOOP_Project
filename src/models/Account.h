@@ -2,6 +2,7 @@
 #define MOOP_ATM_PROJECT_ACCOUNT_H
 
 #include <string>
+#include "../constants/ATM_Types.h"
 
 class Account {
 private:
@@ -10,8 +11,8 @@ private:
 public:
     Account(const std::string &, const std::string &);
     ~Account();
-    unsigned __int64 getCardPIN();
-    unsigned __int64 getBank();
+    PIN_T getCardPIN();
+    BANK_NUMBER_T getBank();
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNT_H

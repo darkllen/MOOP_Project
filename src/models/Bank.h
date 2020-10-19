@@ -3,13 +3,15 @@
 
 #include <string>
 
+#include "../constants/ATM_Types.h"
+
 class Account;
 
 class DebitCard;
 
 class Bank {
 private:
-    unsigned int id_;
+    BANK_NUMBER_T id_;
     std::string address_;
     std::string name_;
 public:

@@ -4,21 +4,33 @@
 
 #include "ATM.h"
 
-ATM::ATM() : _isPoweredOn(false) {}
+ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
+        isPoweredOn_(false),
+        atmInfo_(&atmInfo),
+        dispenser_(new Dispenser(initialCash)),
+        cardReader_(new CardReader),
+        tsManager_(new TransactionManager),
+        sessionManager_(new SessionManager) {}
 
 void ATM::powerOn() {
-    if (!_isPoweredOn) {
+    if (!isPoweredOn_) {
 //  TODO: implement properly
 //  this->mediator_->Notify(this, );
-        _isPoweredOn = true;
+        isPoweredOn_ = true;
     }
 }
 
 void ATM::powerOff() {
-    if (_isPoweredOn) {
+    if (isPoweredOn_) {
 //  TODO: implement properly
 //  this->mediator_->Notify(this, );
-        _isPoweredOn = false;
+        isPoweredOn_ = false;
     }
+}
+ATM::~ATM() {
+    delete dispenser_;
+    delete cardReader_;
+    delete tsManager_;
+    delete sessionManager_;
 }
 

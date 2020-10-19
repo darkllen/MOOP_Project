@@ -4,15 +4,17 @@
 #include <ctime>
 #include <QtCore/qdatetime.h>
 
+#include "../constants/ATM_Types.h"
+
 class DebitCard {
 private:
-    unsigned int cardNum_;
+    CARD_NUMBER_T cardNum_;
     QDateTime expireDate_;
-    unsigned short cvCode_;
-    unsigned __int64 PIN_;
+    CVV_T cvCode_;
+    PIN_T PIN_;
 
 public:
-    DebitCard(const unsigned int &, const QDateTime &, const unsigned short &, const unsigned __int64 &);
+    DebitCard(CARD_NUMBER_T, const QDateTime &, CVV_T, PIN_T);
     ~DebitCard();
 };
 

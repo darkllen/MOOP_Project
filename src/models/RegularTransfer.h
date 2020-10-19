@@ -14,7 +14,7 @@ private:
     QDateTime& regularity_;
 
 public:
-    RegularTransfer(const QDateTime&, const Account&, const Account&, int, const QDateTime&);
+    RegularTransfer(const QDateTime&, const Account&, const Account&, CASH_AMOUNT_T, const QDateTime&);
     ~RegularTransfer();
 };
 

@@ -36,7 +36,7 @@ set(SOURCE_FILES
         src/models/SessionManager.h
         src/models/Transaction.h
         src/models/TransactionManager.h
-        )
+        src/models/Dispenser.h src/models/CardReader.h src/models/Hardware.h src/constants/ATM_Types.h src/controllers/InputValidation.h src/tests/Tester.h)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
