@@ -22,11 +22,11 @@ private:
     void configureSignalAndSlots();
     void setMainWindowBackground(QMainWindow &mw);
 
-    Ui::MainWindowForm *ui;
-    ATMIO *atm_io_;
+    Ui::MainWindowForm *ui_;
+    ATMQtUiController *controller_;
 
 public:
-    explicit ATMForm(QMainWindow &mw, ATMIO &atm_io);
+    explicit ATMForm(QMainWindow &mw, ATMQtUiController &atm_io);
     ~ATMForm() override;
 
     QWebEngineView &getWebView();

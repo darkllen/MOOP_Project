@@ -2,7 +2,31 @@ cmake_minimum_required(VERSION 3.16)
 project(MOOP_ATM_Project)
 
 set(CMAKE_CXX_STANDARD 17)
-set(SOURCE_FILES src/main.cpp src/ui/ATMForm.cpp src/ui/ATMForm.h src/controller/ATMIO.cpp src/controller/ATMIO.h src/model/ATM.cpp src/model/ATM.h src/controller/Maintenence.h src/model/TransactionManager.h src/model/Transaction.h src/model/Cash.h src/model/AccountManaging.h src/model/OneTimeTransfer.h src/model/RegularTransfer.h src/controller/AccountActions.h src/exception/ATMException.h src/exception/HardwareException.h src/exception/DBException.h src/exception/TransactionException.h src/exception/IOException.h)
+set(SOURCE_FILES
+        src/main.cpp
+        src/ui/ATMForm.cpp
+        src/ui/ATMForm.h
+        src/controller/ATMQtUiController.cpp
+        src/controller/ATMQtUiController.h
+        src/controller/AccountActions.h
+        src/controller/ATMController.h
+        src/controller/Maintenence.h
+        src/mediator/ATMIO.h
+        src/mediator/ATMIO.cpp
+        src/model/ATM.cpp
+        src/model/ATM.h
+        src/model/TransactionManager.h
+        src/model/Transaction.h
+        src/model/Cash.h
+        src/model/AccountManaging.h
+        src/model/OneTimeTransfer.h
+        src/model/RegularTransfer.h
+        src/exception/ATMException.h
+        src/exception/HardwareException.h
+        src/exception/DBException.h
+        src/exception/TransactionException.h
+        src/exception/IOException.h
+        )
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)

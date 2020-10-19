@@ -5,18 +5,18 @@
 #ifndef MOOP_ATM_PROJECT_ATM_H
 #define MOOP_ATM_PROJECT_ATM_H
 
-#include "../controller/ATMIO.h"
+#include "../controller/ATMQtUiController.h"
+#include "../mediator/ATMIO.h"
 
-//TODO: Discuss the probability of making ATM class a singleton
-
-class ATM {
+class ATM : public ATMBaseComponent {
 private:
-    ATMIO *io_;
+    bool _isPoweredOn;
 public:
-    ATM();
-    ~ATM();
+    explicit ATM();
+    ~ATM() {};
 
-    ATMIO &getIO();
+    void powerOn();
+    void powerOff();
 };
 
 

@@ -4,15 +4,21 @@
 
 #include "ATM.h"
 
-ATM::ATM() : io_(new ATMIO) {
+ATM::ATM() : _isPoweredOn(false) {}
 
+void ATM::powerOn() {
+    if (!_isPoweredOn) {
+//  TODO: implement properly
+//  this->mediator_->Notify(this, );
+        _isPoweredOn = true;
+    }
 }
 
-ATM::~ATM() {
-    delete io_;
+void ATM::powerOff() {
+    if (_isPoweredOn) {
+//  TODO: implement properly
+//  this->mediator_->Notify(this, );
+        _isPoweredOn = false;
+    }
 }
 
-
-ATMIO &ATM::getIO() {
-    return *io_;
-}
