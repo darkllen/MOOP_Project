@@ -34,3 +34,8 @@ ATM::~ATM() {
     delete sessionManager_;
 }
 
+const ATMInfo& ATM::getATMInfo(){
+    return atmInfo_;
+}
+
+

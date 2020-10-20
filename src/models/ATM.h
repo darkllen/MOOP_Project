@@ -32,6 +32,8 @@ public:
 
     void powerOn();
     void powerOff();
+
+    const ATMInfo& getATMInfo();
 };
 
 

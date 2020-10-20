@@ -13,6 +13,10 @@ protected:
 public:
     Hardware() = default;
     virtual ~Hardware() = default;
+
+    bool getOperational(){return isOperational;}
+    bool setOperational(bool isOp){isOperational = isOp;}
+
 };
 
 

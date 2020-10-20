@@ -14,8 +14,8 @@ public:
     Maintenance();
     ~Maintenance();
 
-    static void addMoney(int);
-    static void getMoney(int);
+    static void addMoney(ATM&, int);
+    static void getMoney(ATM&, int);
     static bool checkStatus(const Hardware &);
     static void changeStatus(Hardware &, bool);
 
