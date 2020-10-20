@@ -3,20 +3,23 @@
 
 #include <string>
 
-#include "../constants/ATM_Types.h"
+#include "../constants/ATMTypes.h"
 
 class Account;
-
 class DebitCard;
 
 class Bank {
 private:
+
     BANK_NUMBER_T id_;
     std::string address_;
     std::string name_;
+
 public:
-    Bank(unsigned int, std::string, std::string);
-    ~Bank();
+
+    Bank(BANK_NUMBER_T, std::string, std::string);
+    ~Bank() = default;
+
     static Account getCardAccount(const DebitCard &);
 };
 

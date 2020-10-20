@@ -5,20 +5,20 @@
 #ifndef MOOP_ATM_PROJECT_MAINTENANCE_H
 #define MOOP_ATM_PROJECT_MAINTENANCE_H
 
+#include "../constants/ATMTypes.h"
+
 class Hardware;
+class Dispenser;
 
 class Maintenance {
-private:
-
 public:
-    Maintenance();
-    ~Maintenance();
+    Maintenance() = default;
+    ~Maintenance() = default;
 
-    static void addMoney(ATM&, int);
-    static void getMoney(ATM&, int);
+    static void putCash(Dispenser &, CASH_AMOUNT_T);
+    static void takeMoney(Dispenser &, CASH_AMOUNT_T);
     static bool checkStatus(const Hardware &);
     static void changeStatus(Hardware &, bool);
-
 };
 
 #endif //MOOP_ATM_PROJECT_MAINTENANCE_H

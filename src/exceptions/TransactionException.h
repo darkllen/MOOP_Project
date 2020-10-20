@@ -5,15 +5,18 @@
 #ifndef MOOP_ATM_PROJECT_TRANSACTIONEXCEPTION_H
 #define MOOP_ATM_PROJECT_TRANSACTIONEXCEPTION_H
 
-#include <string>
-
 #include "ATMException.h"
 
+class TransactionException : public std::exception {
+private:
+    std::runtime_error m;
 
-class TransactionException : public ATMException {
 public:
-    TransactionException(std::string);
-    ~TransactionException();
+    explicit TransactionException(const char *msg) : m(msg) {}
+
+    const char *what() const noexcept override {
+        return m.what();
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_TRANSACTIONEXCEPTION_H

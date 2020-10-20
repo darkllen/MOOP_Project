@@ -7,12 +7,13 @@
 
 #include "Hardware.h"
 
-class Dispenser: public Hardware {
+class Dispenser : public Hardware {
 private:
     CASH_AMOUNT_T availableCash_;
+
 public:
-    Dispenser(CASH_AMOUNT_T);
-    ~Dispenser();
+    explicit Dispenser(CASH_AMOUNT_T);
+    ~Dispenser() override = default;
 
     CASH_AMOUNT_T getAvailableCashAmount() const { return availableCash_; }
 

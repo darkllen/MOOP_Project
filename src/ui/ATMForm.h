@@ -10,7 +10,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 
 #include "../models/ATM.h"
-#include "../controllers/ATMQtUiController.h"
+#include "../controllers/ui/ATMQtUiController.h"
 
 namespace Ui {
     class MainWindowForm;
@@ -31,7 +31,6 @@ public:
     ~ATMForm() override;
 
     QWebEngineView &getWebView();
-    QWebEnginePage &getWebPage();
 
 private slots:
     void on_n000_keypad_btn_clicked();

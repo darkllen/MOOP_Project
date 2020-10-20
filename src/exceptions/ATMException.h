@@ -6,15 +6,18 @@
 #define MOOP_ATM_PROJECT_ATMEXCEPTION_H
 
 #include <string>
+#include <stdexcept>
 
-class ATMException {
+class ATMException : public std::exception {
 private:
-    std::string message_;
-public:
-    ATMException(std::string);
-    ~ATMException();
+    std::runtime_error m;
 
-    void printException();
+public:
+    explicit ATMException(const char *msg) : m(msg) {}
+
+    const char *what() const noexcept override {
+        return m.what();
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_ATMEXCEPTION_H

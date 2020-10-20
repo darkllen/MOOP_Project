@@ -5,10 +5,11 @@
 #ifndef MOOP_ATM_PROJECT_ATM_H
 #define MOOP_ATM_PROJECT_ATM_H
 
+#include "../constants/ATMTypes.h"
 #include "../mediators/ATMIO.h"
 #include "TransactionManager.h"
-#include "Dispenser.h"
-#include "CardReader.h"
+#include "atm_hardware/Dispenser.h"
+#include "atm_hardware/CardReader.h"
 #include "ATMInfo.h"
 #include "SessionManager.h"
 
@@ -33,7 +34,7 @@ public:
     void powerOn();
     void powerOff();
 
-    const ATMInfo& getATMInfo();
+    const ATMInfo& getATMInfo() const;
 };
 
 

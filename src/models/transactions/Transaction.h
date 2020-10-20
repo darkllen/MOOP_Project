@@ -7,12 +7,13 @@
 
 #include <QtCore/qdatetime.h>
 
-class Transaction{
+class Transaction {
 private:
-    QDateTime _time;
-public:
-    Transaction(const QDateTime&);
-    ~Transaction();
 
+    QDateTime time_;
+
+public:
+    explicit Transaction(QDateTime time) : time_(std::move(time)) {}
+    ~Transaction() = default;
 };
 #endif //MOOP_ATM_PROJECT_TRANSACTION_H

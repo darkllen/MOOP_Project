@@ -6,7 +6,7 @@
 #include <QStyleFactory>
 #include <QMainWindow>
 
-#include "controllers/ATMQtUiController.h"
+#include "controllers/ui/ATMQtUiController.h"
 #include "models/ATM.h"
 #include "ui/ATMForm.h"
 

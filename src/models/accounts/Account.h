@@ -2,17 +2,18 @@
 #define MOOP_ATM_PROJECT_ACCOUNT_H
 
 #include <string>
-#include "../constants/ATM_Types.h"
+#include "../../constants/ATMTypes.h"
 
 class Account {
 private:
     std::string ownerName_;
     std::string IBAN_;
 public:
-    Account(const std::string &, const std::string &);
-    ~Account();
-    PIN_T getCardPIN();
-    BANK_NUMBER_T getBank();
+    Account(std::string ownerName, std::string IBAN);
+    ~Account() = default;
+
+    PIN_T getCardPIN() const;
+    BANK_NUMBER_T getBank() const;
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNT_H

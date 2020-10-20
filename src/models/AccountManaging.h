@@ -6,7 +6,8 @@
 #define MOOP_ATM_PROJECT_ACCOUNTMANAGING_H
 
 #include <QtCore/qdatetime.h>
-#include "Transaction.h"
+
+#include "transactions/Transaction.h"
 
 class AccountManaging : public Transaction {
 private:
@@ -19,8 +20,11 @@ public:
         PIN,
     };
 
-    AccountManaging(const QDateTime &dateTime, ValueChanged, int, int);
-    ~AccountManaging();
+    AccountManaging(const QDateTime &dateTime, ValueChanged, int, int) :
+            Transaction(dateTime), oldValue_(0),
+            newValue_(0) {}
+
+    ~AccountManaging() = default;
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNTMANAGING_H

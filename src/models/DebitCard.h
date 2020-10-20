@@ -2,20 +2,23 @@
 #define MOOP_ATM_PROJECT_DEBITCARD_H
 
 #include <ctime>
+#include <utility>
 #include <QtCore/qdatetime.h>
 
-#include "../constants/ATM_Types.h"
+#include "../constants/ATMTypes.h"
 
 class DebitCard {
 private:
+
     CARD_NUMBER_T cardNum_;
     QDateTime expireDate_;
-    CVV_T cvCode_;
-    PIN_T PIN_;
+    CVV_T cvvCode_;
+    PIN_T pin_;
 
 public:
-    DebitCard(CARD_NUMBER_T, const QDateTime &, CVV_T, PIN_T);
-    ~DebitCard();
+    DebitCard(CARD_NUMBER_T cardNum, QDateTime expireDate, CVV_T cvvCode, PIN_T pin) :
+            cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin) {}
+    ~DebitCard() = default;
 };
 
 #endif //MOOP_ATM_PROJECT_DEBITCARD_H

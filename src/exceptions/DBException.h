@@ -5,14 +5,18 @@
 #ifndef MOOP_ATM_PROJECT_DBEXCEPTION_H
 #define MOOP_ATM_PROJECT_DBEXCEPTION_H
 
-#include <string>
-
 #include "ATMException.h"
 
-class DBException : public ATMException {
+class DBException : public std::exception {
+private:
+    std::runtime_error m;
+
 public:
-    DBException(std::string);
-    ~DBException();
+    explicit DBException(const char *msg) : m(msg) {}
+
+    const char *what() const noexcept override {
+        return m.what();
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_DBEXCEPTION_H

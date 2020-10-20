@@ -14,7 +14,7 @@ ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
 
 void ATM::powerOn() {
     if (!isPoweredOn_) {
-//  TODO: implement properly
+//  TODO: Requires implementation
 //  this->mediator_->Notify(this, );
         isPoweredOn_ = true;
     }
@@ -22,7 +22,7 @@ void ATM::powerOn() {
 
 void ATM::powerOff() {
     if (isPoweredOn_) {
-//  TODO: implement properly
+//  TODO: Requires implementation
 //  this->mediator_->Notify(this, );
         isPoweredOn_ = false;
     }
@@ -34,8 +34,7 @@ ATM::~ATM() {
     delete sessionManager_;
 }
 
-const ATMInfo& ATM::getATMInfo(){
-    return atmInfo_;
+const ATMInfo &ATM::getATMInfo() const {
+    return *atmInfo_;
 }
-
 

@@ -3,34 +3,29 @@
 //
 
 #include "Maintenance.h"
-#include "../models/ATM.h
-#include "../models/Hardware.h
+#include "../models/ATM.h"
+#include "../exceptions/HardwareException.h"
 
-Maintenance::Maintenance(){
-
-};
-
-Maintenance::~Maintenance();
-
-static void Maintenance::addMoney(ATM& atm, int amount){
-    int money = atm->getATMInfo->getAvailableCashAmount();
-    atm->getATMInfo->setAvailableCashAmount(money + amount);
-
+void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
+    try {
+        dispenser.cashIn(amount);
+    } catch (const HardwareException &e) {
+        //TODO: Requires implementation
+    }
 }
 
-static void Maintenance::getMoney(ATM& atm, int amount){
-    int money = atm->getATMInfo->getAvailableCashAmount();
-    if(money>=amount)
-        atm->getATMInfo->setAvailableCashAmount(money - amount);
-    else
-        {}//todo throw exception
+void Maintenance::takeMoney(Dispenser &dispenser, CASH_AMOUNT_T amount) {
+    try {
+        dispenser.cashOut(amount);
+    } catch (const HardwareException &e) {
+        //TODO: Requires implementation
+    }
 }
 
-static bool Maintenance::checkStatus(const Hardware & h){
-    return h->getOperational;
+bool Maintenance::checkStatus(const Hardware &h) {
+    return h.getState();
 }
 
-static void changeStatus(Hardware & h, bool isOperational){
-    h.setIsOperational(isOperational);
+void Maintenance::changeStatus(Hardware &h, bool isOperational) {
+    h.setState(isOperational);
 }
-

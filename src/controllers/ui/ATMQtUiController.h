@@ -7,20 +7,22 @@
 
 #include <QtCore/QObject>
 
-#include "ATMController.h"
+#include "../ATMController.h"
 
+class ATMQtDisplayController;
 class ATMForm;
 class QMainWindow;
 
 class ATMQtUiController : public QObject, public ATMController {
 Q_OBJECT
 private:
-    QMainWindow& mw_;
-    ATMForm * atmForm_;
+    ATMForm *atmForm_;
+
+    ATMQtDisplayController *displayController_;
 
 public:
-    explicit ATMQtUiController(QMainWindow& mw);
-    ~ATMQtUiController() override = default;
+    explicit ATMQtUiController(QMainWindow &mw);
+    ~ATMQtUiController() override;
 
     void dialPadInput(DialPadBtn btn) override;
     void dialPadControlInput(ControlBtn btn) override;
@@ -28,17 +30,11 @@ public:
     void dispenserInput() override;
     void cardReaderInput() override;
 
-private slots:
     void printReceiptOutput();
     void dispenserOutput();
     void cardReaderOutput();
     void displayOutput(DisplayState);
     void displayPower(DisplayPowerState powerState);
-
-signals:
-    //TODO: decide the proper logic for communication with JS
-    void some_signal_to_emit();
 };
-
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

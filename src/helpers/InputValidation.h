@@ -6,7 +6,7 @@
 #define MOOP_ATM_PROJECT_INPUTVALIDATION_H
 
 #include <QtCore/qdatetime.h>
-#include "../constants/ATM_Types.h"
+#include "../constants/ATMTypes.h"
 
 namespace InputValidation {
     bool validatePin(PIN_T);

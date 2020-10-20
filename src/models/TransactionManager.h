@@ -7,25 +7,22 @@
 
 #include <QtCore/qdatetime.h>
 
-
 #include "AccountManaging.h"
 
 class Account;
-
 class Transaction;
 
 class TransactionManager {
 private:
 
 public:
-    TransactionManager();
-    ~TransactionManager();
+    TransactionManager() = default;
+    ~TransactionManager() = default;
 
-    const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int);
-    const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int, const Date &);
-    const Transaction &createTransaction(const QDateTime &, int, bool);
-    const Transaction &createTransaction(const QDateTime &, AccountManaging::ValueChanged, int, int);
-
+    static const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int);
+    static const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int, const QDateTime &);
+    static const Transaction &createTransaction(const QDateTime &, int, bool);
+    static const Transaction &createTransaction(const QDateTime &, AccountManaging::ValueChanged, int, int);
 };
 
 #endif //MOOP_ATM_PROJECT_TRANSACTIONMANAGER_H

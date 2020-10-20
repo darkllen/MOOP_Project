@@ -5,18 +5,17 @@
 #ifndef MOOP_ATM_PROJECT_HARDWARE_H
 #define MOOP_ATM_PROJECT_HARDWARE_H
 
-#include "../constants/ATM_Types.h"
+#include "../../constants/ATMTypes.h"
 
 class Hardware {
 protected:
     bool isOperational;
 public:
-    Hardware() = default;
+    Hardware() : isOperational(true) {}
     virtual ~Hardware() = default;
 
-    bool getOperational(){return isOperational;}
-    bool setOperational(bool isOp){isOperational = isOp;}
-
+    bool getState() const { return isOperational; }
+    bool setState(bool isOp) { return isOperational = isOp; }
 };
 
 

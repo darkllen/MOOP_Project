@@ -5,14 +5,18 @@
 #ifndef MOOP_ATM_PROJECT_IOEXCEPTION_H
 #define MOOP_ATM_PROJECT_IOEXCEPTION_H
 
-#include <string>
-
 #include "ATMException.h"
 
-class IOException : public ATMException {
+class IOException : public std::exception {
+private:
+    std::runtime_error m;
+
 public:
-    IOException(std::string);
-    ~IOException();
+    explicit IOException(const char *msg) : m(msg) {}
+
+    const char *what() const noexcept override {
+        return m.what();
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_IOEXCEPTION_H

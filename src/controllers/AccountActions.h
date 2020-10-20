@@ -11,11 +11,11 @@ class AccountActions {
 private:
 
 public:
-    AccountActions();
-    ~AccountActions();
+    AccountActions() = default;
+    ~AccountActions() = default;
+
     static void makeTransaction(const Account &, const Transaction &);
     static void viewHistory(const Account &);
-
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNTACTIONS_H
