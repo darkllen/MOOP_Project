@@ -17,9 +17,6 @@ int main(int argc, char *argv[]) {
     QMainWindow mw;
 
 
-//    TODO: Which version is better?
-//    ATMQtUiController qtUiController(mw);
-//    ATMController *controller = &qtUiController;
     ATMController *controller = new ATMQtUiController(mw);
     ATMInfo atmInfo(0, "", "");
     ATM atm(atmInfo, 0);

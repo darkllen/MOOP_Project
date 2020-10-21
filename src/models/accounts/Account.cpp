@@ -6,7 +6,7 @@
 
 Account::Account(std::string ownerName, std::string IBAN): ownerName_(std::move(ownerName)), IBAN_(std::move(IBAN)) {}
 
-PIN_T Account::getCardPIN() const {
+PIN_T Account::getCardPIN(const CARD_NUMBER_T) const {
     //TODO: Requires implementation
     return 0;
 }

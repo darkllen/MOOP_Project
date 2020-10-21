@@ -16,7 +16,7 @@ public:
     ~Maintenance() = default;
 
     static void putCash(Dispenser &, CASH_AMOUNT_T);
-    static void takeMoney(Dispenser &, CASH_AMOUNT_T);
+    static void takeCash(Dispenser &, CASH_AMOUNT_T);
     static bool checkStatus(const Hardware &);
     static void changeStatus(Hardware &, bool);
 };

@@ -12,7 +12,7 @@ public:
     Account(std::string ownerName, std::string IBAN);
     ~Account() = default;
 
-    PIN_T getCardPIN() const;
+    PIN_T getCardPIN(CARD_NUMBER_T) const;
     BANK_NUMBER_T getBank() const;
 };
 

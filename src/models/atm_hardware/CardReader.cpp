@@ -2,7 +2,6 @@
 // Created by anna2 on 20.10.2020.
 //
 #include "CardReader.h"
-#include "../../constants/ATMTypes.h"
 #include "../../controllers/PinVerificationService.h"
 #include "../../constants/ATMLimits.h"
 

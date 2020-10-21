@@ -6,6 +6,7 @@
 class SavingAccount : public Account {
 private:
 
+    // avaliable number of times to take money
     unsigned int limit_;
     float interestRate_;
 

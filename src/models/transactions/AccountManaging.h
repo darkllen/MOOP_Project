@@ -7,22 +7,22 @@
 
 #include <QtCore/qdatetime.h>
 
-#include "transactions/Transaction.h"
+#include "Transaction.h"
 
 class AccountManaging : public Transaction {
 private:
 
-    int oldValue_;
-    int newValue_;
+    //TODO: decide proper type handling
+    unsigned __int64 oldValue_;
+    unsigned __int64 newValue_;
 
 public:
     enum ValueChanged {
         PIN,
     };
 
-    AccountManaging(const QDateTime &dateTime, ValueChanged, int, int) :
-            Transaction(dateTime), oldValue_(0),
-            newValue_(0) {}
+    AccountManaging(const QDateTime &dateTime, ValueChanged, unsigned __int64, unsigned __int64) :
+            Transaction(dateTime), oldValue_(0), newValue_(0) {}
 
     ~AccountManaging() = default;
 };

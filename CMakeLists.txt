@@ -16,7 +16,7 @@ set(SOURCE_FILES
         src/mediators/ATMIO.cpp
         src/mediators/ATMIO.h
         src/models/accounts/Account.h
-        src/models/AccountManaging.h
+        src/models/transactions/AccountManaging.h
         src/models/ATM.cpp
         src/models/ATM.h
         src/models/ATMEvent.h
@@ -41,7 +41,16 @@ set(SOURCE_FILES
         src/controllers/ui/ATMQtDisplayController.h
         src/controllers/Maintenance.cpp
         src/models/atm_hardware/CardReader.cpp
-        src/controllers/PinVerificationService.cpp src/controllers/ui/ATMQtUiController.cpp src/controllers/ui/ATMQtDisplayController.cpp src/controllers/AccountActions.cpp src/constants/ATMLimits.h src/models/atm_hardware/Dispenser.cpp src/models/accounts/Account.cpp src/models/Bank.cpp src/models/SessionManager.cpp src/models/TransactionManager.cpp)
+        src/controllers/PinVerificationService.cpp
+        src/controllers/ui/ATMQtUiController.cpp
+        src/controllers/ui/ATMQtDisplayController.cpp
+        src/controllers/AccountActions.cpp
+        src/constants/ATMLimits.h
+        src/models/atm_hardware/Dispenser.cpp
+        src/models/accounts/Account.cpp
+        src/models/Bank.cpp
+        src/models/SessionManager.cpp
+        src/models/TransactionManager.cpp)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)

@@ -7,7 +7,7 @@
 
 #include <QtCore/qdatetime.h>
 
-#include "AccountManaging.h"
+#include "transactions/AccountManaging.h"
 
 class Account;
 class Transaction;

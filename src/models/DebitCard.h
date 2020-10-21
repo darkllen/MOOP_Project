@@ -14,10 +14,11 @@ private:
     QDateTime expireDate_;
     CVV_T cvvCode_;
     PIN_T pin_;
+    bool isBlocked_;
 
 public:
     DebitCard(CARD_NUMBER_T cardNum, QDateTime expireDate, CVV_T cvvCode, PIN_T pin) :
-            cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin) {}
+            cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin), isBlocked_(true) {}
     ~DebitCard() = default;
 };
 
