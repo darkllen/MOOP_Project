@@ -4,7 +4,7 @@
 
 #include "Maintenance.h"
 #include "../models/ATM.h"
-#include "../exceptions/HardwareException.h"
+#include "../exceptions/ATMException.h"
 
 void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     try {

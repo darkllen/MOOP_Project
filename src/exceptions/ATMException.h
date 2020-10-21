@@ -20,4 +20,25 @@ public:
     }
 };
 
+class DBException : public ATMException {
+public:
+    explicit DBException(const char *msg) : ATMException(msg) {}
+};
+
+class HardwareException : public ATMException {
+public:
+    explicit HardwareException(const char *msg) : ATMException(msg) {}
+};
+
+class IOException : public ATMException {
+public:
+    explicit IOException(const char *msg) : ATMException(msg) {}
+};
+
+class TransactionException : public ATMException {
+public:
+    explicit TransactionException(const char *msg) : ATMException(msg) {}
+};
+
+
 #endif //MOOP_ATM_PROJECT_ATMEXCEPTION_H

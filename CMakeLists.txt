@@ -13,10 +13,6 @@ set(SOURCE_FILES
         src/controllers/PinVerificationService.h
         src/controllers/Maintenance.h
         src/exceptions/ATMException.h
-        src/exceptions/DBException.h
-        src/exceptions/HardwareException.h
-        src/exceptions/IOException.h
-        src/exceptions/TransactionException.h
         src/mediators/ATMIO.cpp
         src/mediators/ATMIO.h
         src/models/accounts/Account.h
