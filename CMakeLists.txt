@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(MOOP_ATM_Project)
 
 set(CMAKE_CXX_STANDARD 17)
+include_directories(MySQLConnector/include)
 set(SOURCE_FILES
         src/main.cpp
         src/ui/ATMForm.cpp
