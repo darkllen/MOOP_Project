@@ -14,7 +14,7 @@ void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     }
 }
 
-void Maintenance::takeCash(Dispenser &, CASH_AMOUNT_T) {
+void Maintenance::takeCash(Dispenser & dispenser, CASH_AMOUNT_T amount) {
     try {
         dispenser.cashOut(amount);
     } catch (const HardwareException &e) {
