@@ -10,6 +10,7 @@
 #include "models/ATM.h"
 #include "ui/ATMForm.h"
 
+#include <mysqlx/xdevapi.h>
 
 int main(int argc, char *argv[]) {
     QApplication qtApp(argc, argv);
@@ -28,6 +29,10 @@ int main(int argc, char *argv[]) {
 
     delete controller;
     delete io;
+
+    {
+        mysqlx::nullvalue;
+    }
 
     return resultCode;
 }

@@ -1,9 +1,18 @@
 cmake_minimum_required(VERSION 3.16)
-project(MOOP_ATM_Project)
+project(ATM)
 
 set(CMAKE_CXX_STANDARD 17)
-include_directories(MySQLConnector/include)
+
+
+# auto-compile options
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS src/ui/)
+
+
 set(SOURCE_FILES
+        resources/resources.qrc
         src/main.cpp
         src/ui/ATMForm.cpp
         src/ui/ATMForm.h
@@ -51,14 +60,53 @@ set(SOURCE_FILES
         src/models/accounts/Account.cpp
         src/models/Bank.cpp
         src/models/SessionManager.cpp
-        src/models/TransactionManager.cpp)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOUIC_SEARCH_PATHS src/ui/)
-set(CMAKE_BUILD_TYPE DEBUG)
+        src/models/TransactionManager.cpp
+        )
 
-add_executable(MOOP_ATM_Project ${SOURCE_FILES} resources/resources.qrc)
+# changing output folder for .exe and .dll
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Qt5 COMPONENTS Core Widgets Gui Sql WebEngineWidgets REQUIRED)
-target_link_libraries(MOOP_ATM_Project Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Sql Qt5::WebEngineWidgets)
+
+# path for used libs:
+SET(QT_BIN_PATH "" CACHE PATH "Path to Qt bin dir")
+SET(MYSQL_CONN_PATH "" CACHE PATH "Path to MySQL_Connector_C++ dir")
+
+
+# set prefix for Qt app
+set(CMAKE_PREFIX_PATH ${QT_BIN_PATH})
+
+
+# include MySQL_Connector_C++
+include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONN_PATH}/include)
+find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CONN_PATH}/lib64/vs14)
+
+
+# bundle executable
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+find_package(Qt5 COMPONENTS Widgets WebEngineWidgets REQUIRED)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::WebEngineWidgets ${MYSQL_CONN_LIB})
+
+
+# bundle created executable with required qt dlls and libs
+find_program(WINDEPLOYQT_EXECUTABLE NAME windeployqt HINTS ${QT_BIN_PATH})
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${WINDEPLOYQT_EXECUTABLE} --debug --no-translations $<TARGET_FILE:${PROJECT_NAME}>)
+else ()
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${WINDEPLOYQT_EXECUTABLE} --release --no-translations $<TARGET_FILE:${PROJECT_NAME}>)
+endif ()
+
+# bundle created executable with required MySQL_Connector_C++ dlls
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${MYSQL_CONN_PATH}/lib64/mysqlcppconn8-2-vs14.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${MYSQL_CONN_PATH}/lib64/libssl-1_1-x64.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${MYSQL_CONN_PATH}/lib64/libcrypto-1_1-x64.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
