@@ -20,7 +20,7 @@ public:
     Bank(BANK_NUMBER_T, std::string, std::string);
     ~Bank() = default;
 
-    static Account getCardAccount(const DebitCard &);
+    static PIN_T getCardPIN(const CARD_NUMBER_T &);
 };
 
 #endif //MOOP_ATM_PROJECT_BANK_H

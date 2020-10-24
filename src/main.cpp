@@ -12,7 +12,11 @@
 
 #include <mysqlx/xdevapi.h>
 
+#include "controllers/PinVerificationService.h"
+
 int main(int argc, char *argv[]) {
+    PinVerificationService::verify(123,123);
+
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));
     QMainWindow mw;
