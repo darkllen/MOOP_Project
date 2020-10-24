@@ -78,7 +78,7 @@ set(CMAKE_PREFIX_PATH ${QT_BIN_PATH})
 
 # include MySQL_Connector_C++
 include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONN_PATH}/include)
-find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CONN_PATH}/lib64/vs14)
+find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CONN_PATH}/lib64/vs14/debug)
 
 
 # bundle executable
@@ -100,7 +100,7 @@ endif ()
 # bundle created executable with required MySQL_Connector_C++ dlls
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${MYSQL_CONN_PATH}/lib64/mysqlcppconn8-2-vs14.dll"
+        "${MYSQL_CONN_PATH}/lib64/debug/mysqlcppconn8-2-vs14.dll"
         $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different

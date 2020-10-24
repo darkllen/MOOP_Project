@@ -24,7 +24,7 @@ MOOP class team project
 
 - MySQL Connector C++ 8.0.22: 
 
-      https://cdn.mysql.com//Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64.msi
+      https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64-debug.zip
 
      Installing: Custom -> Install only "New X DevAPI connector"
 ---
