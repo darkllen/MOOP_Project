@@ -61,7 +61,7 @@ set(SOURCE_FILES
         src/models/Bank.cpp
         src/models/SessionManager.cpp
         src/models/TransactionManager.cpp
-        )
+        src/helpers/InputValidation.cpp)
 
 # changing output folder for .exe and .dll
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
