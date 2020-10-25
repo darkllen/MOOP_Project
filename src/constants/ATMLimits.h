@@ -11,6 +11,7 @@ namespace ATMLimits {
     const unsigned char MAX_FAILED_PIN_EVALS = 3;
     const CASH_AMOUNT_T MAX_CASH_AMOUNT_IN_DISPENSER = 100000;
     const unsigned int MAX_SESSION_IDLE_TIME_SEC = 30;
+    const int NUMBERS_IN_PIN = 4;
 };
 
 
