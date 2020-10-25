@@ -13,13 +13,13 @@
 class Account;
 class OneTimeTransfer : public Transaction {
 private:
-    Account &to_;
-    Account &from_;
+    const Account &to_;
+    const Account &from_;
     CASH_AMOUNT_T amount_;
 
 public:
 
-    OneTimeTransfer(const QDateTime &dateTime, Account &to, Account &from, CASH_AMOUNT_T amount) :
+    OneTimeTransfer(const QDateTime &dateTime, const Account &to, const Account &from, CASH_AMOUNT_T amount) :
             Transaction(dateTime), to_(to), from_(from), amount_(amount) {}
     ~OneTimeTransfer() = default;
 };

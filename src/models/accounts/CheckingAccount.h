@@ -2,7 +2,7 @@
 #define MOOP_ATM_PROJECT_CHECKINGACCOUNT_H
 
 #include <string>
-#include "../accounts/Account.h"
+#include "Account.h"
 
 class Account;
 

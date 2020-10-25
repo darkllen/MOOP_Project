@@ -33,7 +33,7 @@ set(SOURCE_FILES
         src/models/ATMInfo.h
         src/models/Bank.h
         src/models/transactions/CashTransaction.h
-        src/models/transactions/CheckingAccount.h
+        src/models/accounts/CheckingAccount.h
         src/models/Customer.h
         src/models/DebitCard.h
         src/models/transactions/OneTimeTransfer.h

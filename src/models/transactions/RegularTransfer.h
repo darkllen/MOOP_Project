@@ -14,7 +14,7 @@ private:
     QDateTime regularity_;
 
 public:
-    RegularTransfer(const QDateTime &dateTime, Account &to, Account &from, CASH_AMOUNT_T amount, QDateTime regularity) :
+    RegularTransfer(const QDateTime &dateTime, const Account &to, const Account &from, CASH_AMOUNT_T amount, QDateTime regularity) :
             OneTimeTransfer(dateTime, to, from, amount), regularity_(std::move(regularity)) {}
     ~RegularTransfer() = default;
 };
