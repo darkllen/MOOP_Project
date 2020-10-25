@@ -24,7 +24,7 @@ MOOP class team project
 
 - MySQL Connector C++ 8.0.22: 
 
-      For Release build: https://cdn.mysql.com//Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64.msi
+      For Release build: https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64.zip
       For Debug build: https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64-debug.zip
       
       Warning! We need to download both of them.
