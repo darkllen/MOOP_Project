@@ -30,5 +30,4 @@ PIN_T Bank::getCardPIN(const CARD_NUMBER_T & cardNumberT) {
     } catch (std::exception& e) {
         throw DBException(e.what());
     }
-    return  0;
 }
