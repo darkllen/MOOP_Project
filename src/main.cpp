@@ -17,7 +17,7 @@
 
 
 int main(int argc, char *argv[]) {
-    PinVerificationService::verify(123,123);
+    PinVerificationService::verify(123123,123);
 
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));

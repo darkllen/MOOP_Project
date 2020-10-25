@@ -4,6 +4,7 @@
 #include "CardReader.h"
 #include "../../controllers/PinVerificationService.h"
 #include "../../constants/ATMLimits.h"
+#include "../DebitCard.h"
 
 CardReader::CardReader() : inserted_card_n_(0), evalTries(0), verificationService_(new PinVerificationService) {}
 
@@ -19,6 +20,11 @@ void CardReader::evalPIN(const PIN_T pin) {
 
 void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
     inserted_card_n_ = n;
+    //check if card is blocked
+    DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db
+    if(debitCard.getIsBlocked())
+        //TODO: write that card is blocked
+        returnCard();
 }
 
 void CardReader::onVerificationSuccess() const {
@@ -28,8 +34,10 @@ void CardReader::onVerificationSuccess() const {
 void CardReader::onVerificationFail() {
     ++evalTries;
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS){
-        // block the card and don't return it
+        // don't return the card
         //TODO: Requires implementation
+        DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db
+        debitCard.setIsBlocked(true);
         reset();
     }
     //TODO: Requires implementation

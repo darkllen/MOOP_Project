@@ -20,6 +20,10 @@ public:
     DebitCard(CARD_NUMBER_T cardNum, QDateTime expireDate, CVV_T cvvCode, PIN_T pin) :
             cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin), isBlocked_(true) {}
     ~DebitCard() = default;
+
+    void setIsBlocked(bool value){isBlocked_ = value;}
+    bool getIsBlocked(){return isBlocked_;}
+
 };
 
 #endif //MOOP_ATM_PROJECT_DEBITCARD_H
