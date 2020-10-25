@@ -27,6 +27,6 @@ bool InputValidation::validatePersonName(QString &s){
 }
 
 bool InputValidation::validateCardNumber(CARD_NUMBER_T){
-    //todo check card number in db
+    //todo check that card number exists in db
     return true;
 }

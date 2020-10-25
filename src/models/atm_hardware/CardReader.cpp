@@ -21,7 +21,7 @@ void CardReader::evalPIN(const PIN_T pin) {
 void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
     inserted_card_n_ = n;
     //check if card is blocked
-    DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db
+    DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db (number = inserted_card_n_)
     if(debitCard.getIsBlocked())
         //TODO: write that card is blocked
         returnCard();
@@ -36,7 +36,7 @@ void CardReader::onVerificationFail() {
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS){
         // don't return the card
         //TODO: Requires implementation
-        DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db
+        DebitCard debitCard = DebitCard(0, QDateTime(),0,0);//TODO get card from db (number = inserted_card_n_)
         debitCard.setIsBlocked(true);
         reset();
     }
