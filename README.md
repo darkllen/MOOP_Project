@@ -26,7 +26,6 @@ MOOP class team project
 
       https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64-debug.zip
 
-     Installing: Custom -> Install only "New X DevAPI connector"
 ---
 
 #### CLion configuration
