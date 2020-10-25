@@ -5,6 +5,7 @@
 #include "Bank.h"
 
 #include "accounts/Account.h"
+#include "../exceptions/ATMException.h"
 #include <mysqlx/xdevapi.h>
 #include <iostream>
 #include <string>
@@ -16,16 +17,18 @@ Bank::Bank(BANK_NUMBER_T id, std::string address, std::string name) :
         name_(std::move(name)) {}
 
 PIN_T Bank::getCardPIN(const CARD_NUMBER_T & cardNumberT) {
-    //TODO: Requires implementation
     try {
         const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        Session mySession(url);
-    } catch (std::exception e) {
-        std::cout << e.what()<<std::endl;
+        Session session(url);
+        Schema db = session.getSchema("moop");
+        Table myTable = db.getTable("DebitCard");
+        RowResult myResult = myTable.select("PIN_")
+                .where("cardNum_ like :cardNum_")
+                .bind("cardNum_",cardNumberT).execute();
+        Row row = myResult.fetchOne();
+        return row.get(0).get<int>();
+    } catch (std::exception& e) {
+        throw DBException(e.what());
     }
-
-
-    //mysqlx::Schema db= sess.getSchema("moop");
-
-    return 0;
+    return  0;
 }
