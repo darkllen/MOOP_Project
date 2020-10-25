@@ -14,6 +14,7 @@ public:
 
     PIN_T getCardPIN(CARD_NUMBER_T) const;
     BANK_NUMBER_T getBank() const;
+    std::string getIBAN_() const;
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNT_H
