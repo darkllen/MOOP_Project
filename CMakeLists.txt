@@ -69,7 +69,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # path for used libs:
 SET(QT_BIN_PATH "" CACHE PATH "Path to Qt bin dir")
-SET(MYSQL_CONN_PATH "" CACHE PATH "Path to MySQL_Connector_C++ dir")
+SET(MYSQL_CPP_DEBUG_PATH "" CACHE PATH "Path to MySQL_Connector_C++ Debug dir")
+SET(MYSQL_CPP_RELEASE_PATH "" CACHE PATH "Path to MySQL_Connector_C++ Release dir")
 
 
 # set prefix for Qt app
@@ -77,8 +78,13 @@ set(CMAKE_PREFIX_PATH ${QT_BIN_PATH})
 
 
 # include MySQL_Connector_C++
-include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONN_PATH}/include)
-find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CONN_PATH}/lib64/vs14/debug)
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CPP_DEBUG_PATH}/include)
+    find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CPP_DEBUG_PATH}/lib64/vs14/debug)
+else ()
+    include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CPP_RELEASE_PATH}/include)
+    find_library(MYSQL_CONN_LIB mysqlcppconn8 HINTS ${MYSQL_CPP_RELEASE_PATH}/lib64/vs14)
+endif ()
 
 
 # bundle executable
@@ -98,15 +104,30 @@ else ()
 endif ()
 
 # bundle created executable with required MySQL_Connector_C++ dlls
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${MYSQL_CONN_PATH}/lib64/debug/mysqlcppconn8-2-vs14.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${MYSQL_CONN_PATH}/lib64/libssl-1_1-x64.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${MYSQL_CONN_PATH}/lib64/libcrypto-1_1-x64.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_DEBUG_PATH}/lib64/debug/mysqlcppconn8-2-vs14.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_DEBUG_PATH}/lib64/libssl-1_1-x64.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_DEBUG_PATH}/lib64/libcrypto-1_1-x64.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+else ()
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_RELEASE_PATH}/lib64/mysqlcppconn8-2-vs14.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_RELEASE_PATH}/lib64/libssl-1_1-x64.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+    add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${MYSQL_CPP_RELEASE_PATH}/lib64/libcrypto-1_1-x64.dll"
+            $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+endif ()

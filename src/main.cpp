@@ -10,9 +10,11 @@
 #include "models/ATM.h"
 #include "ui/ATMForm.h"
 
-#include <mysqlx/xdevapi.h>
+#include <iostream>
 
+#include <mysqlx/xdevapi.h>
 #include "controllers/PinVerificationService.h"
+
 
 int main(int argc, char *argv[]) {
     PinVerificationService::verify(123,123);
@@ -34,8 +36,11 @@ int main(int argc, char *argv[]) {
     delete controller;
     delete io;
 
-    {
-        mysqlx::nullvalue;
+    try {
+        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
+        mysqlx::Session mySession(url);
+    } catch (const std::exception& e) {
+        std::cout << e.what()<<std::endl;
     }
 
     return resultCode;

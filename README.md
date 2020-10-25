@@ -24,7 +24,10 @@ MOOP class team project
 
 - MySQL Connector C++ 8.0.22: 
 
-      https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64-debug.zip
+      For Release build: https://cdn.mysql.com//Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64.msi
+      For Debug build: https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-8.0.22-winx64-debug.zip
+      
+      Warning! We need to download both of them.
 
 ---
 
@@ -41,7 +44,8 @@ MOOP class team project
   - CMake -> CMake options ({} - user-defined variables!): 
   
         -DQT_BIN_PATH:PATH={PATH_TO_QT_DIR}\5.15.1\msvc2019_64
-        -DMYSQL_CONN_PATH:PATH={PATH_TO_MYSQL_CPP_CONNECTOR_DIR}
+        -DMYSQL_CPP_DEBUG_PATH:PATH={PATH_TO_MYSQL_CPP_CONNECTOR_DEBUG_DIR}
+        -DMYSQL_CPP_RELEASE_PATH:PATH={PATH_TO_MYSQL_CPP_CONNECTOR_RELAESE_DIR}
 
 #### QtDesigner integratation *(optional)*
 
