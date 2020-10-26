@@ -23,7 +23,6 @@
 #include "models/transactions/OneTimeTransfer.h"
 
 
-
 int main(int argc, char *argv[]) {
 //    PinVerificationService::verify(123123, 123);
 //    DebitCard card = Bank::getCard(123123);
@@ -31,9 +30,6 @@ int main(int argc, char *argv[]) {
 //    Account* account2 = Bank::getAccount("XXYY123123");
 //    Transaction* transaction = new OneTimeTransfer(QDateTime::currentDateTime(), *account2, *account, 23);
 //    AccountActions::makeTransaction(*account, *transaction);
-//
-//
-
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));
     QMainWindow mw;

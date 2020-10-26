@@ -9,10 +9,10 @@ ATMDisplay::ATMDisplay(QWebEngineView &webEngineView): webEngineView_(&webEngine
 
 void ATMDisplay::turnOn() {
     //TODO: Requires implementation
-    webEngineView_->load(QUrl("https://www.google.com/search?client=firefox-b-d&q=is+powered+on"));
+    webEngineView_->setHtml("<h1>IS POWERED ON</h1>");
 }
 
 void ATMDisplay::turnOff() {
     //TODO: Requires implementation
-    webEngineView_->load(QUrl("https://www.google.com/search?client=firefox-b-d&q=is+powered+off"));
+    webEngineView_->setHtml("<h1>IS POWERED OFF</h1>");
 }
