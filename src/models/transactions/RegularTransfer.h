@@ -17,6 +17,8 @@ public:
     RegularTransfer(const QDateTime &dateTime, const Account &to, const Account &from, CASH_AMOUNT_T amount, int regularity) :
             OneTimeTransfer(dateTime, to, from, amount), regularity_(regularity) {}
     ~RegularTransfer() = default;
+
+    int getRegularity() const {return regularity_;} ;
 };
 
 #endif //MOOP_ATM_PROJECT_REGULARTRANSFER_H

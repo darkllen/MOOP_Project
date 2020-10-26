@@ -13,6 +13,8 @@ class AccountManaging : public Transaction {
 private:
 
     //TODO: decide proper type handling
+
+    //TODO add field with ValueChanged type and field with DebitCard number
     unsigned __int64 oldValue_;
     unsigned __int64 newValue_;
 
