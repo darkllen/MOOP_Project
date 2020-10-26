@@ -16,6 +16,6 @@ private:
 
 public:
     explicit Transaction(QDateTime time, const Account &from_) : time_(std::move(time)), from_(from_) {}
-    ~Transaction() = default;
+    virtual ~Transaction() = default;
 };
 #endif //MOOP_ATM_PROJECT_TRANSACTION_H

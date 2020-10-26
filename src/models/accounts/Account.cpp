@@ -4,7 +4,7 @@
 
 #include "Account.h"
 
-Account::Account(std::string ownerName, std::string IBAN, BANK_NUMBER_T bankNumberT): ownerName_(std::move(ownerName)), IBAN_(std::move(IBAN)), bank_(bankNumberT) {}
+Account::Account(std::string ownerName, std::string IBAN, const BANK_NUMBER_T& bankNumberT, const CASH_AMOUNT_T& money): ownerName_(std::move(ownerName)), IBAN_(std::move(IBAN)), bank_(bankNumberT), money_(money) {}
 
 
 BANK_NUMBER_T Account::getBank() const {
@@ -13,5 +13,9 @@ BANK_NUMBER_T Account::getBank() const {
 
 std::string Account::getIBAN_() const {
     return IBAN_;
+}
+
+CASH_AMOUNT_T Account::getMoney() const {
+    return money_;
 }
 

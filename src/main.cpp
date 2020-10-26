@@ -14,17 +14,23 @@
 
 #include <mysqlx/xdevapi.h>
 //#include "controllers/PinVerificationService.h"
-//#include "models/Bank.h"
+#include "models/Bank.h"
 #include "models/accounts/Account.h"
 //#include "models/DebitCard.h"
-//#include "controllers/AccountActions.h"
+#include "controllers/AccountActions.h"
+#include "models/transactions/Transaction.h"
+#include "models/transactions/OneTimeTransfer.h"
+
 
 
 int main(int argc, char *argv[]) {
     //PinVerificationService::verify(123123, 123);
     //DebitCard card = Bank::getCard(123123);
-    //Account* account = Bank::getAccount("XXYY321321");
-    //AccountActions::viewHistory(Account("asd", "XXYY123123", 1));
+    Account* account = Bank::getAccount("XXYY321321");
+    Account* account2 = Bank::getAccount("XXYY123123");
+    Transaction* transaction = new OneTimeTransfer(QDateTime::currentDateTime(), *account2, *account, 23);
+    AccountActions::makeTransaction(*account, *transaction);
+
 
 
     QApplication qtApp(argc, argv);

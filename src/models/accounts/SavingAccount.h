@@ -11,8 +11,8 @@ private:
     float interestRate_;
 
 public:
-    SavingAccount(const std::string& ownerName, const std::string& IBAN, const BANK_NUMBER_T & bank, const unsigned int& limit, const float& interestRate) :
-            Account(ownerName, IBAN, bank),  limit_(limit), interestRate_(interestRate) {}
+    SavingAccount(const std::string& ownerName, const std::string& IBAN, const BANK_NUMBER_T & bank, const unsigned int& limit, const float& interestRate,const CASH_AMOUNT_T& money) :
+            Account(ownerName, IBAN, bank, money),  limit_(limit), interestRate_(interestRate) {}
     ~SavingAccount() = default;
 };
 #endif //MOOP_ATM_PROJECT_SAVINGACCOUNT_H

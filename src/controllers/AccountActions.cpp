@@ -15,7 +15,17 @@
 
 
 void AccountActions::makeTransaction(const Account & acc, const Transaction & tr) {
-    //TODO: Requires implementation
+    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
+    mysqlx::Session session(url);
+    mysqlx::Schema db = session.getSchema("moop");
+    mysqlx::Table myTable = db.getTable("Transactions");
+    mysqlx::Table tableAcc = db.getTable("Account");
+     if (const OneTimeTransfer* t = dynamic_cast<const OneTimeTransfer*>(&tr)){
+
+            int m = acc.getMoney()-t->getAmount();
+            tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
+            tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
+     }
 }
 
 QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
