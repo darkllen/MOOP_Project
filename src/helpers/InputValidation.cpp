@@ -5,6 +5,9 @@
 #include <QtCore/qdatetime.h>
 #include "../constants/ATMTypes.h"
 #include "../constants/ATMLimits.h"
+#include "../models/Bank.h"
+#include "../models/DebitCard.h"
+#include "../exceptions/ATMException.h"
 #include "InputValidation.h"
 
 #include <regex>
@@ -26,7 +29,11 @@ bool InputValidation::validatePersonName(QString &s){
     return std::regex_match (s.toStdString(),nameSurnameRegex);
 }
 
-bool InputValidation::validateCardNumber(CARD_NUMBER_T){
-    //todo check that card number exists in db
-    return true;
+bool InputValidation::validateCardNumber(CARD_NUMBER_T n){
+    try {
+        Bank::getCard(n);
+        return true;
+    } catch (DBException& e) {
+        return false;
+    }
 }
