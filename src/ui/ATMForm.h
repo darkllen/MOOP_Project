@@ -64,6 +64,9 @@ private slots:
     void on_d1l_btn_clicked();
     void on_d2l_btn_clicked();
     void on_d3l_btn_clicked();
+
+    void on_powerOn_action_triggered();
+    void on_powerOff_action_triggered();
 };
 
 #endif //MOOP_ATM_PROJECT_ATMFORM_H

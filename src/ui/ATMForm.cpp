@@ -7,8 +7,11 @@
 
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
+#include "../events/UIInput.h"
 
-ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io) : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io) {
+
+ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
+        : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io) {
     ui_->setupUi(&mw);
     configureSignalAndSlots();
     setMainWindowBackground(mw);
@@ -49,6 +52,9 @@ void ATMForm::configureSignalAndSlots() {
     connect(ui_->d1l_btn, &QPushButton::clicked, this, &ATMForm::on_d1l_btn_clicked);
     connect(ui_->d2l_btn, &QPushButton::clicked, this, &ATMForm::on_d2l_btn_clicked);
     connect(ui_->d3l_btn, &QPushButton::clicked, this, &ATMForm::on_d3l_btn_clicked);
+
+    connect(ui_->actionPowerOn, &QAction::triggered, this, &ATMForm::on_powerOn_action_triggered);
+    connect(ui_->actionPowerOff, &QAction::triggered, this, &ATMForm::on_powerOff_action_triggered);
 }
 
 void ATMForm::setMainWindowBackground(QMainWindow &mw) {
@@ -61,67 +67,67 @@ void ATMForm::setMainWindowBackground(QMainWindow &mw) {
 }
 
 void ATMForm::on_n000_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D000);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D000);
 }
 
 void ATMForm::on_n0_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D0);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D0);
 }
 
 void ATMForm::on_n1_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D1);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D1);
 }
 
 void ATMForm::on_n2_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D2);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D2);
 }
 
 void ATMForm::on_n3_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D3);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D3);
 }
 
 void ATMForm::on_n4_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D4);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D4);
 }
 
 void ATMForm::on_n5_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D5);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D5);
 }
 
 void ATMForm::on_n6_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D6);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D6);
 }
 
 void ATMForm::on_n7_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D7);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D7);
 }
 
 void ATMForm::on_n8_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D8);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D8);
 }
 
 void ATMForm::on_n9_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::D9);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::D9);
 }
 
 void ATMForm::on_dot_keypad_btn_clicked() {
-    controller_->dialPadInput(DialPadBtn::DDot);
+    controller_->dialPadInput(UIInput::DialPadBtnInput::DDot);
 }
 
 void ATMForm::on_cancel_keypad_btn_clicked() {
-    controller_->dialPadControlInput(ControlBtn::Cancel);
+    controller_->dialPadControlInput(UIInput::ControlBtnInput::Cancel);
 }
 
 void ATMForm::on_clear_keypad_btn_clicked() {
-    controller_->dialPadControlInput(ControlBtn::Clear);
+    controller_->dialPadControlInput(UIInput::ControlBtnInput::Clear);
 }
 
 void ATMForm::on_enter_keypad_btn_clicked() {
-    controller_->dialPadControlInput(ControlBtn::Enter);
+    controller_->dialPadControlInput(UIInput::ControlBtnInput::Enter);
 }
 
 void ATMForm::on_empty_keypad_btn_clicked() {
-    controller_->dialPadControlInput(ControlBtn::Empty);
+    controller_->dialPadControlInput(UIInput::ControlBtnInput::Empty);
 }
 
 void ATMForm::on_receipt_btn_clicked() {
@@ -140,35 +146,43 @@ void ATMForm::on_dispenser_btn_clicked() {
 }
 
 void ATMForm::on_d0r_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::R0);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::R0);
 }
 
 void ATMForm::on_d1r_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::R1);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::R1);
 }
 
 void ATMForm::on_d2r_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::R2);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::R2);
 }
 
 void ATMForm::on_d3r_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::R3);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::R3);
 }
 
 void ATMForm::on_d0l_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::L0);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::L0);
 }
 
 void ATMForm::on_d1l_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::L1);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::L1);
 }
 
 void ATMForm::on_d2l_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::L2);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::L2);
 }
 
 void ATMForm::on_d3l_btn_clicked() {
-    controller_->sideDisplayBtnInput(DisplaySideBtn::L3);
+    controller_->sideDisplayBtnInput(UIInput::DisplaySideBtnInput::L3);
+}
+
+void ATMForm::on_powerOn_action_triggered() {
+    controller_->ATMPowerChange(UIInput::ATMPowerState::On);
+}
+
+void ATMForm::on_powerOff_action_triggered() {
+    controller_->ATMPowerChange(UIInput::ATMPowerState::Off);
 }
 
 QWebEngineView &ATMForm::getWebView() {

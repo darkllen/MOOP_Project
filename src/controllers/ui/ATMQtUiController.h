@@ -9,32 +9,34 @@
 
 #include "../ATMController.h"
 
-class ATMQtDisplayController;
 class ATMForm;
 class QMainWindow;
+class ATMDisplay;
 
 class ATMQtUiController : public QObject, public ATMController {
 Q_OBJECT
 private:
     ATMForm *atmForm_;
-
-    ATMQtDisplayController *displayController_;
+    ATMDisplay *display_;
 
 public:
     explicit ATMQtUiController(QMainWindow &mw);
     ~ATMQtUiController() override;
 
-    void dialPadInput(DialPadBtn btn) override;
-    void dialPadControlInput(ControlBtn btn) override;
-    void sideDisplayBtnInput(DisplaySideBtn btn) override;
+    // UI calls:
+    void dialPadInput(UIInput::DialPadBtnInput) override;
+    void dialPadControlInput(UIInput::ControlBtnInput) override;
+    void sideDisplayBtnInput(UIInput::DisplaySideBtnInput) override;
     void dispenserInput() override;
     void cardReaderInput() override;
+    void ATMPowerChange(UIInput::ATMPowerState) override;
 
-    void printReceiptOutput();
-    void dispenserOutput();
-    void cardReaderOutput();
-    void displayOutput(DisplayState);
-    void displayPower(DisplayPowerState powerState);
+    // ATM calls:
+    void printReceiptOutput() override;
+    void dispenserOutput() override;
+    void cardReaderOutput() override;
+    void displayOutput(const NewDisplayStateEvent&) override;
+    void ATMPowerChange(const ATMPowerStateEvent&) override;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

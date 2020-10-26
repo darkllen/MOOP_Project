@@ -5,7 +5,7 @@
 #ifndef MOOP_ATM_PROJECT_ATMIO_H
 #define MOOP_ATM_PROJECT_ATMIO_H
 
-#include "../models/ATMEvent.h"
+#include "../events/ATMEvent.h"
 
 class ATMBaseComponent;
 class ATMMediator {
@@ -31,8 +31,11 @@ private:
     ATM *atm_;
     ATMController *controller_;
 
+    void handleNotifyTargetATM(const ATMEvent &event) const;
+    void handleNotifyTargetATMIO(const ATMEvent &event) const;
+
 public:
-    explicit ATMIO(ATM &atm, ATMController &controller);
+    ATMIO(ATM &atm, ATMController &controller);
     void Notify(ATMBaseComponent &sender, const ATMEvent &event) const override;
 };
 

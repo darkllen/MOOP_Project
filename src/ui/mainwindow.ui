@@ -1058,7 +1058,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="palette">
@@ -1522,9 +1522,27 @@
      <string>Exit</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuATMPower">
+    <property name="title">
+     <string>ATMPower</string>
+    </property>
+    <addaction name="actionPowerOn"/>
+    <addaction name="actionPowerOff"/>
+   </widget>
    <addaction name="menuATM"/>
    <addaction name="menuExit"/>
+   <addaction name="menuATMPower"/>
   </widget>
+  <action name="actionPowerOn">
+   <property name="text">
+    <string>PowerOn</string>
+   </property>
+  </action>
+  <action name="actionPowerOff">
+   <property name="text">
+    <string>PowerOff</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>

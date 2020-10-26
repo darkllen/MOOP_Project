@@ -10,12 +10,13 @@
 #include "models/ATM.h"
 #include "ui/ATMForm.h"
 
-#include <iostream>
 
 #include <mysqlx/xdevapi.h>
 //#include "controllers/PinVerificationService.h"
+
 #include "models/Bank.h"
 #include "models/accounts/Account.h"
+
 //#include "models/DebitCard.h"
 #include "controllers/AccountActions.h"
 #include "models/transactions/Transaction.h"
@@ -24,14 +25,14 @@
 
 
 int main(int argc, char *argv[]) {
-    //PinVerificationService::verify(123123, 123);
-    //DebitCard card = Bank::getCard(123123);
-    Account* account = Bank::getAccount("XXYY321321");
-    Account* account2 = Bank::getAccount("XXYY123123");
-    Transaction* transaction = new OneTimeTransfer(QDateTime::currentDateTime(), *account2, *account, 23);
-    AccountActions::makeTransaction(*account, *transaction);
-
-
+//    PinVerificationService::verify(123123, 123);
+//    DebitCard card = Bank::getCard(123123);
+//    Account* account = Bank::getAccount("XXYY321321");
+//    Account* account2 = Bank::getAccount("XXYY123123");
+//    Transaction* transaction = new OneTimeTransfer(QDateTime::currentDateTime(), *account2, *account, 23);
+//    AccountActions::makeTransaction(*account, *transaction);
+//
+//
 
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));
@@ -49,13 +50,6 @@ int main(int argc, char *argv[]) {
 
     delete controller;
     delete io;
-
-    try {
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session mySession(url);
-    } catch (const std::exception& e) {
-        std::cout << e.what()<<std::endl;
-    }
 
     return resultCode;
 }

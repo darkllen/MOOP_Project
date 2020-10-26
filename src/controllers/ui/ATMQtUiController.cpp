@@ -3,29 +3,40 @@
 //
 
 #include "ATMQtUiController.h"
-#include "ATMQtDisplayController.h"
 #include "../../ui/ATMForm.h"
+#include "../../ui/ATMDisplay.h"
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
-        atmForm_(new ATMForm(mw, *this)), displayController_(new ATMQtDisplayController(*this)) {}
+        ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())) {
+    display_->turnOn();
+}
 
 ATMQtUiController::~ATMQtUiController() {
     delete atmForm_;
-    delete displayController_;
     atmForm_ = nullptr;
-    displayController_ = nullptr;
 }
 
-void ATMQtUiController::dialPadInput(DialPadBtn btn) {
+void ATMQtUiController::dialPadInput(const UIInput::DialPadBtnInput e) {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::dialPadControlInput(ControlBtn btn) {
+void ATMQtUiController::dialPadControlInput(const UIInput::ControlBtnInput e) {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::sideDisplayBtnInput(DisplaySideBtn btn) {
+void ATMQtUiController::sideDisplayBtnInput(const UIInput::DisplaySideBtnInput e) {
     //TODO: Requires implementation
+}
+
+void ATMQtUiController::ATMPowerChange(UIInput::ATMPowerState powerState) {
+    switch (powerState) {
+        case (UIInput::ATMPowerState::On):
+            mediator_->Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATM));
+            break;
+        case (UIInput::ATMPowerState::Off):
+            mediator_->Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATM));
+            break;
+    }
 }
 
 void ATMQtUiController::dispenserInput() {
@@ -48,10 +59,17 @@ void ATMQtUiController::cardReaderOutput() {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::displayOutput(DisplayState) {
+void ATMQtUiController::displayOutput(const NewDisplayStateEvent &) {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::displayPower(DisplayPowerState powerState) {
-    //TODO: Requires implementation
+void ATMQtUiController::ATMPowerChange(const ATMPowerStateEvent & powerState) {
+    switch (powerState.value) {
+        case (ATMPowerStateEvent::PowerState::On):
+            display_->turnOn();
+            break;
+        case (ATMPowerStateEvent::PowerState::Off):
+            display_->turnOff();
+            break;
+    }
 }

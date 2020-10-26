@@ -29,7 +29,7 @@ set(SOURCE_FILES
         src/models/transactions/AccountManaging.h
         src/models/ATM.cpp
         src/models/ATM.h
-        src/models/ATMEvent.h
+        src/events/ATMEvent.h
         src/models/ATMInfo.h
         src/models/Bank.h
         src/models/transactions/CashTransaction.h
@@ -48,12 +48,10 @@ set(SOURCE_FILES
         src/constants/ATMTypes.h
         src/helpers/InputValidation.h
         src/tests/Tester.h
-        src/controllers/ui/ATMQtDisplayController.h
         src/controllers/Maintenance.cpp
         src/models/atm_hardware/CardReader.cpp
         src/controllers/PinVerificationService.cpp
         src/controllers/ui/ATMQtUiController.cpp
-        src/controllers/ui/ATMQtDisplayController.cpp
         src/controllers/AccountActions.cpp
         src/constants/ATMLimits.h
         src/models/atm_hardware/Dispenser.cpp
@@ -61,7 +59,10 @@ set(SOURCE_FILES
         src/models/Bank.cpp
         src/models/SessionManager.cpp
         src/models/TransactionManager.cpp
-        src/helpers/InputValidation.cpp)
+        src/helpers/InputValidation.cpp
+        src/ui/ATMDisplay.cpp
+        src/ui/ATMDisplay.h
+        src/events/UIInput.h)
 
 # changing output folder for .exe and .dll
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

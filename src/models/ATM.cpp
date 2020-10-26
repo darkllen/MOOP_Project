@@ -3,6 +3,7 @@
 //
 
 #include "ATM.h"
+#include "../events/ATMEvent.h"
 
 ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         isPoweredOn_(false),
@@ -12,26 +13,27 @@ ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         tsManager_(new TransactionManager),
         sessionManager_(new SessionManager) {}
 
+ATM::~ATM() {
+    delete dispenser_;
+    delete cardReader_;
+    delete tsManager_;
+    delete sessionManager_;
+}
+
 void ATM::powerOn() {
     if (!isPoweredOn_) {
-//  TODO: Requires implementation
-//  this->mediator_->Notify(this, );
+        this->mediator_->
+                Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
         isPoweredOn_ = true;
     }
 }
 
 void ATM::powerOff() {
     if (isPoweredOn_) {
-//  TODO: Requires implementation
-//  this->mediator_->Notify(this, );
+        this->mediator_->
+                Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
         isPoweredOn_ = false;
     }
-}
-ATM::~ATM() {
-    delete dispenser_;
-    delete cardReader_;
-    delete tsManager_;
-    delete sessionManager_;
 }
 
 const ATMInfo &ATM::getATMInfo() const {
