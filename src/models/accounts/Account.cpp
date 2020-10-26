@@ -4,16 +4,11 @@
 
 #include "Account.h"
 
-Account::Account(std::string ownerName, std::string IBAN): ownerName_(std::move(ownerName)), IBAN_(std::move(IBAN)) {}
+Account::Account(std::string ownerName, std::string IBAN, BANK_NUMBER_T bankNumberT): ownerName_(std::move(ownerName)), IBAN_(std::move(IBAN)), bank_(bankNumberT) {}
 
-PIN_T Account::getCardPIN(const CARD_NUMBER_T) const {
-    //TODO: Requires implementation
-    return 0;
-}
 
 BANK_NUMBER_T Account::getBank() const {
-    //TODO: Requires implementation
-    return 0;
+    return bank_;
 }
 
 std::string Account::getIBAN_() const {

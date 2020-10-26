@@ -13,12 +13,15 @@
 #include <iostream>
 
 #include <mysqlx/xdevapi.h>
-//#include "models/Bank.h"
+#include "models/Bank.h"
+#include "models/accounts/Account.h"
 //#include "models/DebitCard.h"
 
 
 int main(int argc, char *argv[]) {
     //DebitCard card = Bank::getCard(123123);
+    //Account* account = Bank::getAccount("XXYY321321");
+
 
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));

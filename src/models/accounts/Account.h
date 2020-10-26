@@ -8,11 +8,11 @@ class Account {
 private:
     std::string ownerName_;
     std::string IBAN_;
+    BANK_NUMBER_T bank_;
 public:
-    Account(std::string ownerName, std::string IBAN);
+    Account(std::string ownerName, std::string IBAN, BANK_NUMBER_T bank_);
     ~Account() = default;
 
-    PIN_T getCardPIN(CARD_NUMBER_T) const;
     BANK_NUMBER_T getBank() const;
     std::string getIBAN_() const;
 };

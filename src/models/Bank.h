@@ -16,12 +16,13 @@ private:
     std::string name_;
 
 public:
-    //TODO DB add method getCard, getAccount
+    //TODO DB add method, getAccount
     Bank(BANK_NUMBER_T, std::string, std::string);
     ~Bank() = default;
 
     static PIN_T getCardPIN(const CARD_NUMBER_T &);
     static DebitCard getCard(const CARD_NUMBER_T &);
+    static Account* getAccount(const std::string&);
 };
 
 #endif //MOOP_ATM_PROJECT_BANK_H
