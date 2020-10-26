@@ -13,11 +13,12 @@
 #include <iostream>
 
 #include <mysqlx/xdevapi.h>
-#include "controllers/PinVerificationService.h"
+//#include "models/Bank.h"
+//#include "models/DebitCard.h"
 
 
 int main(int argc, char *argv[]) {
-    PinVerificationService::verify(123123,123);
+    //DebitCard card = Bank::getCard(123123);
 
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));

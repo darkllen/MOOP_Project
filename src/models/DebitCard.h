@@ -17,8 +17,8 @@ private:
     bool isBlocked_;
 
 public:
-    DebitCard(CARD_NUMBER_T cardNum, QDateTime expireDate, CVV_T cvvCode, PIN_T pin) :
-            cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin), isBlocked_(true) {}
+    DebitCard(CARD_NUMBER_T cardNum, QDateTime expireDate, CVV_T cvvCode, PIN_T pin, bool isBlocked=true) :
+            cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin), isBlocked_(isBlocked) {}
     ~DebitCard() = default;
 
     void setIsBlocked(bool value){isBlocked_ = value;}
