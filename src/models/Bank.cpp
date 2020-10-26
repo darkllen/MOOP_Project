@@ -25,21 +25,19 @@ DebitCard Bank::getCard(const CARD_NUMBER_T& cardNumberT) {
         mysqlx::RowResult myResult = myTable.select("expireDate_","cvCode_","PIN_",	"isBlocked_")
                 .where("cardNum_ like :cardNum_")
                 .bind("cardNum_",cardNumberT).execute();
-        for(size_t i = 0; i< myResult.count(); ++i){
-            mysqlx::Row row = myResult.fetchOne();
-            std::stringstream s;
-            s << row[0];
-            QStringList date(QString(QString::fromStdString(s.str())).split("-"));
-            QDate expireDate_(date.at(0).toInt(),date.at(1).toInt(),date.at(2).toInt());
-            CVV_T cvCode_(row[1].get<int>());
-            CVV_T PIN_(row[2].get<int>());
-            bool isBlocked_(row[3].get<bool>());
-            return DebitCard(cardNumberT, QDateTime(expireDate_), cvCode_, PIN_, isBlocked_);
-        }
+
+        mysqlx::Row row = myResult.fetchOne();
+        std::stringstream s;
+        s << row[0];
+        QStringList date(QString(QString::fromStdString(s.str())).split("-"));
+        QDate expireDate_(date.at(0).toInt(),date.at(1).toInt(),date.at(2).toInt());
+        CVV_T cvCode_(row[1].get<int>());
+        CVV_T PIN_(row[2].get<int>());
+        bool isBlocked_(row[3].get<bool>());
+        return DebitCard(cardNumberT, QDateTime(expireDate_), cvCode_, PIN_, isBlocked_);
     } catch (std::exception& e) {
         throw DBException(e.what());
     }
-    throw DBException("no card is found with this card num");
 }
 
 Account* Bank::getAccount(const std::string & IBAN_) {
