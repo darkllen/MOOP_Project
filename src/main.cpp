@@ -13,12 +13,14 @@
 #include <iostream>
 
 #include <mysqlx/xdevapi.h>
-#include "models/Bank.h"
-#include "models/accounts/Account.h"
+//#include "controllers/PinVerificationService.h"
+//#include "models/Bank.h"
+//#include "models/accounts/Account.h"
 //#include "models/DebitCard.h"
 
 
 int main(int argc, char *argv[]) {
+    //PinVerificationService::verify(123123, 123);
     //DebitCard card = Bank::getCard(123123);
     //Account* account = Bank::getAccount("XXYY321321");
 
