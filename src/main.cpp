@@ -15,14 +15,16 @@
 #include <mysqlx/xdevapi.h>
 //#include "controllers/PinVerificationService.h"
 //#include "models/Bank.h"
-//#include "models/accounts/Account.h"
+#include "models/accounts/Account.h"
 //#include "models/DebitCard.h"
+//#include "controllers/AccountActions.h"
 
 
 int main(int argc, char *argv[]) {
     //PinVerificationService::verify(123123, 123);
     //DebitCard card = Bank::getCard(123123);
     //Account* account = Bank::getAccount("XXYY321321");
+    //AccountActions::viewHistory(Account("asd", "XXYY123123", 1));
 
 
     QApplication qtApp(argc, argv);

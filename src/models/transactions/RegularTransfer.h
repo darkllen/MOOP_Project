@@ -11,11 +11,11 @@
 class RegularTransfer : public OneTimeTransfer {
 private:
 
-    QDateTime regularity_;
+    int regularity_;
 
 public:
-    RegularTransfer(const QDateTime &dateTime, const Account &to, const Account &from, CASH_AMOUNT_T amount, QDateTime regularity) :
-            OneTimeTransfer(dateTime, to, from, amount), regularity_(std::move(regularity)) {}
+    RegularTransfer(const QDateTime &dateTime, const Account &to, const Account &from, CASH_AMOUNT_T amount, int regularity) :
+            OneTimeTransfer(dateTime, to, from, amount), regularity_(regularity) {}
     ~RegularTransfer() = default;
 };
 

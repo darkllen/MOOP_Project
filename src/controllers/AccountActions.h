@@ -4,7 +4,7 @@
 
 #ifndef MOOP_ATM_PROJECT_ACCOUNTACTIONS_H
 #define MOOP_ATM_PROJECT_ACCOUNTACTIONS_H
-
+#include <QtCore/QList>
 class Transaction;
 class Account;
 class AccountActions {
@@ -15,7 +15,7 @@ public:
     ~AccountActions() = default;
 
     static void makeTransaction(const Account &, const Transaction &);
-    static void viewHistory(const Account &);
+    static QList<Transaction*> viewHistory(const Account &);
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNTACTIONS_H

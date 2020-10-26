@@ -20,9 +20,9 @@ public:
     ~TransactionManager() = default;
 
     static const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int);
-    static const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int, const QDateTime &);
-    static const Transaction &createTransaction(const QDateTime &, int, bool);
-    static const Transaction &createTransaction(const QDateTime &, AccountManaging::ValueChanged, unsigned __int64, unsigned __int64);
+    static const Transaction &createTransaction(const QDateTime &, const Account &, const Account &, int, int);
+    static const Transaction &createTransaction(const QDateTime &, const Account &, int, bool);
+    static const Transaction &createTransaction(const QDateTime &, const Account &, AccountManaging::ValueChanged, unsigned __int64, unsigned __int64);
 };
 
 #endif //MOOP_ATM_PROJECT_TRANSACTIONMANAGER_H

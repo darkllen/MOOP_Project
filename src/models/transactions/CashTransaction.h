@@ -17,8 +17,8 @@ private:
 
 public:
 
-    CashTransaction(const QDateTime &dateTime, ACCOUNT_BALANCE_AMOUNT_T amount, bool isWithdrawal) :
-            Transaction(dateTime), amount_(amount), isWithdrawal_(isWithdrawal) {}
+    CashTransaction(const QDateTime &dateTime, const Account& from, ACCOUNT_BALANCE_AMOUNT_T amount, bool isWithdrawal) :
+            Transaction(dateTime,from), amount_(amount), isWithdrawal_(isWithdrawal) {}
     ~CashTransaction() = default;
 
     ACCOUNT_BALANCE_AMOUNT_T getAmount() const { return amount_; }

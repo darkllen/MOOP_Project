@@ -21,8 +21,8 @@ public:
         PIN,
     };
 
-    AccountManaging(const QDateTime &dateTime, ValueChanged, unsigned __int64, unsigned __int64) :
-            Transaction(dateTime), oldValue_(0), newValue_(0) {}
+    AccountManaging(const QDateTime &dateTime,const Account& from, ValueChanged v, unsigned __int64& oldV, unsigned __int64& newV) :
+            Transaction(dateTime,from), oldValue_(oldV), newValue_(newV) {}
 
     ~AccountManaging() = default;
 };
