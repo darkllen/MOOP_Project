@@ -9,6 +9,7 @@
 #include "../events/UIInput.h"
 #include "../events/ATMEvent.h"
 
+#include "../constants/ATMTypes.h"
 
 class ATMController: public ATMBaseComponent {
 public:
@@ -19,7 +20,7 @@ public:
     virtual void dialPadControlInput(UIInput::ControlBtnInput) = 0;
     virtual void sideDisplayBtnInput(UIInput::DisplaySideBtnInput) = 0;
     virtual void dispenserInput() = 0;
-    virtual void cardReaderInput() = 0;
+    virtual void cardReaderInput(CARD_NUMBER_T) = 0;
     virtual void ATMPowerChange(UIInput::ATMPowerState) = 0;
 
     virtual void printReceiptOutput() = 0;

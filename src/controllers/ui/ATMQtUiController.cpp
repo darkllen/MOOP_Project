@@ -43,8 +43,8 @@ void ATMQtUiController::dispenserInput() {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::cardReaderInput() {
-    //TODO: Requires implementation
+void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
+    mediator_->Notify(*this, CardReaderInputEvent(n));
 }
 
 void ATMQtUiController::printReceiptOutput() {

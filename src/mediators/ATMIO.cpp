@@ -36,6 +36,10 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
                     break;
             }
         }
+        case ATMEvent::CardReaderInputEvent: {
+            auto e = dynamic_cast<const CardReaderInputEvent &>(event);
+            atm_->getCardReader().setInsertedCardN(e.value);
+        }
             break;
         default:
             throw ATMException("Invalid event target!");

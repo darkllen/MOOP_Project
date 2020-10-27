@@ -11,7 +11,8 @@ ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         dispenser_(new Dispenser(initialCash)),
         cardReader_(new CardReader),
         tsManager_(new TransactionManager),
-        sessionManager_(new SessionManager) {}
+        sessionManager_(new SessionManager) {
+}
 
 ATM::~ATM() {
     delete dispenser_;
@@ -40,3 +41,10 @@ const ATMInfo &ATM::getATMInfo() const {
     return *atmInfo_;
 }
 
+CardReader& ATM::getCardReader() {
+    return *cardReader_;
+}
+
+Dispenser& ATM::getDispenser() {
+    return *dispenser_;
+}

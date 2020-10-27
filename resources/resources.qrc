@@ -2,5 +2,8 @@
     <qresource>
         <file>green_background.png</file>
 		<file>blue_screen.png</file>
+		<file>views/WelcomeScreen/index.html</file>
+		<file>views/WelcomeScreen/styles.css</file>
+		<file>views/PoweredOffScreen/index.html</file>
     </qresource>
 </RCC>

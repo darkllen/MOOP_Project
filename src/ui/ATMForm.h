@@ -26,6 +26,8 @@ private:
     Ui::MainWindowForm *ui_;
     ATMQtUiController *controller_;
 
+    bool cardReaderStateIsInsert;
+
 public:
     explicit ATMForm(QMainWindow &mw, ATMQtUiController &atm_io);
     ~ATMForm() override;
@@ -67,6 +69,9 @@ private slots:
 
     void on_powerOn_action_triggered();
     void on_powerOff_action_triggered();
+
+    void initValues();
+    void toggleCardReaderMode();
 };
 
 #endif //MOOP_ATM_PROJECT_ATMFORM_H

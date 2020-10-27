@@ -35,6 +35,9 @@ public:
     void powerOff();
 
     const ATMInfo& getATMInfo() const;
+
+    CardReader& getCardReader();
+    Dispenser& getDispenser();
 };
 
 

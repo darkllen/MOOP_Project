@@ -4,17 +4,20 @@
 
 #include <QWebChannel>
 #include <QtWidgets/qabstractbutton.h>
+#include <QInputDialog>
+#include <QMessageBox>
 
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
 #include "../events/UIInput.h"
-
+#include "../constants/ATMTypes.h"
 
 ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
         : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io) {
     ui_->setupUi(&mw);
     configureSignalAndSlots();
     setMainWindowBackground(mw);
+    initValues();
 }
 
 ATMForm::~ATMForm() {
@@ -56,6 +59,12 @@ void ATMForm::configureSignalAndSlots() {
     connect(ui_->actionPowerOn, &QAction::triggered, this, &ATMForm::on_powerOn_action_triggered);
     connect(ui_->actionPowerOff, &QAction::triggered, this, &ATMForm::on_powerOff_action_triggered);
 }
+
+void ATMForm::initValues() {
+    ui_->dispenser_btn->setEnabled(false);
+    ui_->receipt_btn->setEnabled(false);
+}
+
 
 void ATMForm::setMainWindowBackground(QMainWindow &mw) {
     mw.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
@@ -136,13 +145,29 @@ void ATMForm::on_receipt_btn_clicked() {
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
-    qDebug() << "card-reader";
-    //TODO: Needs implementation
+    if (cardReaderStateIsInsert) {
+        bool ok;
+        QString text = QInputDialog::getText(nullptr, "Card reader input dialog",
+                                             "Please enter your card number:", QLineEdit::Normal,
+                                             "", &ok);
+        if (ok && !text.isEmpty()) {
+            bool convertSuccess;
+            CARD_NUMBER_T value = text.toULongLong(&convertSuccess, 10);
+            if (convertSuccess) {
+                controller_->cardReaderInput(value);
+            } else {
+                QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
+            }
+        }
+    } else {
+        //TODO: Needs implementation
+    }
 }
 
 void ATMForm::on_dispenser_btn_clicked() {
     qDebug() << "dispenser";
     //TODO: Needs implementation
+    controller_->dispenserInput();
 }
 
 void ATMForm::on_d0r_btn_clicked() {
@@ -187,4 +212,12 @@ void ATMForm::on_powerOff_action_triggered() {
 
 QWebEngineView &ATMForm::getWebView() {
     return *(ui_->display);
+}
+
+void ATMForm::toggleCardReaderMode() {
+    cardReaderStateIsInsert = !cardReaderStateIsInsert;
+    if (cardReaderStateIsInsert) {
+        ui_->card_reader_btn->setText("Insert card");
+        ui_->card_reader_btn->setText("Get back card");
+    }
 }

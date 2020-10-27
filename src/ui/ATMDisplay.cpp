@@ -5,14 +5,40 @@
 #include "ATMDisplay.h"
 #include <QtWebEngineWidgets/QWebEngineView>
 
-ATMDisplay::ATMDisplay(QWebEngineView &webEngineView): webEngineView_(&webEngineView) {}
+ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) : webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
 
 void ATMDisplay::turnOn() {
-    //TODO: Requires implementation
-    webEngineView_->setHtml("<h1>IS POWERED ON</h1>");
+    isOn_ = true;
+    navigateTo(NewDisplayStateEvent(Views::WelcomeScreen));
 }
 
 void ATMDisplay::turnOff() {
-    //TODO: Requires implementation
-    webEngineView_->setHtml("<h1>IS POWERED OFF</h1>");
+    navigateTo(NewDisplayStateEvent(Views::PoweredOffScreen));
+    isOn_ = false;
+}
+
+void ATMDisplay::navigateTo(const NewDisplayStateEvent &e) {
+    if (!isOn_){
+        throw "Attempt to use the screen in OFF state";
+        //TODO: requires implementation
+    }
+    switch (e.value) {
+        case WelcomeScreen:
+            webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
+            break;
+        case PINEnteringScreen:
+            break;
+        case CardBlockedScreen:
+            break;
+        case MainMenuScreen:
+            break;
+        case PoweredOffScreen:
+            webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
+            break;
+    }
+    currentScreen_ = e.value;
+}
+
+Views ATMDisplay::getCurrentScreen() {
+    return currentScreen_;
 }

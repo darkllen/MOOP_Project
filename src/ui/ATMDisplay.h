@@ -5,11 +5,15 @@
 #ifndef ATM_ATMDISPLAY_H
 #define ATM_ATMDISPLAY_H
 
+#include "../events/ATMEvent.h"
+
 class QWebEngineView;
 
 class ATMDisplay {
 private:
     QWebEngineView* webEngineView_;
+    Views currentScreen_;
+    bool isOn_;
 
 public:
     explicit ATMDisplay(QWebEngineView& webEngineView);
@@ -17,6 +21,9 @@ public:
 
     void turnOn();
     void turnOff();
+
+    void navigateTo(const NewDisplayStateEvent&);
+    Views getCurrentScreen();
 };
 
 

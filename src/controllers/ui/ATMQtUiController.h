@@ -28,7 +28,7 @@ public:
     void dialPadControlInput(UIInput::ControlBtnInput) override;
     void sideDisplayBtnInput(UIInput::DisplaySideBtnInput) override;
     void dispenserInput() override;
-    void cardReaderInput() override;
+    void cardReaderInput(CARD_NUMBER_T) override;
     void ATMPowerChange(UIInput::ATMPowerState) override;
 
     // ATM calls:
