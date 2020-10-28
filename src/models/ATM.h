@@ -38,6 +38,8 @@ public:
 
     CardReader& getCardReader();
     Dispenser& getDispenser();
+
+    void setMediator(ATMMediator *mediator) override;
 };
 
 

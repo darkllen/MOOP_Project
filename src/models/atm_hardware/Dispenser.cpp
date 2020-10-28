@@ -6,7 +6,7 @@
 
 #include "../../constants/ATMLimits.h"
 
-Dispenser::Dispenser(CASH_AMOUNT_T amount): availableCash_(amount) {
+Dispenser::Dispenser(CASH_AMOUNT_T amount): Hardware(), availableCash_(amount) {
     if (amount >= ATMLimits::MAX_CASH_AMOUNT_IN_DISPENSER) {
         //TODO: Requires implementation
     }

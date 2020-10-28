@@ -7,11 +7,11 @@
 
 #include "../../constants/ATMTypes.h"
 
-class Hardware {
+class Hardware: public ATMBaseComponent {
 protected:
     bool isOperational;
 public:
-    Hardware() : isOperational(true) {}
+    Hardware() : ATMBaseComponent(), isOperational(true) {}
     virtual ~Hardware() = default;
 
     bool getState() const { return isOperational; }

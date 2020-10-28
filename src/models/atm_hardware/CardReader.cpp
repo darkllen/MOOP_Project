@@ -6,8 +6,9 @@
 #include "../../controllers/PinVerificationService.h"
 #include "../../constants/ATMLimits.h"
 #include "../DebitCard.h"
+#include "../../exceptions/ATMException.h"
 
-CardReader::CardReader() : inserted_card_n_(0), evalTries(0), verificationService_(new PinVerificationService) {}
+CardReader::CardReader() : Hardware(), inserted_card_n_(0), evalTries(0), verificationService_(new PinVerificationService) {}
 
 CardReader::~CardReader() {
     delete verificationService_;
@@ -23,10 +24,11 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
     inserted_card_n_ = n;
     //check if card is blocked
     //TODO catch  BDexception
-    DebitCard debitCard = Bank::getCard(inserted_card_n_);
-    if(debitCard.getIsBlocked())
-        //TODO: write that card is blocked
-        returnCard();
+
+        DebitCard debitCard = Bank::getCard(inserted_card_n_);
+        if (debitCard.getIsBlocked())
+            //TODO: write that card is blocked
+            returnCard();
 }
 
 void CardReader::onVerificationSuccess() const {

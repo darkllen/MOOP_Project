@@ -10,7 +10,7 @@
 
 struct ATMEvent {
     enum EventType {
-        ATMPowerStateEvent, NewDisplayStateEvent, CardReaderInputEvent
+        ATMPowerStateEvent, NewDisplayStateEvent, CardReaderInputEvent, InvalidCardInsertedEvent
     };
     enum Target {
         ATM, ATMIO
@@ -33,13 +33,17 @@ struct ATMPowerStateEvent : public ATMEvent {
 
 struct CardReaderInputEvent : public ATMEvent {
     CARD_NUMBER_T value;
-    CardReaderInputEvent(CARD_NUMBER_T n) : ATMEvent(EventType::CardReaderInputEvent, Target::ATM), value(n) {}
+    explicit CardReaderInputEvent(CARD_NUMBER_T n) : ATMEvent(EventType::CardReaderInputEvent, Target::ATM), value(n) {}
 };
 
 
 struct NewDisplayStateEvent : public ATMEvent {
     Views value;
-    NewDisplayStateEvent(Views s) : ATMEvent(EventType::NewDisplayStateEvent, Target::ATMIO), value(s) {}
+    explicit NewDisplayStateEvent(Views s) : ATMEvent(EventType::NewDisplayStateEvent, Target::ATMIO), value(s) {}
+};
+
+struct InvalidCardInsertedEvent : public ATMEvent {
+    explicit InvalidCardInsertedEvent() : ATMEvent(EventType::InvalidCardInsertedEvent, Target::ATMIO) {}
 };
 
 

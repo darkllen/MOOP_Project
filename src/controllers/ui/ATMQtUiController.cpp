@@ -37,10 +37,10 @@ void ATMQtUiController::sideDisplayBtnInput(const UIInput::DisplaySideBtnInput e
 void ATMQtUiController::ATMPowerChange(UIInput::ATMPowerState powerState) {
     switch (powerState) {
         case (UIInput::ATMPowerState::On):
-            mediator_->Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATM));
+            mediator_->Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATM));
             break;
         case (UIInput::ATMPowerState::Off):
-            mediator_->Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATM));
+            mediator_->Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATM));
             break;
     }
 }
@@ -53,7 +53,7 @@ void ATMQtUiController::dispenserInput() {
 
 void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
     if (display_->getCurrentScreen() == WelcomeScreen) {
-        mediator_->Notify(*this, CardReaderInputEvent(n));
+        mediator_->Notify(CardReaderInputEvent(n));
 //    TODO: Requires implementation
     }
 }

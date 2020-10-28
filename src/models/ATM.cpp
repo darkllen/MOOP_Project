@@ -6,6 +6,7 @@
 #include "../events/ATMEvent.h"
 
 ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
+        ATMBaseComponent(),
         isPoweredOn_(false),
         atmInfo_(&atmInfo),
         dispenser_(new Dispenser(initialCash)),
@@ -24,7 +25,7 @@ ATM::~ATM() {
 void ATM::powerOn() {
     if (!isPoweredOn_) {
         this->mediator_->
-                Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
+                Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
         isPoweredOn_ = true;
     }
 }
@@ -32,7 +33,7 @@ void ATM::powerOn() {
 void ATM::powerOff() {
     if (isPoweredOn_) {
         this->mediator_->
-                Notify(*this, ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
+                Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
         isPoweredOn_ = false;
     }
 }
@@ -47,4 +48,9 @@ CardReader& ATM::getCardReader() {
 
 Dispenser& ATM::getDispenser() {
     return *dispenser_;
+}
+void ATM::setMediator(ATMMediator *mediator) {
+    this->mediator_ = mediator;
+    this->dispenser_->setMediator(mediator);
+    this->cardReader_->setMediator(mediator);
 }

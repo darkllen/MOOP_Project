@@ -15,7 +15,7 @@ ATMIO::ATMIO(ATM &atm, ATMController &controller) : atm_(&atm), controller_(&con
     this->controller_->setMediator(this);
 }
 
-void ATMIO::Notify(ATMBaseComponent &sender, const ATMEvent &event) const {
+void ATMIO::Notify(const ATMEvent &event) const {
     if (event.target == ATMEvent::Target::ATM) {
         handleNotifyTargetATM(event);
     } else if (event.target == ATMEvent::Target::ATMIO) {
@@ -39,7 +39,11 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         break;
         case ATMEvent::CardReaderInputEvent: {
             auto e = dynamic_cast<const CardReaderInputEvent &>(event);
-            atm_->getCardReader().setInsertedCardN(e.value);
+            try {
+                atm_->getCardReader().setInsertedCardN(e.value);
+            } catch (const DBException& e) {
+                Notify(InvalidCardInsertedEvent());
+            }
         }
             break;
         default:
