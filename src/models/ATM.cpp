@@ -22,31 +22,15 @@ ATM::~ATM() {
     delete sessionManager_;
 }
 
-void ATM::powerOn() {
-    if (!isPoweredOn_) {
-        this->mediator_->
-                Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
-        isPoweredOn_ = true;
-    }
-}
-
-void ATM::powerOff() {
-    if (isPoweredOn_) {
-        this->mediator_->
-                Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
-        isPoweredOn_ = false;
-    }
-}
-
 const ATMInfo &ATM::getATMInfo() const {
     return *atmInfo_;
 }
 
-CardReader& ATM::getCardReader() {
+CardReader &ATM::getCardReader() {
     return *cardReader_;
 }
 
-Dispenser& ATM::getDispenser() {
+Dispenser &ATM::getDispenser() {
     return *dispenser_;
 }
 void ATM::setMediator(ATMMediator *mediator) {
@@ -54,3 +38,23 @@ void ATM::setMediator(ATMMediator *mediator) {
     this->dispenser_->setMediator(mediator);
     this->cardReader_->setMediator(mediator);
 }
+
+void ATM::powerStateChange(ATMPowerStateEvent::PowerState value) {
+    switch (value) {
+        case ATMPowerStateEvent::On:
+            if (!isPoweredOn_) {
+                this->mediator_->
+                        Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
+                isPoweredOn_ = true;
+            }
+            break;
+        case ATMPowerStateEvent::Off:
+            if (isPoweredOn_) {
+                this->mediator_->
+                        Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
+                isPoweredOn_ = false;
+            }
+            break;
+    }
+}
+

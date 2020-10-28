@@ -22,7 +22,7 @@ public:
     void turnOn();
     void turnOff();
 
-    void navigateTo(const NewDisplayStateEvent&);
+    void navigateTo(const NewDisplayStateEventToATMIO&);
     Views getCurrentScreen();
 };
 

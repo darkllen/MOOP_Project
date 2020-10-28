@@ -6,13 +6,13 @@
 #define MOOP_ATM_PROJECT_CARDREADER_H
 
 #include "../../constants/ATMTypes.h"
-#include "../../exceptions/ATMException.h"
 #include "Hardware.h"
 
 class PinVerificationService;
 
 class CardReader: public Hardware {
 private:
+    bool cardIsInserted_;
     CARD_NUMBER_T inserted_card_n_;
     unsigned char evalTries;
 
@@ -20,7 +20,9 @@ private:
 
     void onVerificationSuccess() const;
     void onVerificationFail();
-    inline void reset() { inserted_card_n_ = 0; evalTries = 0; }
+    void blockCard();
+    void acceptCard();
+    inline void reset() { cardIsInserted_ = false, inserted_card_n_ = 0; evalTries = 0; }
 
 public:
     CardReader();
@@ -28,7 +30,7 @@ public:
 
     void evalPIN(PIN_T);
     void setInsertedCardN(CARD_NUMBER_T);
-    bool returnCard();
+    void returnCard();
 };
 
 #endif //MOOP_ATM_PROJECT_CARDREADER_H

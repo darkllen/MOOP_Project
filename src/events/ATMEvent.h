@@ -10,7 +10,10 @@
 
 struct ATMEvent {
     enum EventType {
-        ATMPowerStateEvent, NewDisplayStateEvent, CardReaderInputEvent, InvalidCardInsertedEvent
+        ATMPowerStateEvent,
+        NewDisplayStateEvent,
+        CardReaderInputEvent,
+        CardEvent
     };
     enum Target {
         ATM, ATMIO
@@ -31,20 +34,27 @@ struct ATMPowerStateEvent : public ATMEvent {
 };
 
 
-struct CardReaderInputEvent : public ATMEvent {
+struct CardReaderInputEventToATM : public ATMEvent {
     CARD_NUMBER_T value;
-    explicit CardReaderInputEvent(CARD_NUMBER_T n) : ATMEvent(EventType::CardReaderInputEvent, Target::ATM), value(n) {}
+    explicit CardReaderInputEventToATM(CARD_NUMBER_T n) : ATMEvent(EventType::CardReaderInputEvent, Target::ATM), value(n) {}
 };
 
 
-struct NewDisplayStateEvent : public ATMEvent {
+struct NewDisplayStateEventToATMIO : public ATMEvent {
     Views value;
-    explicit NewDisplayStateEvent(Views s) : ATMEvent(EventType::NewDisplayStateEvent, Target::ATMIO), value(s) {}
+    explicit NewDisplayStateEventToATMIO(Views s) : ATMEvent(EventType::NewDisplayStateEvent, Target::ATMIO), value(s) {}
 };
 
-struct InvalidCardInsertedEvent : public ATMEvent {
-    explicit InvalidCardInsertedEvent() : ATMEvent(EventType::InvalidCardInsertedEvent, Target::ATMIO) {}
-};
 
+struct CardEventToATMIO: public ATMEvent {
+    enum Type {
+        CardAccepted,
+        InvalidCardInsertedEvent,
+        CardBlockedEvent,
+        CardReturnEvent
+    };
+    Type value;
+    explicit CardEventToATMIO(Type eventType) : ATMEvent(EventType::CardEvent, Target::ATMIO), value(eventType) {}
+};
 
 #endif //MOOP_ATM_PROJECT_ATMEVENT_H

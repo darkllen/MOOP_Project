@@ -6,6 +6,7 @@
 #define MOOP_ATM_PROJECT_HARDWARE_H
 
 #include "../../constants/ATMTypes.h"
+#include "../../mediators/ATMIO.h"
 
 class Hardware: public ATMBaseComponent {
 protected:
@@ -15,7 +16,7 @@ public:
     virtual ~Hardware() = default;
 
     bool getState() const { return isOperational; }
-    bool setState(bool isOp) { return isOperational = isOp; }
+    void setState(bool isOp) { isOperational = isOp; }
 };
 
 

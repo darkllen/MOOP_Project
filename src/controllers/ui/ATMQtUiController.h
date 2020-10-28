@@ -35,8 +35,9 @@ public:
     void printReceiptOutput() override;
     void dispenserOutput() override;
     void cardReaderOutput() override;
-    void displayOutput(const NewDisplayStateEvent&) override;
-    void ATMPowerChange(const ATMPowerStateEvent&) override;
+    void displayOutput(Views) override;
+    void ATMPowerChange(ATMPowerStateEvent::PowerState) override;
+    void cardAnswerFromATM(CardEventToATMIO::Type) override;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

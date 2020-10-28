@@ -7,9 +7,7 @@
 #include "../../ui/ATMDisplay.h"
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
-        ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())) {
-    display_->turnOn();
-}
+        ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())) {}
 
 ATMQtUiController::~ATMQtUiController() {
     delete atmForm_;
@@ -53,7 +51,7 @@ void ATMQtUiController::dispenserInput() {
 
 void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
     if (display_->getCurrentScreen() == WelcomeScreen) {
-        mediator_->Notify(CardReaderInputEvent(n));
+        mediator_->Notify(CardReaderInputEventToATM(n));
 //    TODO: Requires implementation
     }
 }
@@ -70,17 +68,34 @@ void ATMQtUiController::cardReaderOutput() {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::displayOutput(const NewDisplayStateEvent &) {
+void ATMQtUiController::displayOutput(Views view) {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::ATMPowerChange(const ATMPowerStateEvent &powerState) {
-    switch (powerState.value) {
+void ATMQtUiController::ATMPowerChange(ATMPowerStateEvent::PowerState state) {
+    switch (state) {
         case (ATMPowerStateEvent::PowerState::On):
             display_->turnOn();
             break;
         case (ATMPowerStateEvent::PowerState::Off):
             display_->turnOff();
+            break;
+    }
+}
+
+void ATMQtUiController::cardAnswerFromATM(CardEventToATMIO::Type eventType) {
+    switch (eventType) {
+        case CardEventToATMIO::Type::CardAccepted:
+            //TODO: requires implementation
+            break;
+        case CardEventToATMIO::Type::CardReturnEvent:
+            //TODO: requires implementation
+            break;
+        case CardEventToATMIO::Type::CardBlockedEvent:
+            //TODO: requires implementation
+            break;
+        case CardEventToATMIO::Type::InvalidCardInsertedEvent:
+            //TODO: requires implementation
             break;
     }
 }

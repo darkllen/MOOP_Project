@@ -31,9 +31,7 @@ public:
     explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash);
     ~ATM();
 
-    void powerOn();
-    void powerOff();
-
+    void powerStateChange(ATMPowerStateEvent::PowerState value);
     const ATMInfo& getATMInfo() const;
 
     CardReader& getCardReader();

@@ -27,23 +27,12 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
     switch (event.type) {
         case ATMEvent::ATMPowerStateEvent: {
             auto e = dynamic_cast<const ATMPowerStateEvent &>(event);
-            switch (e.value) {
-                case ATMPowerStateEvent::PowerState::On:
-                    atm_->powerOn();
-                    break;
-                case ATMPowerStateEvent::PowerState::Off:
-                    atm_->powerOff();
-                    break;
-            }
+            atm_->powerStateChange(e.value);
         }
-        break;
+            break;
         case ATMEvent::CardReaderInputEvent: {
-            auto e = dynamic_cast<const CardReaderInputEvent &>(event);
-            try {
-                atm_->getCardReader().setInsertedCardN(e.value);
-            } catch (const DBException& e) {
-                Notify(InvalidCardInsertedEvent());
-            }
+            auto e = dynamic_cast<const CardReaderInputEventToATM &>(event);
+            atm_->getCardReader().setInsertedCardN(e.value);
         }
             break;
         default:
@@ -54,7 +43,10 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
 void ATMIO::handleNotifyTargetATMIO(const ATMEvent &event) const {
     switch (event.type) {
         case ATMEvent::EventType::ATMPowerStateEvent:
-            controller_->ATMPowerChange(dynamic_cast<const ATMPowerStateEvent &>(event));
+            controller_->ATMPowerChange(dynamic_cast<const ATMPowerStateEvent &>(event).value);
+            break;
+        case ATMEvent::EventType::CardEvent:
+            controller_->cardAnswerFromATM(dynamic_cast<const CardEventToATMIO &>(event).value);
             break;
         default:
             throw ATMException("Invalid event target!");

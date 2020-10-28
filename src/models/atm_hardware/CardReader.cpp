@@ -8,7 +8,10 @@
 #include "../DebitCard.h"
 #include "../../exceptions/ATMException.h"
 
-CardReader::CardReader() : Hardware(), inserted_card_n_(0), evalTries(0), verificationService_(new PinVerificationService) {}
+
+CardReader::CardReader()
+        : Hardware(), cardIsInserted_(false), inserted_card_n_(0), evalTries(0),
+          verificationService_(new PinVerificationService) {}
 
 CardReader::~CardReader() {
     delete verificationService_;
@@ -22,13 +25,17 @@ void CardReader::evalPIN(const PIN_T pin) {
 
 void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
     inserted_card_n_ = n;
-    //check if card is blocked
-    //TODO catch  BDexception
-
+    try {
         DebitCard debitCard = Bank::getCard(inserted_card_n_);
-        if (debitCard.getIsBlocked())
-            //TODO: write that card is blocked
-            returnCard();
+        if (debitCard.getIsBlocked()) {
+            blockCard();
+        } else {
+            acceptCard();
+        }
+    } catch (const DBException &e) {
+        mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::InvalidCardInsertedEvent));
+        //TODO: requires proper implementation
+    }
 }
 
 void CardReader::onVerificationSuccess() const {
@@ -37,19 +44,30 @@ void CardReader::onVerificationSuccess() const {
 
 void CardReader::onVerificationFail() {
     ++evalTries;
-    if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS){
-        // don't return the card
-        //TODO: Requires implementation
-        //TODO catch  BDexception
-        DebitCard debitCard = Bank::getCard(inserted_card_n_);
-        debitCard.setIsBlocked(true);
-        reset();
+    if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {
+        blockCard();
     }
-    //TODO: Requires implementation
 }
 
-bool CardReader::returnCard() {
-    bool res = inserted_card_n_ != 0;
-    if (res) reset();
-    return res;
+void CardReader::returnCard() {
+    if (cardIsInserted_) {
+        mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardReturnEvent));
+        reset();
+    }
+}
+
+void CardReader::blockCard() {
+    try {
+        DebitCard debitCard = Bank::getCard(inserted_card_n_);
+        debitCard.setIsBlocked(true);
+    } catch (const DBException &e) {
+        //TODO: requires proper implementation
+    }
+    mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardBlockedEvent));
+    reset();
+}
+
+void CardReader::acceptCard() {
+    cardIsInserted_ = true;
+    mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardAccepted));
 }

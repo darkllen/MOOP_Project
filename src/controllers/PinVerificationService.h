@@ -9,7 +9,7 @@ public :
     PinVerificationService() = default;
     ~PinVerificationService() = default;
 
-    static bool verify(CARD_NUMBER_T, PIN_T);
+    bool verify(CARD_NUMBER_T, PIN_T);
 };
 
 #endif //MOOP_ATM_PROJECT_PINVERIFICATIONSERVICE_H

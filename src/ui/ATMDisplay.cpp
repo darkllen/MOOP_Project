@@ -9,15 +9,15 @@ ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) : webEngineView_(&webEngin
 
 void ATMDisplay::turnOn() {
     isOn_ = true;
-    navigateTo(NewDisplayStateEvent(Views::WelcomeScreen));
+    navigateTo(NewDisplayStateEventToATMIO(Views::WelcomeScreen));
 }
 
 void ATMDisplay::turnOff() {
-    navigateTo(NewDisplayStateEvent(Views::PoweredOffScreen));
+    navigateTo(NewDisplayStateEventToATMIO(Views::PoweredOffScreen));
     isOn_ = false;
 }
 
-void ATMDisplay::navigateTo(const NewDisplayStateEvent &e) {
+void ATMDisplay::navigateTo(const NewDisplayStateEventToATMIO &e) {
     if (!isOn_){
         throw "Attempt to use the screen in OFF state";
         //TODO: requires implementation

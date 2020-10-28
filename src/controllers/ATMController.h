@@ -8,7 +8,6 @@
 #include "../mediators/ATMIO.h"
 #include "../events/UIInput.h"
 #include "../events/ATMEvent.h"
-
 #include "../constants/ATMTypes.h"
 
 class ATMController: public ATMBaseComponent {
@@ -26,8 +25,9 @@ public:
     virtual void printReceiptOutput() = 0;
     virtual void dispenserOutput() = 0;
     virtual void cardReaderOutput() = 0;
-    virtual void displayOutput(const NewDisplayStateEvent&) = 0;
-    virtual void ATMPowerChange(const ATMPowerStateEvent&) = 0;
+    virtual void displayOutput(Views) = 0;
+    virtual void ATMPowerChange(ATMPowerStateEvent::PowerState) = 0;
+    virtual void cardAnswerFromATM(CardEventToATMIO::Type) = 0;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMCONTROLLER_H
