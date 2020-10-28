@@ -17,15 +17,21 @@ ATMQtUiController::~ATMQtUiController() {
 }
 
 void ATMQtUiController::dialPadInput(const UIInput::DialPadBtnInput e) {
-    //TODO: Requires implementation
+    if (display_->getCurrentScreen() == PINEnteringScreen) {
+        //TODO: Requires implementation
+    }
 }
 
 void ATMQtUiController::dialPadControlInput(const UIInput::ControlBtnInput e) {
-    //TODO: Requires implementation
+    if (display_->getCurrentScreen() == PINEnteringScreen) {
+        //TODO: Requires implementation
+    }
 }
 
 void ATMQtUiController::sideDisplayBtnInput(const UIInput::DisplaySideBtnInput e) {
-    //TODO: Requires implementation
+    if (display_->getCurrentScreen() == MainMenuScreen) {
+        //TODO: Requires implementation
+    }
 }
 
 void ATMQtUiController::ATMPowerChange(UIInput::ATMPowerState powerState) {
@@ -40,11 +46,16 @@ void ATMQtUiController::ATMPowerChange(UIInput::ATMPowerState powerState) {
 }
 
 void ATMQtUiController::dispenserInput() {
+//    if (display_->getCurrentScreen() == PINEnteringScreen) {
     //TODO: Requires implementation
+//    }
 }
 
 void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
-    mediator_->Notify(*this, CardReaderInputEvent(n));
+    if (display_->getCurrentScreen() == WelcomeScreen) {
+        mediator_->Notify(*this, CardReaderInputEvent(n));
+//    TODO: Requires implementation
+    }
 }
 
 void ATMQtUiController::printReceiptOutput() {
@@ -63,7 +74,7 @@ void ATMQtUiController::displayOutput(const NewDisplayStateEvent &) {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::ATMPowerChange(const ATMPowerStateEvent & powerState) {
+void ATMQtUiController::ATMPowerChange(const ATMPowerStateEvent &powerState) {
     switch (powerState.value) {
         case (ATMPowerStateEvent::PowerState::On):
             display_->turnOn();
