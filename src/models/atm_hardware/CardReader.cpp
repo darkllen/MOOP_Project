@@ -19,8 +19,13 @@ CardReader::~CardReader() {
 }
 
 void CardReader::evalPIN(const PIN_T pin) {
-    bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
-    verificationResult ? onVerificationSuccess() : onVerificationFail();
+    try {
+        bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
+        verificationResult ? onVerificationSuccess() : onVerificationFail();
+    }
+    catch (const DBException e) {
+        //Todo: wrong card
+    }
 }
 
 void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {

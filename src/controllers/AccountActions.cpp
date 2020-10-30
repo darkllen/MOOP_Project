@@ -12,39 +12,44 @@
 #include "../models/transactions/AccountManaging.h"
 #include "../models/Bank.h"
 #include "../exceptions/ATMException.h"
-
+#include "../constants/ATMTypes.h"
 
 void AccountActions::makeTransaction(const Account & acc, const Transaction & tr) {
-    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-    mysqlx::Session session(url);
-    mysqlx::Schema db = session.getSchema("moop");
-    mysqlx::Table myTable = db.getTable("Transactions");
-    mysqlx::Table tableAcc = db.getTable("Account");
-     if (const OneTimeTransfer* t = dynamic_cast<const OneTimeTransfer*>(&tr)){
+    try {
+        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
+        mysqlx::Session session(url);
+        mysqlx::Schema db = session.getSchema("moop");
+        mysqlx::Table myTable = db.getTable("Transactions");
+        mysqlx::Table tableAcc = db.getTable("Account");
+        if (const OneTimeTransfer* t = dynamic_cast<const OneTimeTransfer*>(&tr)){
             tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
             tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
             myTable.insert("time_", "from_", "to_", "amount_")
-            .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount()).execute();
-     } else if (const RegularTransfer* t = dynamic_cast<const RegularTransfer*>(&tr)){
-         tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-         tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
-         myTable.insert("time_", "from_", "to_", "amount_", "regularity_")
-                 .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount(), t->getRegularity()).execute();
-     }else if (const AccountManaging* t = dynamic_cast<const AccountManaging*>(&tr)){
-        //TODO add this Transaction
-     } else if (const CashTransaction* t = dynamic_cast<const CashTransaction*>(&tr)){
-         if (t->getIsWithdrawal()){
-             tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-         } else{
-             tableAcc.update().set("money_", acc.getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-         }
+                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount()).execute();
+        } else if (const RegularTransfer* t = dynamic_cast<const RegularTransfer*>(&tr)){
+            tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
+            tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
+            myTable.insert("time_", "from_", "to_", "amount_", "regularity_")
+                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount(), t->getRegularity()).execute();
+        }else if (const AccountManaging* t = dynamic_cast<const AccountManaging*>(&tr)){
+            //TODO add this Transaction
+        } else if (const CashTransaction* t = dynamic_cast<const CashTransaction*>(&tr)){
+            if (t->getIsWithdrawal()){
+                tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
+            } else{
+                tableAcc.update().set("money_", acc.getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
+            }
 
-         myTable.insert("time_", "from_", "amount_", "isWithdrawal_")
-                 .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getAmount(), t->getIsWithdrawal()).execute();
-     }
+            myTable.insert("time_", "from_", "amount_", "isWithdrawal_")
+                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getAmount(), t->getIsWithdrawal()).execute();
+        }
+    } catch (std::exception& e) {
+        throw DBException(e.what());
+    }
 }
 
 QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
+    CARD_NUMBER_T card_n;
     QList<Transaction*> transactions;
     try {
         const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
@@ -88,7 +93,7 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
                 int valueChanged_(row[7].get<int>());
                 unsigned __int64 oldValue_(row[8].get<int>());
                 unsigned __int64 newValue_(row[9].get<int>());
-                transactions.append(new AccountManaging(QDateTime(time_), *from_, AccountManaging::ValueChanged(valueChanged_), oldValue_, newValue_));
+                transactions.append(new AccountManaging(QDateTime(time_), *from_, card_n, AccountManaging::ValueChanged(valueChanged_), oldValue_, newValue_));
                 continue;
             }
             std::stringstream IBAN2;

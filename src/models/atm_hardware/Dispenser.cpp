@@ -10,14 +10,12 @@
 Dispenser::Dispenser(CASH_AMOUNT_T amount): Hardware(), availableCash_(amount) {
     if (amount >= ATMLimits::MAX_CASH_AMOUNT_IN_DISPENSER) {
         throw HardwareException("More cash then dispenser can handle");
-        //TODO: Show that in ui
     }
 }
 
 void Dispenser::cashIn(CASH_AMOUNT_T amount) {
     if (availableCash_ + amount >= ATMLimits::MAX_CASH_AMOUNT_IN_DISPENSER) {
         throw HardwareException("More cash then dispenser can handle");
-        //TODO: Show that in ui
     }
     availableCash_ += amount;
 }
@@ -25,7 +23,6 @@ void Dispenser::cashIn(CASH_AMOUNT_T amount) {
 void Dispenser::cashOut(CASH_AMOUNT_T amount) {
     if (availableCash_ - amount < 0){
         throw HardwareException("Not enough cash left in dispenser");
-        //TODO: Show that in ui
     }
     availableCash_ -= amount;
 }
