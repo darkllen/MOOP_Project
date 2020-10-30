@@ -10,7 +10,7 @@ void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     try {
         dispenser.cashIn(amount);
     } catch (const HardwareException &e) {
-        //TODO: Requires implementation
+        //TODO: Trigger ui
     }
 }
 
@@ -18,7 +18,7 @@ void Maintenance::takeCash(Dispenser & dispenser, CASH_AMOUNT_T amount) {
     try {
         dispenser.cashOut(amount);
     } catch (const HardwareException &e) {
-        //TODO: Requires implementation
+        //TODO: Trigger ui
     }
 }
 

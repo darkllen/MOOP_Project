@@ -19,8 +19,13 @@ CardReader::~CardReader() {
 }
 
 void CardReader::evalPIN(const PIN_T pin) {
-    bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
-    verificationResult ? onVerificationSuccess() : onVerificationFail();
+    try {
+        bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
+        verificationResult ? onVerificationSuccess() : onVerificationFail();
+    }
+    catch (const DBException& e) {
+        //Todo: wrong card
+    }
 }
 
 void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
@@ -33,6 +38,7 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
             acceptCard();
         }
     } catch (const DBException &e) {
+        reset();
         mediator_->Notify(*atm_, EventToATMController::CardEvalResultEvent
                 (EventToATMController::CardEvalResultEvent::Result::CardIsInvalid)
         );        //TODO: requires proper implementation

@@ -6,27 +6,30 @@
 #define MOOP_ATM_PROJECT_ACCOUNTMANAGING_H
 
 #include <QtCore/qdatetime.h>
-
 #include "Transaction.h"
+#include "../../constants/ATMTypes.h"
 
 class AccountManaging : public Transaction {
-private:
 
-    //TODO: decide proper type handling
-
-    //TODO add field with ValueChanged type and field with DebitCard number
-    unsigned __int64 oldValue_;
-    unsigned __int64 newValue_;
 
 public:
+
     enum ValueChanged {
         PIN,
     };
 
-    AccountManaging(const QDateTime &dateTime,const Account& from, ValueChanged v, unsigned __int64& oldV, unsigned __int64& newV) :
-            Transaction(dateTime,from), oldValue_(oldV), newValue_(newV) {}
+    AccountManaging(const QDateTime &dateTime,const Account& from, const CARD_NUMBER_T & card_n, ValueChanged v, unsigned __int64& oldV, unsigned __int64& newV) :
+            Transaction(dateTime,from), card_n_(card_n), v_(v), oldValue_(oldV), newValue_(newV) {}
 
     ~AccountManaging() = default;
+
+private:
+
+    //TODO: decide proper type handling
+    unsigned __int64 oldValue_;
+    unsigned __int64 newValue_;
+    ValueChanged v_;
+    CARD_NUMBER_T card_n_;
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNTMANAGING_H
