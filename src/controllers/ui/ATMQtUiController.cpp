@@ -5,6 +5,7 @@
 #include "ATMQtUiController.h"
 #include "../../ui/ATMForm.h"
 #include "../../ui/ATMDisplay.h"
+#include "../../events/DisplayEvent.h"
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
         ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())) {}
@@ -84,18 +85,5 @@ void ATMQtUiController::ATMPowerChange(ATMPowerStateEvent::PowerState state) {
 }
 
 void ATMQtUiController::cardAnswerFromATM(CardEventToATMIO::Type eventType) {
-    switch (eventType) {
-        case CardEventToATMIO::Type::CardAccepted:
-            //TODO: requires implementation
-            break;
-        case CardEventToATMIO::Type::CardReturnEvent:
-            //TODO: requires implementation
-            break;
-        case CardEventToATMIO::Type::CardBlockedEvent:
-            //TODO: requires implementation
-            break;
-        case CardEventToATMIO::Type::InvalidCardInsertedEvent:
-            //TODO: requires implementation
-            break;
-    }
+    display_->navigateTo(CardEventDisplayState(eventType));
 }

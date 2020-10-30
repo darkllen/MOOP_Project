@@ -2,10 +2,13 @@
 // Created by Lemonderon on 25.10.2020.
 //
 
-#include "ATMDisplay.h"
 #include <QtWebEngineWidgets/QWebEngineView>
+#include <QtConcurrent/QtConcurrentRun>
 
-ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) : webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
+#include "ATMDisplay.h"
+
+ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) : webEngineView_(&webEngineView), currentScreen_(WelcomeScreen),
+                                                        isOn_(false) {}
 
 void ATMDisplay::turnOn() {
     isOn_ = true;
@@ -17,12 +20,12 @@ void ATMDisplay::turnOff() {
     isOn_ = false;
 }
 
-void ATMDisplay::navigateTo(const NewDisplayStateEventToATMIO &e) {
-    if (!isOn_){
+void ATMDisplay::navigateTo(const NewDisplayStateEventToATMIO &event) {
+    if (!isOn_) {
         throw "Attempt to use the screen in OFF state";
         //TODO: requires implementation
     }
-    switch (e.value) {
+    switch (event.value) {
         case WelcomeScreen:
             webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
             break;
@@ -35,10 +38,43 @@ void ATMDisplay::navigateTo(const NewDisplayStateEventToATMIO &e) {
         case PoweredOffScreen:
             webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
             break;
+        case CardEventScreen:
+            auto e = dynamic_cast<const CardEventDisplayState &>(event);
+            QtConcurrent::run(showCardEventOnDisplay, *this, e.type);
+            break;
     }
-    currentScreen_ = e.value;
+    currentScreen_ = event.value;
 }
 
-Views ATMDisplay::getCurrentScreen() {
+Views ATMDisplay::getCurrentScreen() const{
     return currentScreen_;
+}
+
+void ATMDisplay::showCardEventAsync(CardEventToATMIO::Type type) {
+    switch (type) {
+        case CardEventToATMIO::CardAccepted:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardAccepted/index.html"));
+            QThread::sleep(2);
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
+            break;
+        case CardEventToATMIO::InvalidCardInsertedEvent:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInsertedEvent/index.html"));
+            QThread::sleep(2);
+            webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
+            break;
+        case CardEventToATMIO::CardBlockedEvent:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardBlockedEvent/index.html"));
+            QThread::sleep(5);
+            webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
+            break;
+        case CardEventToATMIO::CardReturnEvent:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardReturnEvent/index.html"));
+            QThread::sleep(2);
+            webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
+            break;
+    }
+}
+
+void showCardEventOnDisplay(ATMDisplay &d, CardEventToATMIO::Type type) {
+    d.showCardEventAsync(type);
 }
