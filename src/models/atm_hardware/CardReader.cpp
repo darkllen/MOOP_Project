@@ -33,8 +33,8 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
             acceptCard();
         }
     } catch (const DBException &e) {
+        reset();
         mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::InvalidCardInsertedEvent));
-        //TODO: requires proper implementation
     }
 }
 
@@ -61,7 +61,7 @@ void CardReader::blockCard() {
         DebitCard debitCard = Bank::getCard(inserted_card_n_);
         debitCard.setIsBlocked(true);
     } catch (const DBException &e) {
-        //TODO: requires proper implementation
+        throw e;
     }
     mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardBlockedEvent));
     reset();
