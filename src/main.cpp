@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     ATMInfo atmInfo(0, "", "");
     ATM atm(atmInfo, 0);
     ATMIO *io = new ATMIO(atm, *controller);
-    atm.powerStateChange(ATMPowerStateEvent::On);
+    atm.powerStateChange(ATMPowerState::On);
 
 
     mw.show();

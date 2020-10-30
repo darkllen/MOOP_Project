@@ -10,7 +10,7 @@
 class ATMBaseComponent;
 class ATMMediator {
 public:
-    virtual void Notify(const ATMEvent &event) const = 0;
+    virtual void Notify(const ATMBaseComponent& sender, const ATMEvent &event) const = 0;
 };
 
 class ATMBaseComponent {
@@ -32,11 +32,11 @@ private:
     ATMController *controller_;
 
     void handleNotifyTargetATM(const ATMEvent &event) const;
-    void handleNotifyTargetATMIO(const ATMEvent &event) const;
+    void handleNotifyTargetATMController(const ATMEvent &event) const;
 
 public:
     ATMIO(ATM &atm, ATMController &controller);
-    void Notify(const ATMEvent &event) const override;
+    void Notify(const ATMBaseComponent& sender, const ATMEvent &event) const override;
 };
 
 

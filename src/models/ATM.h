@@ -13,7 +13,7 @@
 #include "ATMInfo.h"
 #include "SessionManager.h"
 
-class ATM : public ATMBaseComponent {
+class ATM: public ATMBaseComponent {
 private:
 
     bool isPoweredOn_;
@@ -31,7 +31,7 @@ public:
     explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash);
     ~ATM();
 
-    void powerStateChange(ATMPowerStateEvent::PowerState value);
+    void powerStateChange(ATMPowerState state);
     const ATMInfo& getATMInfo() const;
 
     CardReader& getCardReader();

@@ -15,39 +15,54 @@ ATMIO::ATMIO(ATM &atm, ATMController &controller) : atm_(&atm), controller_(&con
     this->controller_->setMediator(this);
 }
 
-void ATMIO::Notify(const ATMEvent &event) const {
-    if (event.target == ATMEvent::Target::ATM) {
+void ATMIO::Notify(const ATMBaseComponent &sender, const ATMEvent &event) const {
+    if (&sender == atm_) {
+        handleNotifyTargetATMController(event);
+    } else {
         handleNotifyTargetATM(event);
-    } else if (event.target == ATMEvent::Target::ATMIO) {
-        handleNotifyTargetATMIO(event);
     }
 }
 
 void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
     switch (event.type) {
         case ATMEvent::ATMPowerStateEvent: {
-            auto e = dynamic_cast<const ATMPowerStateEvent &>(event);
+            auto e = dynamic_cast<const EventToATM::ATMPowerStateEvent &>(event);
             atm_->powerStateChange(e.value);
-        }
             break;
-        case ATMEvent::CardReaderInputEvent: {
-            auto e = dynamic_cast<const CardReaderInputEventToATM &>(event);
+        }
+        case ATMEvent::CardInsertedEvent: {
+            auto e = dynamic_cast<const EventToATM::CardInsertedEvent &>(event);
             atm_->getCardReader().setInsertedCardN(e.value);
-        }
             break;
+        }
+        case ATMEvent::CardTakenEvent: {
+            auto e = dynamic_cast<const EventToATM::CardTakenEvent &>(event);
+            atm_->getCardReader().returnCard();
+            break;
+        }
         default:
             throw ATMException("Invalid event target!");
     }
 }
 
-void ATMIO::handleNotifyTargetATMIO(const ATMEvent &event) const {
+void ATMIO::handleNotifyTargetATMController(const ATMEvent &event) const {
     switch (event.type) {
-        case ATMEvent::EventType::ATMPowerStateEvent:
-            controller_->ATMPowerChange(dynamic_cast<const ATMPowerStateEvent &>(event).value);
+        case ATMEvent::ATMPowerStateEvent: {
+            controller_->ATMPowerChangeFromATM(
+                    dynamic_cast<const EventToATMController::ATMPowerStateEvent &>(event).value
+            );
             break;
-        case ATMEvent::EventType::CardEvent:
-            controller_->cardAnswerFromATM(dynamic_cast<const CardEventToATMIO &>(event).value);
+        }
+        case ATMEvent::CardEvalResultEvent: {
+            controller_->showCardEvalResult(
+                    dynamic_cast<const EventToATMController::CardEvalResultEvent &>(event).value
+            );
             break;
+        }
+        case ATMEvent::NewViewEvent: {
+            controller_->navigateToNewView(dynamic_cast<const EventToATMController::NewViewEvent &>(event).value);
+            break;
+        }
         default:
             throw ATMException("Invalid event target!");
     }

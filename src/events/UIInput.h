@@ -5,19 +5,19 @@
 #ifndef ATM_UIINPUT_H
 #define ATM_UIINPUT_H
 
-namespace UIInput {
-    enum DialPadBtnInput {
+namespace UIButtonsInput {
+    enum DialPad {
         D000, D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, DDot
     };
-    enum DisplaySideBtnInput {
+    enum DisplaySideButton {
         L0, L1, L2, L3, R0, R1, R2, R3
     };
-    enum ControlBtnInput {
+    enum ControlPad {
         Cancel, Clear, Enter, Empty
-    };
-    enum ATMPowerState {
-        On, Off
     };
 }
 
+enum ATMPowerState {
+    On, Off
+};
 #endif //ATM_UIINPUT_H

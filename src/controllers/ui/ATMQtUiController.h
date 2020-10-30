@@ -24,20 +24,19 @@ public:
     ~ATMQtUiController() override;
 
     // UI calls:
-    void dialPadInput(UIInput::DialPadBtnInput) override;
-    void dialPadControlInput(UIInput::ControlBtnInput) override;
-    void sideDisplayBtnInput(UIInput::DisplaySideBtnInput) override;
+    void dialPadInput(UIButtonsInput::DialPad) override;
+    void dialPadControlInput(UIButtonsInput::ControlPad) override;
+    void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) override;
     void dispenserInput() override;
     void cardReaderInput(CARD_NUMBER_T) override;
-    void ATMPowerChange(UIInput::ATMPowerState) override;
+    void ATMPowerChangeFromUI(ATMPowerState) override;
 
     // ATM calls:
     void printReceiptOutput() override;
     void dispenserOutput() override;
-    void cardReaderOutput() override;
-    void displayOutput(Views) override;
-    void ATMPowerChange(ATMPowerStateEvent::PowerState) override;
-    void cardAnswerFromATM(CardEventToATMIO::Type) override;
+    void navigateToNewView(Views) override;
+    void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) override;
+    void ATMPowerChangeFromATM(ATMPowerState) override;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

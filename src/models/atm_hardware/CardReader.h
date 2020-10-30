@@ -16,6 +16,7 @@ private:
     CARD_NUMBER_T inserted_card_n_;
     unsigned char evalTries;
 
+    ATM *atm_;
     PinVerificationService * verificationService_;
 
     void onVerificationSuccess() const;
@@ -25,7 +26,8 @@ private:
     inline void reset() { cardIsInserted_ = false, inserted_card_n_ = 0; evalTries = 0; }
 
 public:
-    CardReader();
+    //TODO: remove atm binding
+    explicit CardReader(ATM& atm);
     ~CardReader() override;
 
     void evalPIN(PIN_T);

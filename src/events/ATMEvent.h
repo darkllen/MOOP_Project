@@ -7,49 +7,65 @@
 
 #include "../constants/Views.h"
 #include "../constants/ATMTypes.h"
+#include "UIInput.h"
 
 struct ATMEvent {
     enum EventType {
         ATMPowerStateEvent,
-        NewDisplayStateEvent,
-        CardReaderInputEvent,
-        CardEvent
-    };
-    enum Target {
-        ATM, ATMIO
+        CardEvalResultEvent,
+        CardInsertedEvent,
+        CardTakenEvent,
+        NewViewEvent,
+        PINSubmittedEvent
     };
     EventType type;
-    Target target;
-    explicit ATMEvent(EventType eventType, Target eventTarget) : type(eventType), target(eventTarget) {}
+    explicit ATMEvent(EventType eventType) : type(eventType) {}
     virtual ~ATMEvent() = default;
 };
 
-
-struct ATMPowerStateEvent : public ATMEvent {
-    enum PowerState {
-        On, Off
+namespace EventToATM {
+    struct ATMPowerStateEvent: public ATMEvent {
+        ATMPowerState value;
+        explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
     };
-    PowerState value;
-    explicit ATMPowerStateEvent(PowerState e, Target t) : ATMEvent(EventType::ATMPowerStateEvent, t), value(e) {}
-};
 
-
-struct CardReaderInputEventToATM : public ATMEvent {
-    CARD_NUMBER_T value;
-    explicit CardReaderInputEventToATM(CARD_NUMBER_T n) :
-            ATMEvent(EventType::CardReaderInputEvent, Target::ATM), value(n) {}
-};
-
-
-struct CardEventToATMIO : public ATMEvent {
-    enum Type {
-        CardAccepted,
-        InvalidCardInsertedEvent,
-        CardBlockedEvent,
-        CardReturnEvent
+    struct PINSubmittedEvent : public ATMEvent {
+        PIN_T value;
+        explicit PINSubmittedEvent(PIN_T n) : ATMEvent(EventType::PINSubmittedEvent), value(n) {}
     };
-    Type value;
-    explicit CardEventToATMIO(Type eventType) : ATMEvent(EventType::CardEvent, Target::ATMIO), value(eventType) {}
+
+    struct CardInsertedEvent : public ATMEvent {
+        CARD_NUMBER_T value;
+        explicit CardInsertedEvent(CARD_NUMBER_T n) : ATMEvent(EventType::CardInsertedEvent), value(n) {}
+    };
+
+    struct CardTakenEvent : public ATMEvent {
+        explicit CardTakenEvent() : ATMEvent(EventType::CardTakenEvent) {}
+    };
 };
+
+namespace EventToATMController {
+    struct ATMPowerStateEvent: public ATMEvent {
+        ATMPowerState value;
+        explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
+    };
+
+    struct CardEvalResultEvent : public ATMEvent {
+        enum Result {
+            CardIsAccepted,
+            CardIsInvalid,
+            CardIsBlocked
+        };
+        Result value;
+        explicit CardEvalResultEvent(Result eventType) :
+                ATMEvent(EventType::CardEvalResultEvent),
+                value(eventType) {}
+    };
+
+    struct NewViewEvent : public ATMEvent {
+        Views value;
+        explicit NewViewEvent(Views s) : ATMEvent(EventType::NewViewEvent), value(s) {}
+    };
+}
 
 #endif //MOOP_ATM_PROJECT_ATMEVENT_H

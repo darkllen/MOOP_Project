@@ -5,7 +5,7 @@
 #include "ATMQtUiController.h"
 #include "../../ui/ATMForm.h"
 #include "../../ui/ATMDisplay.h"
-#include "../../events/DisplayEvent.h"
+
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
         ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())) {}
@@ -15,33 +15,26 @@ ATMQtUiController::~ATMQtUiController() {
     atmForm_ = nullptr;
 }
 
-void ATMQtUiController::dialPadInput(const UIInput::DialPadBtnInput e) {
+void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
     if (display_->getCurrentScreen() == PINEnteringScreen) {
         //TODO: Requires implementation
     }
 }
 
-void ATMQtUiController::dialPadControlInput(const UIInput::ControlBtnInput e) {
+void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) {
     if (display_->getCurrentScreen() == PINEnteringScreen) {
         //TODO: Requires implementation
     }
 }
 
-void ATMQtUiController::sideDisplayBtnInput(const UIInput::DisplaySideBtnInput e) {
+void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
     if (display_->getCurrentScreen() == MainMenuScreen) {
         //TODO: Requires implementation
     }
 }
 
-void ATMQtUiController::ATMPowerChange(UIInput::ATMPowerState powerState) {
-    switch (powerState) {
-        case (UIInput::ATMPowerState::On):
-            mediator_->Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATM));
-            break;
-        case (UIInput::ATMPowerState::Off):
-            mediator_->Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATM));
-            break;
-    }
+void ATMQtUiController::ATMPowerChangeFromUI(ATMPowerState powerState) {
+    mediator_->Notify(*this, EventToATM::ATMPowerStateEvent(powerState));
 }
 
 void ATMQtUiController::dispenserInput() {
@@ -52,8 +45,7 @@ void ATMQtUiController::dispenserInput() {
 
 void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
     if (display_->getCurrentScreen() == WelcomeScreen) {
-        mediator_->Notify(CardReaderInputEventToATM(n));
-//    TODO: Requires implementation
+        mediator_->Notify(*this, EventToATM::CardInsertedEvent(n));
     }
 }
 
@@ -65,25 +57,34 @@ void ATMQtUiController::dispenserOutput() {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::cardReaderOutput() {
-    //TODO: Requires implementation
+void ATMQtUiController::navigateToNewView(Views view) {
+    display_->navigateTo(view);
 }
 
-void ATMQtUiController::displayOutput(Views view) {
-    //TODO: Requires implementation
-}
-
-void ATMQtUiController::ATMPowerChange(ATMPowerStateEvent::PowerState state) {
-    switch (state) {
-        case (ATMPowerStateEvent::PowerState::On):
-            display_->turnOn();
+void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultEvent::Result result) {
+    switch (result) {
+        case EventToATMController::CardEvalResultEvent::CardIsAccepted: {
+            display_->navigateTo(Views::MainMenuScreen);
             break;
-        case (ATMPowerStateEvent::PowerState::Off):
-            display_->turnOff();
+        }
+        case EventToATMController::CardEvalResultEvent::CardIsInvalid: {
+            display_->navigateTo(Views::CardIsInvalidScreen);
             break;
+        }
+        case EventToATMController::CardEvalResultEvent::CardIsBlocked: {
+            display_->navigateTo(Views::CardIsBlockedScreen);
+            break;
+        }
     }
 }
 
-void ATMQtUiController::cardAnswerFromATM(CardEventToATMIO::Type eventType) {
-    display_->navigateTo(CardEventDisplayState(eventType));
+void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
+    switch (state) {
+        case On:
+            display_->turnOn();
+            break;
+        case Off:
+            display_->turnOff();
+            break;
+    }
 }

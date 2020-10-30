@@ -5,7 +5,8 @@
 #ifndef ATM_ATMDISPLAY_H
 #define ATM_ATMDISPLAY_H
 
-#include "../events/DisplayEvent.h"
+#include "../constants/Views.h"
+
 
 class QWebEngineView;
 
@@ -21,13 +22,12 @@ public:
 
     void turnOn();
     void turnOff();
+    void reset();
 
-    void navigateTo(const NewDisplayStateEventToATMIO&);
-    void showCardEventAsync(CardEventToATMIO::Type type);
+    void navigateTo(Views view);
 
     Views getCurrentScreen() const;
 };
 
-extern void showCardEventOnDisplay(ATMDisplay& d, CardEventToATMIO::Type t);
 
 #endif //ATM_ATMDISPLAY_H

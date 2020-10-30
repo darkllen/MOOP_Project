@@ -15,19 +15,18 @@ public:
     explicit ATMController(): ATMBaseComponent() {}
     virtual ~ATMController() {};
 
-    virtual void dialPadInput(UIInput::DialPadBtnInput) = 0;
-    virtual void dialPadControlInput(UIInput::ControlBtnInput) = 0;
-    virtual void sideDisplayBtnInput(UIInput::DisplaySideBtnInput) = 0;
+    virtual void dialPadInput(UIButtonsInput::DialPad) = 0;
+    virtual void dialPadControlInput(UIButtonsInput::ControlPad) = 0;
+    virtual void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) = 0;
     virtual void dispenserInput() = 0;
     virtual void cardReaderInput(CARD_NUMBER_T) = 0;
-    virtual void ATMPowerChange(UIInput::ATMPowerState) = 0;
+    virtual void ATMPowerChangeFromUI(ATMPowerState) = 0;
 
     virtual void printReceiptOutput() = 0;
     virtual void dispenserOutput() = 0;
-    virtual void cardReaderOutput() = 0;
-    virtual void displayOutput(Views) = 0;
-    virtual void ATMPowerChange(ATMPowerStateEvent::PowerState) = 0;
-    virtual void cardAnswerFromATM(CardEventToATMIO::Type) = 0;
+    virtual void navigateToNewView(Views) = 0;
+    virtual void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) = 0;
+    virtual void ATMPowerChangeFromATM(ATMPowerState) = 0;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMCONTROLLER_H

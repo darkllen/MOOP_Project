@@ -10,7 +10,7 @@ ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         isPoweredOn_(false),
         atmInfo_(&atmInfo),
         dispenser_(new Dispenser(initialCash)),
-        cardReader_(new CardReader),
+        cardReader_(new CardReader(*this)),
         tsManager_(new TransactionManager),
         sessionManager_(new SessionManager) {
 }
@@ -39,22 +39,18 @@ void ATM::setMediator(ATMMediator *mediator) {
     this->cardReader_->setMediator(mediator);
 }
 
-void ATM::powerStateChange(ATMPowerStateEvent::PowerState value) {
-    switch (value) {
-        case ATMPowerStateEvent::On:
-            if (!isPoweredOn_) {
-                this->mediator_->
-                        Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::On, ATMEvent::Target::ATMIO));
-                isPoweredOn_ = true;
-            }
+void ATM::powerStateChange(ATMPowerState state) {
+    switch (state) {
+        case On: {
+            isPoweredOn_ = true;
+            mediator_->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::On));
             break;
-        case ATMPowerStateEvent::Off:
-            if (isPoweredOn_) {
-                this->mediator_->
-                        Notify(ATMPowerStateEvent(ATMPowerStateEvent::PowerState::Off, ATMEvent::Target::ATMIO));
-                isPoweredOn_ = false;
-            }
+        }
+        case Off: {
+            isPoweredOn_ = false;
+            mediator_->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::Off));
             break;
+        }
     }
 }
 

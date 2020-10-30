@@ -62,7 +62,7 @@ set(SOURCE_FILES
         src/helpers/InputValidation.cpp
         src/ui/ATMDisplay.cpp
         src/ui/ATMDisplay.h
-        src/events/UIInput.h src/constants/Views.h src/events/DisplayEvent.h)
+        src/events/UIInput.h src/constants/Views.h)
 
 # changing output folder for .exe and .dll
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)

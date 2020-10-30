@@ -9,8 +9,8 @@
 #include "../../exceptions/ATMException.h"
 
 
-CardReader::CardReader()
-        : Hardware(), cardIsInserted_(false), inserted_card_n_(0), evalTries(0),
+CardReader::CardReader(ATM &atm)
+        : Hardware(), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm),
           verificationService_(new PinVerificationService) {}
 
 CardReader::~CardReader() {
@@ -33,8 +33,9 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
             acceptCard();
         }
     } catch (const DBException &e) {
-        mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::InvalidCardInsertedEvent));
-        //TODO: requires proper implementation
+        mediator_->Notify(*atm_, EventToATMController::CardEvalResultEvent
+                (EventToATMController::CardEvalResultEvent::Result::CardIsInvalid)
+        );        //TODO: requires proper implementation
     }
 }
 
@@ -50,10 +51,8 @@ void CardReader::onVerificationFail() {
 }
 
 void CardReader::returnCard() {
-    if (cardIsInserted_) {
-        mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardReturnEvent));
-        reset();
-    }
+    assert(cardIsInserted_);
+    reset();
 }
 
 void CardReader::blockCard() {
@@ -63,11 +62,15 @@ void CardReader::blockCard() {
     } catch (const DBException &e) {
         //TODO: requires proper implementation
     }
-    mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardBlockedEvent));
+    mediator_->Notify(*atm_, EventToATMController::CardEvalResultEvent
+            (EventToATMController::CardEvalResultEvent::Result::CardIsBlocked)
+    );
     reset();
 }
 
 void CardReader::acceptCard() {
     cardIsInserted_ = true;
-    mediator_->Notify(CardEventToATMIO(CardEventToATMIO::Type::CardAccepted));
+    mediator_->Notify(*atm_, EventToATMController::CardEvalResultEvent
+            (EventToATMController::CardEvalResultEvent::Result::CardIsAccepted)
+    );
 }

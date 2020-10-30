@@ -7,7 +7,13 @@
 
 
 enum Views {
-    WelcomeScreen, PINEnteringScreen, CardBlockedScreen, MainMenuScreen, PoweredOffScreen, CardEventScreen
+    WelcomeScreen,
+    PINEnteringScreen,
+    CardBlockedScreen,
+    MainMenuScreen,
+    PoweredOffScreen,
+    CardIsInvalidScreen,
+    CardIsBlockedScreen
 };
 
 #endif //ATM_VIEWS_H
