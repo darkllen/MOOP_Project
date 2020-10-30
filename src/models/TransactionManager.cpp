@@ -10,18 +10,19 @@
 
 
 
-const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, int amount) {
+const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, const CASH_AMOUNT_T & amount) {
     return *(new OneTimeTransfer(date, to, from, amount));
 }
 
-const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, int amount, int reg) {
+const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, const CASH_AMOUNT_T & amount, int reg) {
     return *(new RegularTransfer(date, to, from, amount, reg));
 }
 
-const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & from, int amount, bool isWithdrawal) {
+const Transaction &TransactionManager::createTransaction(const QDateTime & date, const Account & from, const ACCOUNT_BALANCE_AMOUNT_T & amount, bool isWithdrawal) {
     return *(new CashTransaction(date, from, amount, isWithdrawal));
 }
 
-const Transaction &TransactionManager::createTransaction(const QDateTime & date,const Account & from,  AccountManaging::ValueChanged valueType, unsigned __int64 oldValue, unsigned __int64 newValue) {
-    return *(new AccountManaging(date, from, valueType, oldValue, newValue));
+const Transaction &TransactionManager::createTransaction(const QDateTime & date,const Account & from, const CARD_NUMBER_T & card_n, AccountManaging::ValueChanged valueType, unsigned __int64 oldValue, unsigned __int64 newValue) {
+    return *(new AccountManaging(date, from, card_n, valueType, oldValue, newValue));
+
 }
