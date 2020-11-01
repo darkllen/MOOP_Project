@@ -5,11 +5,17 @@
 #include "ATM.h"
 #include "../events/ATMEvent.h"
 
+#include "atm_hardware/CardReader.h"
+#include "atm_hardware/Dispenser.h"
+#include "TransactionManager.h"
+#include "ATMInfo.h"
+#include "SessionManager.h"
+
 ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         ATMBaseComponent(),
         isPoweredOn_(false),
         atmInfo_(&atmInfo),
-        dispenser_(new Dispenser(initialCash)),
+        dispenser_(new Dispenser(*this, initialCash)),
         cardReader_(new CardReader(*this)),
         tsManager_(new TransactionManager),
         sessionManager_(new SessionManager) {
@@ -32,11 +38,6 @@ CardReader &ATM::getCardReader() {
 
 Dispenser &ATM::getDispenser() {
     return *dispenser_;
-}
-void ATM::setMediator(ATMMediator *mediator) {
-    this->mediator_ = mediator;
-    this->dispenser_->setMediator(mediator);
-    this->cardReader_->setMediator(mediator);
 }
 
 void ATM::powerStateChange(ATMPowerState state) {

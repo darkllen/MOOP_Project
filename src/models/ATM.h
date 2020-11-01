@@ -7,11 +7,12 @@
 
 #include "../constants/ATMTypes.h"
 #include "../mediators/ATMIO.h"
-#include "TransactionManager.h"
-#include "atm_hardware/Dispenser.h"
-#include "atm_hardware/CardReader.h"
-#include "ATMInfo.h"
-#include "SessionManager.h"
+
+class ATMInfo;
+class Dispenser;
+class CardReader;
+class TransactionManager;
+class SessionManager;
 
 class ATM: public ATMBaseComponent {
 private:
@@ -27,6 +28,7 @@ private:
     SessionManager *sessionManager_;
 
 public:
+    class Hardware;
 
     explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash);
     ~ATM();
@@ -36,8 +38,6 @@ public:
 
     CardReader& getCardReader();
     Dispenser& getDispenser();
-
-    void setMediator(ATMMediator *mediator) override;
 };
 
 

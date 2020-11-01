@@ -7,7 +7,7 @@
 #include "../../constants/ATMLimits.h"
 #include "../../exceptions/ATMException.h"
 
-Dispenser::Dispenser(CASH_AMOUNT_T amount): Hardware(), availableCash_(amount) {
+Dispenser::Dispenser(ATM& atm,CASH_AMOUNT_T amount): Hardware(atm), availableCash_(amount) {
     if (amount >= ATMLimits::MAX_CASH_AMOUNT_IN_DISPENSER) {
         throw HardwareException("More cash then dispenser can handle");
     }

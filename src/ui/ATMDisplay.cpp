@@ -39,10 +39,10 @@ void ATMDisplay::navigateTo(Views view) {
             webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
             break;
         case CardIsBlockedScreen:
-            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInsertedEvent/index.html"));
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardBlocked/index.html"));
             break;
         case CardIsInvalidScreen:
-            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardBlockedEvent/index.html"));
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
             break;
     }
     currentScreen_ = view;
@@ -50,8 +50,4 @@ void ATMDisplay::navigateTo(Views view) {
 
 Views ATMDisplay::getCurrentScreen() const {
     return currentScreen_;
-}
-
-void ATMDisplay::reset() {
-    webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
 }

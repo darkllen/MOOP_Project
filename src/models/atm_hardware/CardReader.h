@@ -10,24 +10,27 @@
 
 class PinVerificationService;
 
-class CardReader: public Hardware {
+class CardReader : public ATM::Hardware {
 private:
     bool cardIsInserted_;
     CARD_NUMBER_T inserted_card_n_;
     unsigned char evalTries;
 
     ATM *atm_;
-    PinVerificationService * verificationService_;
+    PinVerificationService *verificationService_;
 
     void onVerificationSuccess() const;
     void onVerificationFail();
     void blockCard();
     void acceptCard();
-    inline void reset() { cardIsInserted_ = false, inserted_card_n_ = 0; evalTries = 0; }
+    inline void reset() {
+        cardIsInserted_ = false;
+        inserted_card_n_ = 0;
+        evalTries = 0;
+    }
 
 public:
-    //TODO: remove atm binding
-    explicit CardReader(ATM& atm);
+    explicit CardReader(ATM &atm);
     ~CardReader() override;
 
     void evalPIN(PIN_T);

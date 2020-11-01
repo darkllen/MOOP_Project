@@ -1,11 +1,9 @@
 <!DOCTYPE RCC><RCC version="1.0">
     <qresource>
         <file>green_background.png</file>
-		<file>views/CardEventScreen/CardAccepted/index.html</file>
 		<file>views/CardEventScreen/CardBlocked/index.html</file>
 		<file>views/CardEventScreen/CardReturn/index.html</file>
 		<file>views/CardEventScreen/InvalidCardInserted/index.html</file>
-		<file>views/MainMenuScreen/index.html</file>
 		<file>views/MainMenuScreen/index.html</file>
 		<file>views/PoweredOffScreen/index.html</file>
 		<file>views/WelcomeScreen/index.html</file>

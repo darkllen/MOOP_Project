@@ -8,7 +8,8 @@
 #include "../models/ATM.h"
 #include "../controllers/ATMController.h"
 #include "../exceptions/ATMException.h"
-
+#include "../models/atm_hardware/CardReader.h"
+#include "../models/atm_hardware/Dispenser.h"
 
 ATMIO::ATMIO(ATM &atm, ATMController &controller) : atm_(&atm), controller_(&controller) {
     this->atm_->setMediator(this);

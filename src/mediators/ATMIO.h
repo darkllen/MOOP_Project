@@ -10,7 +10,7 @@
 class ATMBaseComponent;
 class ATMMediator {
 public:
-    virtual void Notify(const ATMBaseComponent& sender, const ATMEvent &event) const = 0;
+    virtual void Notify(const ATMBaseComponent &sender, const ATMEvent &event) const = 0;
 };
 
 class ATMBaseComponent {
@@ -19,8 +19,12 @@ protected:
 
 public:
     explicit ATMBaseComponent(ATMMediator *mediator = nullptr) : mediator_(mediator) {}
-    virtual void setMediator(ATMMediator *mediator) {
+    void setMediator(ATMMediator *mediator) {
         this->mediator_ = mediator;
+    }
+
+    ATMMediator *getMediator() {
+        return this->mediator_;
     }
 };
 
@@ -36,7 +40,7 @@ private:
 
 public:
     ATMIO(ATM &atm, ATMController &controller);
-    void Notify(const ATMBaseComponent& sender, const ATMEvent &event) const override;
+    void Notify(const ATMBaseComponent &sender, const ATMEvent &event) const override;
 };
 
 

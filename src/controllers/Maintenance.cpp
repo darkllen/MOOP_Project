@@ -3,8 +3,9 @@
 //
 
 #include "Maintenance.h"
-#include "../models/ATM.h"
 #include "../exceptions/ATMException.h"
+#include "../models/atm_hardware/CardReader.h"
+#include "../models/atm_hardware/Dispenser.h"
 
 void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     try {
@@ -22,10 +23,10 @@ void Maintenance::takeCash(Dispenser & dispenser, CASH_AMOUNT_T amount) {
     }
 }
 
-bool Maintenance::checkStatus(const Hardware &h) {
+bool Maintenance::checkStatus(const ATM::Hardware &h) {
     return h.getState();
 }
 
-void Maintenance::changeStatus(Hardware &h, bool isOperational) {
+void Maintenance::changeStatus(ATM::Hardware &h, bool isOperational) {
     h.setState(isOperational);
 }

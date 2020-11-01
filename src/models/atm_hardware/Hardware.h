@@ -7,16 +7,18 @@
 
 #include "../../constants/ATMTypes.h"
 #include "../../mediators/ATMIO.h"
+#include "../../models/ATM.h"
 
-class Hardware: public ATMBaseComponent {
+class ATM::Hardware {
 protected:
-    bool isOperational;
+    ATM &parent_;
+    bool isOperational_;
 public:
-    Hardware() : ATMBaseComponent(), isOperational(true) {}
+    explicit Hardware(ATM &parent) : parent_(parent), isOperational_(true) {}
     virtual ~Hardware() = default;
 
-    bool getState() const { return isOperational; }
-    void setState(bool isOp) { isOperational = isOp; }
+    bool getState() const { return isOperational_; }
+    void setState(bool isOp) { isOperational_ = isOp; }
 };
 
 

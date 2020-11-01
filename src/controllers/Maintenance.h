@@ -6,9 +6,8 @@
 #define MOOP_ATM_PROJECT_MAINTENANCE_H
 
 #include "../constants/ATMTypes.h"
+#include "../models/ATM.h"
 
-class Hardware;
-class Dispenser;
 
 class Maintenance {
 public:
@@ -17,8 +16,8 @@ public:
 
     static void putCash(Dispenser &, CASH_AMOUNT_T);
     static void takeCash(Dispenser &, CASH_AMOUNT_T);
-    static bool checkStatus(const Hardware &);
-    static void changeStatus(Hardware &, bool);
+    static bool checkStatus(const ATM::Hardware &);
+    static void changeStatus(ATM::Hardware &, bool);
 };
 
 #endif //MOOP_ATM_PROJECT_MAINTENANCE_H
