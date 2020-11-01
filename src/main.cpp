@@ -25,7 +25,7 @@
 
 
 int main(int argc, char *argv[]) {
-//    qputenv()
+    qputenv("QT_DEVICE_PIXEL_RATIO",QByteArray("1"));
 //    PinVerificationService::verify(123123, 123);
 //    DebitCard card = Bank::getCard(123123);
 //    Account* account = Bank::getAccount("XXYY321321");
