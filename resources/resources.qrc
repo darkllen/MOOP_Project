@@ -4,6 +4,12 @@
 		<file>views/CardEventScreen/CardBlocked/index.html</file>
 		<file>views/CardEventScreen/CardReturn/index.html</file>
 		<file>views/CardEventScreen/InvalidCardInserted/index.html</file>
+		<file>views/CardEventScreen/InvalidCardInserted/index.html</file>
+		<file>views/CardEventScreen/CardPINChecking/index.html</file>
+		<file>views/CardEventScreen/CardPINChecking/index1.html</file>
+		<file>views/CardEventScreen/CardPINChecking/index2.html</file>
+		<file>views/CardEventScreen/CardPINChecking/index3.html</file>
+		<file>views/CardEventScreen/CardPINChecking/index4.html</file>
 		<file>views/MainMenuScreen/index.html</file>
 		<file>views/PoweredOffScreen/index.html</file>
 		<file>views/WelcomeScreen/index.html</file>

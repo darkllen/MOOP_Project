@@ -29,6 +29,19 @@ void ATMDisplay::navigateTo(Views view) {
             webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
             break;
         case PINEnteringScreen:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index.html"));
+            break;
+        case PINEnteringScreen1:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index1.html"));
+            break;
+        case PINEnteringScreen2:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index2.html"));
+            break;
+        case PINEnteringScreen3:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index3.html"));
+            break;
+        case PINEnteringScreen4:
+            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index4.html"));
             break;
         case CardBlockedScreen:
             break;

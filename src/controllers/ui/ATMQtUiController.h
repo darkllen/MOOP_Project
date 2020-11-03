@@ -18,6 +18,7 @@ Q_OBJECT
 private:
     ATMForm *atmForm_;
     ATMDisplay *display_;
+    unsigned int entered_NUM;
 
 public:
     explicit ATMQtUiController(QMainWindow &mw);

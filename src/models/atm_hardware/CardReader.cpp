@@ -45,9 +45,12 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
 }
 
 void CardReader::onVerificationSuccess() const {
-    //TODO: Requires implementation
+    parent_.getMediator()->Notify(*atm_, EventToATMController::CardEvalResultEvent
+            (EventToATMController::CardEvalResultEvent::Result::CardIsAccepted)
+    );
 }
 
+//TODO show how many tries left on screen (yes, new views...)
 void CardReader::onVerificationFail() {
     ++evalTries;
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {
@@ -76,6 +79,6 @@ void CardReader::blockCard() {
 void CardReader::acceptCard() {
     cardIsInserted_ = true;
     parent_.getMediator()->Notify(*atm_, EventToATMController::CardEvalResultEvent
-            (EventToATMController::CardEvalResultEvent::Result::CardIsAccepted)
+            (EventToATMController::CardEvalResultEvent::Result::CardPINChecking)
     );
 }

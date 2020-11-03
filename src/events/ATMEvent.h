@@ -54,7 +54,8 @@ namespace EventToATMController {
         enum Result {
             CardIsAccepted,
             CardIsInvalid,
-            CardIsBlocked
+            CardIsBlocked,
+            CardPINChecking
         };
         Result value;
         explicit CardEvalResultEvent(Result eventType) :

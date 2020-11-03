@@ -9,6 +9,10 @@
 enum Views {
     WelcomeScreen,
     PINEnteringScreen,
+    PINEnteringScreen1,
+    PINEnteringScreen2,
+    PINEnteringScreen3,
+    PINEnteringScreen4,
     CardBlockedScreen,
     MainMenuScreen,
     PoweredOffScreen,

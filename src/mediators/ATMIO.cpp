@@ -10,6 +10,7 @@
 #include "../exceptions/ATMException.h"
 #include "../models/atm_hardware/CardReader.h"
 #include "../models/atm_hardware/Dispenser.h"
+#include "../controllers/PinVerificationService.h"
 
 ATMIO::ATMIO(ATM &atm, ATMController &controller) : atm_(&atm), controller_(&controller) {
     this->atm_->setMediator(this);
@@ -39,6 +40,11 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         case ATMEvent::CardTakenEvent: {
             auto e = dynamic_cast<const EventToATM::CardTakenEvent &>(event);
             atm_->getCardReader().returnCard();
+            break;
+        }
+        case ATMEvent::PINSubmittedEvent: {
+            auto e = dynamic_cast<const EventToATM::PINSubmittedEvent &>(event);
+            atm_->getCardReader().evalPIN(e.value);
             break;
         }
         default:
