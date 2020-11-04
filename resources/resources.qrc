@@ -11,6 +11,14 @@
 		<file>views/CardEventScreen/CardPINChecking/index3.html</file>
 		<file>views/CardEventScreen/CardPINChecking/index4.html</file>
 		<file>views/MainMenuScreen/index.html</file>
+		<file>views/MainMenuScreen/account.html</file>
+		<file>views/MainMenuScreen/cardBalance.html</file>
+		<file>views/MainMenuScreen/changeLimit.html</file>
+		<file>views/MainMenuScreen/changePin.html</file>
+		<file>views/MainMenuScreen/doTransaction.html</file>
+		<file>views/MainMenuScreen/putCash.html</file>
+		<file>views/MainMenuScreen/showAccounts.html</file>
+		<file>views/MainMenuScreen/takeCash.html</file>
 		<file>views/PoweredOffScreen/index.html</file>
 		<file>views/WelcomeScreen/index.html</file>
 		<file>views/WelcomeScreen/styles.css</file>

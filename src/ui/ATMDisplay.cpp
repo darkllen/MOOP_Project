@@ -48,6 +48,30 @@ void ATMDisplay::navigateTo(Views view) {
         case MainMenuScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
             break;
+        case AccountScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/account.html"));
+            break;
+        case CardBalanceScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/cardBalance.html"));
+            break;
+        case ChangeLimitScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changeLimit.html"));
+            break;
+        case ChangePinScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changePin.html"));
+            break;
+        case DoTransactionScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/doTransaction.html"));
+            break;
+        case PutCashScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/putCash.html"));
+            break;
+        case ShowAccountsScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/showAccounts.html"));
+            break;
+        case TakeCashScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/takeCash.html"));
+            break;
         case PoweredOffScreen:
             webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
             break;
