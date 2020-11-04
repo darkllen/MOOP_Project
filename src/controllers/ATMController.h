@@ -18,12 +18,12 @@ public:
     virtual void dialPadInput(UIButtonsInput::DialPad) = 0;
     virtual void dialPadControlInput(UIButtonsInput::ControlPad) = 0;
     virtual void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) = 0;
-    virtual void dispenserInput() = 0;
+    virtual void dispenserInput(CASH_AMOUNT_T) = 0;
     virtual void cardReaderInput(CARD_NUMBER_T) = 0;
     virtual void ATMPowerChangeFromUI(ATMPowerState) = 0;
 
     virtual void printReceiptOutput() = 0;
-    virtual void dispenserOutput() = 0;
+    virtual void dispenserOutput(CASH_AMOUNT_T) = 0;
     virtual void navigateToNewView(Views) = 0;
     virtual void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) = 0;
     virtual void ATMPowerChangeFromATM(ATMPowerState) = 0;

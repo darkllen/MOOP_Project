@@ -47,6 +47,16 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
             atm_->getCardReader().evalPIN(e.value);
             break;
         }
+        case ATMEvent::PutCashEvent: {
+            auto e = dynamic_cast<const EventToATM::PutCashEvent &>(event);
+            atm_->getDispenser().cashIn(e.value);
+            break;
+        }
+        case ATMEvent::TakeCashEvent: {
+            auto e = dynamic_cast<const EventToATM::TakeCashEvent &>(event);
+            atm_->getDispenser().cashOut(e.value);
+            break;
+        }
         default:
             throw ATMException("Invalid event target!");
     }

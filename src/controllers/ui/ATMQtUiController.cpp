@@ -66,8 +66,12 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
     if (display_->getCurrentScreen() == MainMenuScreen) {
         if (e == UIButtonsInput::L3) {
+            atmForm_->changeDispenser(true);
+            atmForm_->setIsWithdrawal(false);
             navigateToNewView(Views::PutCashScreen);
         } else if (e == UIButtonsInput::L2) {
+            atmForm_->changeDispenser(true);
+            atmForm_->setIsWithdrawal(true);
             navigateToNewView(Views::TakeCashScreen);
         }  else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ShowAccountsScreen);
@@ -84,10 +88,13 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         }
     } else if (display_->getCurrentScreen() == PutCashScreen) {
         if (e == UIButtonsInput::L0) {
+            atmForm_->changeDispenser(false);
             navigateToNewView(Views::MainMenuScreen);
         }
+
     } else if (display_->getCurrentScreen() == TakeCashScreen) {
         if (e == UIButtonsInput::L0) {
+            atmForm_->changeDispenser(false);
             navigateToNewView(Views::MainMenuScreen);
         }
     } else if (display_->getCurrentScreen() == FinishAccountScreen) {
@@ -121,10 +128,15 @@ void ATMQtUiController::ATMPowerChangeFromUI(ATMPowerState powerState) {
     mediator_->Notify(*this, EventToATM::ATMPowerStateEvent(powerState));
 }
 
-void ATMQtUiController::dispenserInput() {
+void ATMQtUiController::dispenserInput(const CASH_AMOUNT_T n) {
 //    if (display_->getCurrentScreen() == PINEnteringScreen) {
     //TODO: Requires implementation
 //    }
+     if (display_->getCurrentScreen() == PutCashScreen) {
+         mediator_->Notify(*this, EventToATM::PutCashEvent(n));
+    } else if (display_->getCurrentScreen() == TakeCashScreen) {
+         mediator_->Notify(*this, EventToATM::TakeCashEvent(n));
+     }
 }
 
 void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
@@ -137,7 +149,7 @@ void ATMQtUiController::printReceiptOutput() {
     //TODO: Requires implementation
 }
 
-void ATMQtUiController::dispenserOutput() {
+void ATMQtUiController::dispenserOutput(CASH_AMOUNT_T n) {
     //TODO: Requires implementation
 }
 

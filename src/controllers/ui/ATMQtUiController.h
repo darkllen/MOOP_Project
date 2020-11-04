@@ -28,13 +28,13 @@ public:
     void dialPadInput(UIButtonsInput::DialPad) override;
     void dialPadControlInput(UIButtonsInput::ControlPad) override;
     void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) override;
-    void dispenserInput() override;
+    void dispenserInput(CASH_AMOUNT_T) override;
     void cardReaderInput(CARD_NUMBER_T) override;
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
     // ATM calls:
     void printReceiptOutput() override;
-    void dispenserOutput() override;
+    void dispenserOutput(CASH_AMOUNT_T) override;
     void navigateToNewView(Views) override;
     void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) override;
     void ATMPowerChangeFromATM(ATMPowerState) override;

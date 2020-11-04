@@ -27,12 +27,16 @@ private:
     ATMQtUiController *controller_;
 
     bool cardReaderStateIsInsert;
+    bool isWithdrawal;
 
 public:
     explicit ATMForm(QMainWindow &mw, ATMQtUiController &atm_io);
     ~ATMForm() override;
 
     QWebEngineView &getWebView();
+
+    void setIsWithdrawal(bool);
+    void changeDispenser(bool);
 
 private slots:
     void on_n000_keypad_btn_clicked();

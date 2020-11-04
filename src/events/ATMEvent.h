@@ -16,7 +16,10 @@ struct ATMEvent {
         CardInsertedEvent,
         CardTakenEvent,
         NewViewEvent,
-        PINSubmittedEvent
+        PINSubmittedEvent,
+        PutCashEvent,
+        TakeCashEvent
+
     };
     EventType type;
     explicit ATMEvent(EventType eventType) : type(eventType) {}
@@ -41,6 +44,15 @@ namespace EventToATM {
 
     struct CardTakenEvent : public ATMEvent {
         explicit CardTakenEvent() : ATMEvent(EventType::CardTakenEvent) {}
+    };
+
+    struct PutCashEvent : public ATMEvent {
+        CASH_AMOUNT_T value;
+        explicit PutCashEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::PutCashEvent), value(n) {}
+    };
+    struct TakeCashEvent : public ATMEvent {
+        CASH_AMOUNT_T value;
+        explicit TakeCashEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::TakeCashEvent), value(n) {}
     };
 };
 
