@@ -15,7 +15,7 @@ enum Views {
     PINEnteringScreen4,
     CardBlockedScreen,
     MainMenuScreen,
-    AccountScreen,
+    FinishAccountScreen,
     CardBalanceScreen,
     ChangeLimitScreen,
     ChangePinScreen,

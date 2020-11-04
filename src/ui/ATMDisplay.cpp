@@ -48,8 +48,8 @@ void ATMDisplay::navigateTo(Views view) {
         case MainMenuScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
             break;
-        case AccountScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/account.html"));
+        case FinishAccountScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/finishAccount.html"));
             break;
         case CardBalanceScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/cardBalance.html"));

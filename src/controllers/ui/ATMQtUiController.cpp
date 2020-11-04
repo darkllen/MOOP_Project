@@ -66,7 +66,55 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 
 void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
     if (display_->getCurrentScreen() == MainMenuScreen) {
-        //TODO: Requires implementation
+        if (e == UIButtonsInput::L3) {
+            navigateToNewView(Views::PutCashScreen);
+        } else if (e == UIButtonsInput::L2) {
+            navigateToNewView(Views::TakeCashScreen);
+        }  else if (e == UIButtonsInput::L1) {
+            navigateToNewView(Views::ShowAccountsScreen);
+        } else if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::FinishAccountScreen);
+        }else if (e == UIButtonsInput::R3) {
+            navigateToNewView(Views::ChangePinScreen);
+        } else if (e == UIButtonsInput::R2) {
+            navigateToNewView(Views::ChangeLimitScreen);
+        } else if (e == UIButtonsInput::R1) {
+            navigateToNewView(Views::DoTransactionScreen);
+        } else if (e == UIButtonsInput::R0) {
+            navigateToNewView(Views::CardBalanceScreen);
+        }
+    } else if (display_->getCurrentScreen() == PutCashScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == TakeCashScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == FinishAccountScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == ShowAccountsScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == ChangePinScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == ChangeLimitScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == DoTransactionScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
+    } else if (display_->getCurrentScreen() == CardBalanceScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
     }
 }
 
