@@ -184,7 +184,7 @@ void ATMForm::on_dispenser_btn_clicked() {
                         changeDispenser(false);
                         controller_->navigateToNewView(MainMenuScreen);
                     }
-                    catch (HardwareException e) {//todo process exception in dispenser
+                    catch (HardwareException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
                 } else {
@@ -208,7 +208,7 @@ void ATMForm::on_dispenser_btn_clicked() {
                         changeDispenser(false);
                         controller_->navigateToNewView(MainMenuScreen);
                     }
-                    catch (HardwareException e) {//todo process exception in dispenser
+                    catch (HardwareException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
                 } else {
