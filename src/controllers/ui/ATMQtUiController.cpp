@@ -15,7 +15,6 @@ ATMQtUiController::~ATMQtUiController() {
     atmForm_ = nullptr;
 }
 
-#include <iostream>
 void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
     if (display_->getCurrentScreen() == PINEnteringScreen) {
         if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){

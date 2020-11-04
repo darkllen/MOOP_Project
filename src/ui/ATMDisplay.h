@@ -25,6 +25,7 @@ public:
     void reset();
 
     void navigateTo(Views view);
+    void runJs(const QString& js);
 
     Views getCurrentScreen() const;
 };

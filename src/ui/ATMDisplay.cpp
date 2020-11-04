@@ -19,6 +19,7 @@ void ATMDisplay::turnOff() {
     isOn_ = false;
 }
 
+
 void ATMDisplay::navigateTo(Views view) {
     if (!isOn_) {
         throw "Attempt to use the screen in OFF state";
@@ -84,6 +85,10 @@ void ATMDisplay::navigateTo(Views view) {
     }
     currentScreen_ = view;
 }
+
+void ATMDisplay::runJs(const QString& js){
+    webEngineView_->page()->runJavaScript(js);
+};
 
 Views ATMDisplay::getCurrentScreen() const {
     return currentScreen_;
