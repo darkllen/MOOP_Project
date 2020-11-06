@@ -38,6 +38,8 @@ public:
 
     CardReader& getCardReader();
     Dispenser& getDispenser();
+
+    static ATM getATM(const ATM_SERIAL_NUMBER_T& num);
 };
 
 

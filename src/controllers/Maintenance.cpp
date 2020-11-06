@@ -2,10 +2,13 @@
 // Created by anna2 on 20.10.2020.
 //
 
+
 #include "Maintenance.h"
 #include "../exceptions/ATMException.h"
 #include "../models/atm_hardware/CardReader.h"
 #include "../models/atm_hardware/Dispenser.h"
+#include "../models/ATM.h"
+#include "../models/ATMInfo.h"
 
 void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     try {
@@ -15,7 +18,7 @@ void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     }
 }
 
-void Maintenance::takeCash(Dispenser & dispenser, CASH_AMOUNT_T amount) {
+void Maintenance::takeCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
     try {
         dispenser.cashOut(amount);
     } catch (const HardwareException &e) {
