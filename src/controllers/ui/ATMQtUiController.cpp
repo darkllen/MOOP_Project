@@ -20,50 +20,42 @@ ATMQtUiController::~ATMQtUiController() {
     atmForm_ = nullptr;
 }
 
+int countDigit(long long n) {
+    return floor(log10(n) + 1);
+}
+
 void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
     if (display_->getCurrentScreen() == PINEnteringScreen) {
         if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
             entered_NUM =entered_NUM*10 + e - 1;
-            navigateToNewView(Views::PINEnteringScreen1);
-        }
-    } else if (display_->getCurrentScreen() == PINEnteringScreen1){
-        if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
-            entered_NUM =entered_NUM*10 + e - 1;
-            navigateToNewView(Views::PINEnteringScreen2);
-        } else if (e == UIButtonsInput::D000){
-            entered_NUM = 0;
-            navigateToNewView(Views::PINEnteringScreen);
-        }
-    } else if (display_->getCurrentScreen() == PINEnteringScreen2){
-        if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
-            entered_NUM =entered_NUM*10 + e - 1;
-            navigateToNewView(Views::PINEnteringScreen3);
-        } else if (e == UIButtonsInput::D000){
-            entered_NUM = 0;
-            navigateToNewView(Views::PINEnteringScreen);
-        }
-    } else if (display_->getCurrentScreen() == PINEnteringScreen3){
-        if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
-            entered_NUM =entered_NUM*10 + e - 1;
-            navigateToNewView(Views::PINEnteringScreen4);
-        } else if (e == UIButtonsInput::D000){
-            entered_NUM = 0;
-            navigateToNewView(Views::PINEnteringScreen);
-        }
-    } else if (display_->getCurrentScreen() == PINEnteringScreen4){
-         if (e == UIButtonsInput::D000){
-            entered_NUM = 0;
-            navigateToNewView(Views::PINEnteringScreen);
+            QString jsQ = "document.getElementById(\"stars\").innerHTML += '*';";
+            //todo wait while load
+            display_->runJs(jsQ);
+
         }
     }
+
 }
 
 void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) {
     //TODO Realize Cancel Button and Clear button
-    if (display_->getCurrentScreen() == PINEnteringScreen4) {
+    if (display_->getCurrentScreen() == PINEnteringScreen) {
         if (e == UIButtonsInput::Enter){
-            mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM));
+            if(countDigit(entered_NUM==4)) {
+                mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM));
+                entered_NUM = 0;
+            }
+
+        } else if (e == UIButtonsInput::Cancel){
+            entered_NUM/=10;
+            //todo wait while load
+            display_->runJs("var s = document.getElementById(\"stars\").innerHTML;");
+            display_->runJs("document.getElementById(\"stars\").innerHTML = s.substring(0, s.length-1);");
+
+        } else if (e == UIButtonsInput::Clear){
             entered_NUM = 0;
+            //todo wait while load
+            display_->runJs("document.getElementById(\"stars\").innerHTML = ''");
         }
     }
 }
@@ -192,6 +184,7 @@ void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultE
         }
         case EventToATMController::CardEvalResultEvent::CardIsBlocked: {
             display_->navigateTo(Views::CardIsBlockedScreen);
+            atmForm_->changeCardReader(true);
             break;
         }
     }
@@ -207,3 +200,4 @@ void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
             break;
     }
 }
+
