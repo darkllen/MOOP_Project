@@ -11,6 +11,12 @@
 #include "../models/atm_hardware/CardReader.h"
 #include "../models/atm_hardware/Dispenser.h"
 #include "../controllers/PinVerificationService.h"
+#include "../controllers/AccountActions.h"
+#include "../models/TransactionManager.h"
+#include "../models/Bank.h"
+#include "../models/DebitCard.h"
+#include "../models/accounts/Account.h"
+
 
 ATMIO::ATMIO(ATM &atm, ATMController &controller) : atm_(&atm), controller_(&controller) {
     this->atm_->setMediator(this);
@@ -55,6 +61,16 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         case ATMEvent::TakeCashEvent: {
             auto e = dynamic_cast<const EventToATM::TakeCashEvent &>(event);
             atm_->getDispenser().cashOut(e.value);
+            break;
+        }
+        case ATMEvent::PINChangedEvent: {
+            auto e = dynamic_cast<const EventToATM::PINChangedEvent &>(event);
+            //atm_->getCardReader().getCardNum();
+            CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
+            PIN_T pin = Bank::getCard(n).getPIN();
+            const Account account = *(Bank::getAccount(n));
+            const AccountManaging tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account,n,AccountManaging::ValueChanged::PIN,pin,e.value);
+            AccountActions::makeTransaction(account, tr);
             break;
         }
         default:

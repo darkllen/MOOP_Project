@@ -9,6 +9,7 @@
 #include "../../models/Bank.h"
 #include "../../models/accounts/Account.h"
 #include "../../models/atm_hardware/CardReader.h"
+#include "../../helpers/InputValidation.h"
 
 
 
@@ -20,12 +21,8 @@ ATMQtUiController::~ATMQtUiController() {
     atmForm_ = nullptr;
 }
 
-int countDigit(long long n) {
-    return floor(log10(n) + 1);
-}
-
 void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
-    if (display_->getCurrentScreen() == PINEnteringScreen) {
+    if (display_->getCurrentScreen() == PINEnteringScreen || display_->getCurrentScreen() == ChangePinScreen) {
         if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
             entered_NUM =entered_NUM*10 + e - 1;
             QString jsQ = "document.getElementById(\"stars\").innerHTML += '*';";
@@ -39,14 +36,9 @@ void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
 
 void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) {
     //TODO Realize Cancel Button and Clear button
-    if (display_->getCurrentScreen() == PINEnteringScreen) {
-        if (e == UIButtonsInput::Enter){
-            if(countDigit(entered_NUM==4)) {
-                mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM));
-                entered_NUM = 0;
-            }
-
-        } else if (e == UIButtonsInput::Cancel){
+    if ((display_->getCurrentScreen() == PINEnteringScreen || display_->getCurrentScreen() == ChangePinScreen)
+         &&(e != UIButtonsInput::Enter)){
+        if (e == UIButtonsInput::Cancel){
             entered_NUM/=10;
             //todo wait while load
             display_->runJs("var s = document.getElementById(\"stars\").innerHTML;");
@@ -56,6 +48,21 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             entered_NUM = 0;
             //todo wait while load
             display_->runJs("document.getElementById(\"stars\").innerHTML = ''");
+        }
+    } else if (display_->getCurrentScreen() == PINEnteringScreen) {
+        if (e == UIButtonsInput::Enter) {
+            if(InputValidation::validatePin(entered_NUM)){
+                mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM));
+                entered_NUM = 0;
+            }
+        }
+    }
+    else if (display_->getCurrentScreen() == ChangePinScreen) {
+        if (e == UIButtonsInput::Enter) {
+            if(InputValidation::validatePin(entered_NUM)){
+                mediator_->Notify(*this, EventToATM::PINChangedEvent(entered_NUM));
+                entered_NUM = 0;
+            }
         }
     }
 }
