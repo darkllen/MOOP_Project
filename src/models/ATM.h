@@ -31,6 +31,8 @@ public:
     class Hardware;
 
     explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash);
+    ATM(const  ATM& atm) = default;
+
     ~ATM();
 
     void powerStateChange(ATMPowerState state);

@@ -42,9 +42,8 @@ int main(int argc, char *argv[]) {
 
 
     ATMController *controller = new ATMQtUiController(mw);
-    ATMInfo atmInfo(0, "", "");
-    ATM atm(atmInfo, 0);
-
+    //ATMInfo atmInfo(0, "", "");
+    ATM atm(ATM::getATM(1111));
     ATMIO *io = new ATMIO(atm, *controller);
     atm.powerStateChange(ATMPowerState::On);
 

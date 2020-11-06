@@ -21,6 +21,7 @@ ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
         sessionManager_(new SessionManager) {
 }
 
+
 ATM::~ATM() {
     delete dispenser_;
     delete cardReader_;
@@ -58,6 +59,8 @@ void ATM::powerStateChange(ATMPowerState state) {
 ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     return ATM(ATMInfo(1111, "Kyiv", ""), 5000);
 }
+
+
 
 
 
