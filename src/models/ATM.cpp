@@ -1,7 +1,7 @@
 //
 // Created by kuchm on 04.10.2020.
 //
-
+#include <mysqlx/xdevapi.h>
 #include "ATM.h"
 #include "../events/ATMEvent.h"
 
@@ -57,7 +57,20 @@ void ATM::powerStateChange(ATMPowerState state) {
 }
 
 ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
-    return ATM(ATMInfo(1111, "Kyiv", ""), 5000);
+
+    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
+    mysqlx::Session session(url);
+    mysqlx::Schema db = session.getSchema("moop");
+    mysqlx::Table myTable = db.getTable("ATMInfo");
+    mysqlx::RowResult myResult = myTable.select("location_","availableCashAmount_")
+            .where("serialNumber_ like :serialNumber_")
+            .bind("serialNumber_",num).execute();
+
+    mysqlx::Row row = myResult.fetchOne();
+    std::stringstream s;
+    s << row[0];
+    CASH_AMOUNT_T cash (row[1].get<int>());
+    return ATM(ATMInfo(num, s.str(), ""),cash);
 }
 
 
