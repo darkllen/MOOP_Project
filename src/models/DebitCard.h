@@ -23,7 +23,7 @@ public:
 
     //TODO make it private and friend of PINVerification
     PIN_T getPIN(){return pin_;}
-    void setIsBlocked(bool value){isBlocked_ = value;}
+    void setIsBlocked(bool value);
 
     bool getIsBlocked(){return isBlocked_;}
 
