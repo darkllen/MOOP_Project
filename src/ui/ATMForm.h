@@ -36,7 +36,9 @@ public:
     QWebEngineView &getWebView();
 
     void setIsWithdrawal(bool);
+    void changeCardReader(bool b);
     void changeDispenser(bool);
+
 
 private slots:
     void on_n000_keypad_btn_clicked();

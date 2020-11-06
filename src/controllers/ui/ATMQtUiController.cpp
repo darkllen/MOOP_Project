@@ -112,6 +112,13 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
     } else if (display_->getCurrentScreen() == FinishAccountScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::MainMenuScreen);
+        } else if (e == UIButtonsInput::R0) {
+            navigateToNewView(Views::WelcomeScreen);
+            atmForm_->changeCardReader(true);
+            //todo erase all info?
+        }
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
         }
     } else if (display_->getCurrentScreen() == ShowAccountsScreen) {
         if (e == UIButtonsInput::L0) {

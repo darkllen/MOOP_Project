@@ -156,6 +156,7 @@ void ATMForm::on_card_reader_btn_clicked() {
             CARD_NUMBER_T value = text.toULongLong(&convertSuccess, 10);
             if (convertSuccess) {
                 controller_->cardReaderInput(value);
+                changeCardReader(false);
             } else {
                 QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
             }
@@ -278,6 +279,10 @@ void ATMForm::toggleCardReaderMode() {
 
 void ATMForm::changeDispenser(bool b){
     ui_->dispenser_btn->setEnabled(b);
+}
+
+void ATMForm::changeCardReader(bool b){
+    ui_->card_reader_btn->setEnabled(b);
 }
 
 void ATMForm::setIsWithdrawal(bool b){
