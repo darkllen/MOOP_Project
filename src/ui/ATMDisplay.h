@@ -16,6 +16,8 @@ private:
     Views currentScreen_;
     bool isOn_;
 
+    bool isLocked_;
+
 public:
     explicit ATMDisplay(QWebEngineView& webEngineView);
     ~ATMDisplay() = default;
@@ -28,6 +30,8 @@ public:
     void runJs(const QString& js);
 
     Views getCurrentScreen() const;
+
+    bool getIsLocked(){return isLocked_;}
 };
 
 

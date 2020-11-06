@@ -2,9 +2,14 @@
 // Created by Lemonderon on 20.10.2020.
 //
 
+#include <QtWidgets/QMessageBox>
 #include "ATMQtUiController.h"
 #include "../../ui/ATMForm.h"
 #include "../../ui/ATMDisplay.h"
+#include "../../models/Bank.h"
+#include "../../models/accounts/Account.h"
+#include "../../models/atm_hardware/CardReader.h"
+
 
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
@@ -85,6 +90,13 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::DoTransactionScreen);
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::CardBalanceScreen);
+
+            CARD_NUMBER_T n = dynamic_cast<ATMIO*>(mediator_)->getATM().getCardReader().getCardNum();
+            ACCOUNT_BALANCE_AMOUNT_T balance = Bank::getAccount(n)->getMoney();
+            QString jsQ = "document.getElementById(\"bal_num\").innerHTML = "+QString::number(balance)+";";
+            //todo wait while load and remove message
+                   QMessageBox::warning(nullptr, "Invalid input", jsQ, QMessageBox::Ok);
+            display_->runJs(jsQ);
         }
     } else if (display_->getCurrentScreen() == PutCashScreen) {
         if (e == UIButtonsInput::L0) {

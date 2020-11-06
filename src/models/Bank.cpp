@@ -70,3 +70,8 @@ Account* Bank::getAccount(const std::string & IBAN_) {
     }
 }
 
+Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
+    return new Account("","",1,200);
+    //todo return real account
+}
+

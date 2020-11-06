@@ -5,6 +5,9 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 
 #include "ATMDisplay.h"
+#include "../models/Bank.h"
+#include "../models/accounts/Account.h"
+
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
         webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}

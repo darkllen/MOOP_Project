@@ -36,6 +36,8 @@ public:
     void evalPIN(PIN_T);
     void setInsertedCardN(CARD_NUMBER_T);
     void returnCard();
+
+    CARD_NUMBER_T getCardNum(){return inserted_card_n_;}
 };
 
 #endif //MOOP_ATM_PROJECT_CARDREADER_H
