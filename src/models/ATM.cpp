@@ -11,12 +11,12 @@
 #include "ATMInfo.h"
 #include "SessionManager.h"
 
-ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash) :
+ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash, bool cardReaderState, bool dispenserState) :
         ATMBaseComponent(),
         isPoweredOn_(false),
         atmInfo_(&atmInfo),
-        dispenser_(new Dispenser(*this, initialCash)),
-        cardReader_(new CardReader(*this)),
+        dispenser_(new Dispenser(*this, initialCash, dispenserState)),
+        cardReader_(new CardReader(*this, cardReaderState)),
         tsManager_(new TransactionManager),
         sessionManager_(new SessionManager) {
 }
@@ -62,7 +62,7 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     mysqlx::Session session(url);
     mysqlx::Schema db = session.getSchema("moop");
     mysqlx::Table myTable = db.getTable("ATMInfo");
-    mysqlx::RowResult myResult = myTable.select("location_","availableCashAmount_")
+    mysqlx::RowResult myResult = myTable.select("location_","availableCashAmount_", "cardReaderState", "dispenserState")
             .where("serialNumber_ like :serialNumber_")
             .bind("serialNumber_",num).execute();
 
@@ -70,7 +70,9 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     std::stringstream s;
     s << row[0];
     CASH_AMOUNT_T cash (row[1].get<int>());
-    return ATM(ATMInfo(num, s.str(), ""),cash);
+    bool cardReaderState(row[2].get<bool>());
+    bool dispenserState(row[3].get<bool>());
+    return ATM(ATMInfo(num, s.str(), ""),cash, cardReaderState, dispenserState);
 }
 
 //todo connect to database

@@ -30,7 +30,7 @@ private:
 public:
     class Hardware;
 
-    explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash);
+    explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash, bool cardReaderState, bool dispenserState);
     ATM(const  ATM& atm) = default;
 
     ~ATM();

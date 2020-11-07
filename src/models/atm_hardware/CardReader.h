@@ -30,7 +30,7 @@ private:
     }
 
 public:
-    explicit CardReader(ATM &atm);
+    explicit CardReader(ATM &atm, bool isOp);
     ~CardReader() override;
 
     void evalPIN(PIN_T);
@@ -38,6 +38,7 @@ public:
     void returnCard();
 
     CARD_NUMBER_T getCardNum(){return inserted_card_n_;}
+    void setState(bool isOp) override;
 };
 
 #endif //MOOP_ATM_PROJECT_CARDREADER_H

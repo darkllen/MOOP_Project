@@ -14,11 +14,11 @@ protected:
     ATM &parent_;
     bool isOperational_;
 public:
-    explicit Hardware(ATM &parent) : parent_(parent), isOperational_(true) {}
+    explicit Hardware(ATM &parent, bool isOp) : parent_(parent), isOperational_(isOp) {}
     virtual ~Hardware() = default;
 
     bool getState() const { return isOperational_; }
-    void setState(bool isOp) { isOperational_ = isOp; }
+    virtual void setState(bool isOp) = 0;
 };
 
 
