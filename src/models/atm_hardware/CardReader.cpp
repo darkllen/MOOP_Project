@@ -42,7 +42,7 @@ void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
         reset();
         parent_.getMediator()->Notify(*atm_, EventToATMController::CardEvalResultEvent
                 (EventToATMController::CardEvalResultEvent::Result::CardIsInvalid)
-        );        //TODO: requires proper implementation
+        );
     }
 }
 

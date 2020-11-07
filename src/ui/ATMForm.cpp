@@ -186,8 +186,6 @@ void ATMForm::on_dispenser_btn_clicked() {
                         changeDispenser(false);
                         if(controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
-                            //todo wait while load and remove message
-                            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
                             changeReceipt(true);
                         }
                         else
@@ -218,8 +216,6 @@ void ATMForm::on_dispenser_btn_clicked() {
                         changeDispenser(false);
                         if(controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
-                            //todo wait while load and remove message
-                            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
                             changeReceipt(true);
                         }
                         else

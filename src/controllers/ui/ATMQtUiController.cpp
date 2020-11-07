@@ -28,7 +28,6 @@ ATMQtUiController::~ATMQtUiController() {
 void ATMQtUiController::changePINTries(int n){
     if (display_->getCurrentScreen() == PINEnteringScreen) {
             QString jsQ = "document.getElementById(\"tries\").innerHTML = 'Tries left: "+ QString::number(ATMLimits::MAX_FAILED_PIN_EVALS - n) +"';";
-            //todo wait while load
             entered_NUM = 0;
         display_->runJs("document.getElementById(\"text\").innerHTML =' ';");
         display_->runJs(jsQ);
@@ -60,13 +59,11 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
          &&(e != UIButtonsInput::Enter)){
         if (e == UIButtonsInput::Cancel){
             entered_NUM/=10;
-            //todo wait while load
             display_->runJs("var s = document.getElementById(\"text\").innerHTML;");
             display_->runJs("document.getElementById(\"text\").innerHTML = s.substring(0, s.length-1);");
 
         } else if (e == UIButtonsInput::Clear){
             entered_NUM = 0;
-            //todo wait while load
             display_->runJs("document.getElementById(\"text\").innerHTML = ''");
         }
     } else if (display_->getCurrentScreen() == PINEnteringScreen) {
@@ -185,8 +182,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
             ACCOUNT_BALANCE_AMOUNT_T balance = Bank::getAccount(n)->getMoney();
             QString jsQ = "document.getElementById(\"bal_num\").innerHTML = " + QString::number(balance) + ";";
-            //todo wait while load and remove message
-            QMessageBox::warning(nullptr, "Invalid input", jsQ, QMessageBox::Ok);
             display_->runJs(jsQ);
         }
     } else if (display_->getCurrentScreen() == PutCashScreen) {
@@ -213,8 +208,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
             if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
                 atmForm_->changeCardReader(false);
-                //todo wait while load and remove message
-                QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
                 display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
             } else
                 atmForm_->changeCardReader(true);
@@ -265,8 +258,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
         } else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ChangeStatusScreen);
-            //todo wait while load and remove message
-            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
 
             QString dis;
             if(dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenserStatus()) dis = "Working";
@@ -281,9 +272,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         } else if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::InfoScreen);
             CASH_AMOUNT_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenser().getAvailableCashAmount();
-            //todo wait while load and remove message
-            QMessageBox::warning(nullptr, "Wait", QString::number(n), QMessageBox::Ok);
-            display_->runJs("document.getElementById(\"cash\").innerHTML ='"+QString::number(n)+"' ;");
+           display_->runJs("document.getElementById(\"cash\").innerHTML ='"+QString::number(n)+"' ;");
 
         }
 
@@ -367,7 +356,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
             }
 
-            //todo wait
             atmForm_->changeReceipt(true);
             entered_card=0;
             entered_amount=0;
@@ -405,9 +393,6 @@ void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
 void ATMQtUiController::printReceiptOutput() {
     if (atmForm_->getIsReceiptEnable()) {
         display_->navigateTo(ReceiptScreen);
-        //todo wait while load and remove message
-
-        QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
         display_->runJs("document.getElementById(\"text\").innerHTML ='"+display_->getReceipt()+"';");
 
         display_->setReceipt("");
@@ -458,8 +443,6 @@ void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
             display_->turnOn();
             atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
             if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
-                //todo wait while load and remove message
-                QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
                 display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
             }
             break;
@@ -476,8 +459,6 @@ void ATMQtUiController::enableDispencer(bool isWithdrawal){
         atmForm_->setIsWithdrawal(isWithdrawal);
     } else{
         atmForm_->changeDispenser(false);
-        //todo wait while load and remove message
-        QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
         display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the dispenser is temporarily down' ;");
     }
 }
