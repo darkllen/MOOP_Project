@@ -91,6 +91,11 @@ void ATM::setDispenserStatus(bool b){
     dispenser_->setState(b);
 }
 
+void ATM::resetCardReader(){
+    cardReader_->reset();
+}
+
+
 
 
 

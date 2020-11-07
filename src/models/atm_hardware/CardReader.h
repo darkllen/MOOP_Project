@@ -23,11 +23,7 @@ private:
     void onVerificationFail();
     void blockCard();
     void acceptCard();
-    inline void reset() {
-        cardIsInserted_ = false;
-        inserted_card_n_ = 0;
-        evalTries = 0;
-    }
+
 
 public:
     explicit CardReader(ATM &atm, bool isOp);
@@ -39,6 +35,12 @@ public:
 
     CARD_NUMBER_T getCardNum(){return inserted_card_n_;}
     void setState(bool isOp) override;
+
+    inline void reset() {
+        cardIsInserted_ = false;
+        inserted_card_n_ = 0;
+        evalTries = 0;
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_CARDREADER_H

@@ -56,6 +56,8 @@ public:
     void ATMPowerChangeFromATM(ATMPowerState) override;
 
     void downloadProcessScreen();
+
+    void updateEnNum();
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

@@ -130,7 +130,14 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 }
 
 void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
-    if (display_->getCurrentScreen() == MainMenuScreen) {
+    if (display_->getCurrentScreen() == PINEnteringScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::WelcomeScreen);
+            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
+            entered_NUM = 0;
+            dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
+        }
+    } else if (display_->getCurrentScreen() == MainMenuScreen) {
         if (e == UIButtonsInput::L3) {
             navigateToNewView(Views::PutCashScreen);
             enableDispencer(false);
@@ -182,12 +189,13 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::MainMenuScreen);
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::WelcomeScreen);
+            dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
 
             if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
                 atmForm_->changeCardReader(false);
                 //todo wait while load and remove message
                 QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
-                display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, cardReader тимчасово не працює';");
+                display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
             } else
                 atmForm_->changeCardReader(true);
 
@@ -302,7 +310,24 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::PoweredOffScreen);
         }
-    } else if (display_->getCurrentScreen() == ProcessScreen) {
+    }  else if (display_->getCurrentScreen() == ReadCardScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::DoTransactionScreen);
+            entered_NUM = 0;
+        }
+    } else if (display_->getCurrentScreen() == ReadAmountScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::ReadCardScreen);
+            entered_NUM = entered_card;
+            updateEnNum();
+        }
+    } else if (display_->getCurrentScreen() == ReadRegScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::ReadAmountScreen);
+            entered_NUM = entered_amount;
+            updateEnNum();
+        }
+    }else if (display_->getCurrentScreen() == ProcessScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::DoTransactionScreen);
         } else if (e == UIButtonsInput::R0) {
@@ -388,7 +413,7 @@ void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
             if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
                 //todo wait while load and remove message
                 QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
-                display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, cardReader тимчасово не працює';");
+                display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
             }
             break;
         case Off:
@@ -406,7 +431,7 @@ void ATMQtUiController::enableDispencer(bool isWithdrawal){
         atmForm_->changeDispenser(false);
         //todo wait while load and remove message
         QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
-        display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, діспенсер тимчасово не працює' ;");
+        display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the dispenser is temporarily down' ;");
     }
 }
 
@@ -418,6 +443,11 @@ void ATMQtUiController::downloadProcessScreen() {
         display_->runJs("document.getElementById(\"days\").innerHTML ='every "+QString::number(entered_reg)+" days' ;");
 
 
+}
+
+void ATMQtUiController::updateEnNum() {
+    QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+    display_->runJs("document.getElementById(\"text\").innerHTML = '"+QString::number(entered_NUM)+"';");
 }
 
 

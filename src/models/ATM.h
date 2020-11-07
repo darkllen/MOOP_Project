@@ -47,6 +47,9 @@ public:
     void setCardReaderStatus(bool);
     bool getDispenserStatus();
     void setDispenserStatus(bool);
+
+    void resetCardReader();
+
 };
 
 
