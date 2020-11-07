@@ -56,6 +56,8 @@ void CardReader::onVerificationFail() {
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {
         blockCard();
     }
+    parent_.getMediator()->Notify(*atm_, EventToATM::PINIsWrong (evalTries)
+    );
 }
 
 void CardReader::returnCard() {

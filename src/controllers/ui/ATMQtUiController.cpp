@@ -10,6 +10,7 @@
 #include "../../models/accounts/Account.h"
 #include "../../models/atm_hardware/CardReader.h"
 #include "../../helpers/InputValidation.h"
+#include "../../constants/ATMLimits.h"
 
 
 
@@ -20,6 +21,17 @@ ATMQtUiController::~ATMQtUiController() {
     delete atmForm_;
     atmForm_ = nullptr;
 }
+
+void ATMQtUiController::changePINTries(int n){
+    if (display_->getCurrentScreen() == PINEnteringScreen) {
+            QString jsQ = "document.getElementById(\"tries\").innerHTML = 'Tries left: "+ QString::number(ATMLimits::MAX_FAILED_PIN_EVALS - n) +"';";
+            //todo wait while load
+            entered_NUM = 0;
+        display_->runJs("document.getElementById(\"stars\").innerHTML =' ';");
+        display_->runJs(jsQ);
+        }
+}
+
 
 void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
     if (display_->getCurrentScreen() == PINEnteringScreen || display_->getCurrentScreen() == ChangePinScreen) {
@@ -62,6 +74,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             if(InputValidation::validatePin(entered_NUM)){
                 mediator_->Notify(*this, EventToATM::PINChangedEvent(entered_NUM));
                 entered_NUM = 0;
+                navigateToNewView(Views::MainMenuScreen);
             }
         }
     }
@@ -194,6 +207,7 @@ void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultE
             atmForm_->changeCardReader(true);
             break;
         }
+
     }
 }
 

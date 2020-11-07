@@ -22,6 +22,9 @@ public:
     virtual void cardReaderInput(CARD_NUMBER_T) = 0;
     virtual void ATMPowerChangeFromUI(ATMPowerState) = 0;
 
+    virtual void changePINTries(int n)=0;
+
+
     virtual void printReceiptOutput() = 0;
     virtual void dispenserOutput(CASH_AMOUNT_T) = 0;
     virtual void navigateToNewView(Views) = 0;

@@ -56,16 +56,23 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         case ATMEvent::PutCashEvent: {
             auto e = dynamic_cast<const EventToATM::PutCashEvent &>(event);
             atm_->getDispenser().cashIn(e.value);
+            CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
+            const Account account = *(Bank::getAccount(n));
+            const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account, e.value, false);
+            AccountActions::makeTransaction(account, tr);
             break;
         }
         case ATMEvent::TakeCashEvent: {
             auto e = dynamic_cast<const EventToATM::TakeCashEvent &>(event);
             atm_->getDispenser().cashOut(e.value);
+            CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
+            const Account account = *(Bank::getAccount(n));
+            const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account, e.value, true);
+            AccountActions::makeTransaction(account, tr);
             break;
         }
         case ATMEvent::PINChangedEvent: {
             auto e = dynamic_cast<const EventToATM::PINChangedEvent &>(event);
-            //atm_->getCardReader().getCardNum();
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
             PIN_T pin = Bank::getCard(n).getPIN();
             const Account account = *(Bank::getAccount(n));
@@ -73,6 +80,7 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
             AccountActions::makeTransaction(account, tr);
             break;
         }
+
         default:
             throw ATMException("Invalid event target!");
     }
@@ -94,6 +102,11 @@ void ATMIO::handleNotifyTargetATMController(const ATMEvent &event) const {
         }
         case ATMEvent::NewViewEvent: {
             controller_->navigateToNewView(dynamic_cast<const EventToATMController::NewViewEvent &>(event).value);
+            break;
+        }
+        case ATMEvent::PINIsWrong: {
+            auto e = dynamic_cast<const EventToATM::PINIsWrong &>(event);
+            controller_->changePINTries(e.value);
             break;
         }
         default:

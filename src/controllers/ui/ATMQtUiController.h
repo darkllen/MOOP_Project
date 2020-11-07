@@ -32,6 +32,8 @@ public:
     void cardReaderInput(CARD_NUMBER_T) override;
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
+    void changePINTries(int n);
+
     // ATM calls:
     void printReceiptOutput() override;
     void dispenserOutput(CASH_AMOUNT_T) override;
