@@ -104,6 +104,9 @@ void ATMDisplay::navigateTo(Views view) {
         case ProcessScreen:
             webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
             break;
+        case ReceiptScreen:
+            webEngineView_->load(QUrl("qrc:/views/receipt.html"));
+            break;
     }
 
     currentScreen_ = view;

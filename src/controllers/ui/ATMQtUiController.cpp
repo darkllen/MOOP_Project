@@ -177,12 +177,16 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             atmForm_->changeDispenser(false);
             navigateToNewView(Views::MainMenuScreen);
+            display_->setReceipt("");
+            atmForm_->changeReceipt(false);
         }
 
     } else if (display_->getCurrentScreen() == TakeCashScreen) {
         if (e == UIButtonsInput::L0) {
             atmForm_->changeDispenser(false);
             navigateToNewView(Views::MainMenuScreen);
+            display_->setReceipt("");
+            atmForm_->changeReceipt(false);
         }
     } else if (display_->getCurrentScreen() == FinishAccountScreen) {
         if (e == UIButtonsInput::L0) {
@@ -330,13 +334,25 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
     }else if (display_->getCurrentScreen() == ProcessScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::DoTransactionScreen);
+            display_->setReceipt("");
+            atmForm_->changeReceipt(false);
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::MainMenuScreen);
-            if(isOneTime)
-                mediator_->Notify(*this, EventToATM::OneTimeTransaction(entered_card,entered_amount));
-            else
-                mediator_->Notify(*this, EventToATM::RegularTransaction(entered_card,entered_amount, entered_reg));
 
+            CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
+
+            if(isOneTime) {
+                mediator_->Notify(*this, EventToATM::OneTimeTransaction(entered_card, entered_amount));
+                display_->setReceipt(QString::number(entered_amount)+"$ was transfered from card "+QString::number(n)+" to card "+QString::number(entered_card));
+            }
+            else {
+                mediator_->Notify(*this, EventToATM::RegularTransaction(entered_card, entered_amount, entered_reg));
+                display_->setReceipt(QString(entered_amount)+"$ will be transfered from card "+QString::number(n)+" to card "+QString(entered_card)+" every "+QString(entered_reg)+" days");
+
+            }
+
+            //todo wait
+            atmForm_->changeReceipt(true);
             entered_card=0;
             entered_amount=0;
             entered_reg=0;
@@ -357,7 +373,9 @@ void ATMQtUiController::dispenserInput(const CASH_AMOUNT_T n) {
 
      if (display_->getCurrentScreen() == PutCashScreen) {
          mediator_->Notify(*this, EventToATM::PutCashEvent(n));
-    } else if (display_->getCurrentScreen() == PutCashMScreen) {
+         display_->setReceipt("Put "+QString::number(n)+"$ to card with number "+QString::number(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum()));
+//         atmForm_->changeReceipt(true);
+     } else if (display_->getCurrentScreen() == PutCashMScreen) {
          mediator_->Notify(*this, EventToATM::PutCashMEvent(n));
      }
 }
@@ -369,12 +387,23 @@ void ATMQtUiController::cardReaderInput(const CARD_NUMBER_T n) {
 }
 
 void ATMQtUiController::printReceiptOutput() {
-    //TODO: Requires implementation
+    if (atmForm_->getIsReceiptEnable()) {
+        display_->navigateTo(ReceiptScreen);
+        //todo wait while load and remove message
+
+        QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+        display_->runJs("document.getElementById(\"text\").innerHTML ='"+display_->getReceipt()+"';");
+
+        display_->setReceipt("");
+        atmForm_->changeReceipt(false);
+    }
 }
 
 void ATMQtUiController::dispenserOutput(CASH_AMOUNT_T n) {
     if (display_->getCurrentScreen() == TakeCashScreen) {
         mediator_->Notify(*this, EventToATM::TakeCashEvent(n));
+        display_->setReceipt("Take "+QString::number(n)+"$ from card with number "+QString::number(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum()));
+//        atmForm_->changeReceipt(true);
     } else if (display_->getCurrentScreen() == TakeCashMScreen) {
         mediator_->Notify(*this, EventToATM::TakeCashMEvent(n));
     }

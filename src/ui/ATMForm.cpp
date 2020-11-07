@@ -142,7 +142,8 @@ void ATMForm::on_empty_keypad_btn_clicked() {
 
 void ATMForm::on_receipt_btn_clicked() {
     qDebug() << "get receipt";
-    controller_->navigateToNewView(ReceiptScreen);
+    controller_->printReceiptOutput();
+
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
@@ -183,8 +184,12 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserOutput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn())
+                        if(controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
+                            //todo wait while load and remove message
+                            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+                            changeReceipt(true);
+                        }
                         else
                             controller_->navigateToNewView(PoweredOffScreen);
 
@@ -211,8 +216,12 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserInput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn())
+                        if(controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
+                            //todo wait while load and remove message
+                            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+                            changeReceipt(true);
+                        }
                         else
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
@@ -294,6 +303,10 @@ void ATMForm::changeCardReader(bool b){
 
 void ATMForm::changeReceipt(bool b){
     ui_->receipt_btn->setEnabled(b);
+}
+
+bool ATMForm::getIsReceiptEnable(){
+    return ui_->receipt_btn->isEnabled();
 }
 
 

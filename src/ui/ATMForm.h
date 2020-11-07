@@ -39,9 +39,11 @@ public:
     void changeCardReader(bool b);
     void changeDispenser(bool);
     void changeReceipt(bool);
+    bool getIsReceiptEnable();
 
 
-private slots:
+
+        private slots:
     void on_n000_keypad_btn_clicked();
     void on_n0_keypad_btn_clicked();
     void on_n1_keypad_btn_clicked();

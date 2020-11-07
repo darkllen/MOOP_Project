@@ -17,7 +17,7 @@ private:
     bool isOn_;
 
     bool isLocked_;
-    std::string receipt="";
+    QString receipt="";
 
 public:
     explicit ATMDisplay(QWebEngineView& webEngineView);
@@ -34,8 +34,8 @@ public:
 
     bool getIsLocked(){return isLocked_;}
     bool getIsOn(){return isOn_;}
-    std::string getReceipt(){return receipt;}
-    void setReceipt(std::string s){receipt = s;}
+    QString getReceipt(){return receipt;}
+    void setReceipt(QString s){receipt = s;}
 };
 
 
