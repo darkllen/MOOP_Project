@@ -72,6 +72,8 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     CASH_AMOUNT_T cash (row[1].get<int>());
     bool cardReaderState(row[2].get<bool>());
     bool dispenserState(row[3].get<bool>());
+
+    //TODO YARIK
     return ATM(ATMInfo(num, s.str(), ""),cash, cardReaderState, dispenserState);
 }
 
