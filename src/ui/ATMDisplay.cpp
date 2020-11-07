@@ -3,10 +3,12 @@
 //
 
 #include <QtWebEngineWidgets/QWebEngineView>
-
+#include <QTimer>
+#include <QtCore/qeventloop.h>
 #include "ATMDisplay.h"
 #include "../models/Bank.h"
 #include "../models/accounts/Account.h"
+
 
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
@@ -108,7 +110,7 @@ void ATMDisplay::navigateTo(Views view) {
             webEngineView_->load(QUrl("qrc:/views/receipt.html"));
             break;
     }
-
+    ATMDisplay::waitForLoad(*webEngineView_);
     currentScreen_ = view;
 }
 
@@ -118,4 +120,23 @@ void ATMDisplay::runJs(const QString& js){
 
 Views ATMDisplay::getCurrentScreen() const {
     return currentScreen_;
+}
+
+
+bool ATMDisplay::waitForLoad(QWebEngineView& view)
+{
+    QEventLoop loopLoad;
+    QTimer timer;
+    QObject::connect(&view, SIGNAL(loadFinished(bool)), &loopLoad, SLOT(quit()));
+    QObject::connect(&view, SIGNAL(loadFinished(bool)), &timer, SLOT(stop()));
+    QObject::connect(&timer, SIGNAL(timeout()), &loopLoad, SLOT(quit()));
+    timer.start(2000);
+    loopLoad.exec();
+    if(timer.isActive())
+    {
+        timer.stop();
+        view.stop();
+        return false;
+    }
+    return true;
 }

@@ -36,6 +36,8 @@ public:
     bool getIsOn(){return isOn_;}
     QString getReceipt(){return receipt;}
     void setReceipt(QString s){receipt = s;}
+
+    static bool waitForLoad(QWebEngineView &view);
 };
 
 
