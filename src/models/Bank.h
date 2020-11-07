@@ -7,6 +7,7 @@
 
 class Account;
 class DebitCard;
+class Customer;
 
 class Bank {
 private:
@@ -21,6 +22,8 @@ public:
     static DebitCard getCard(const CARD_NUMBER_T &);
     static Account* getAccount(const std::string&);
     static Account* getAccount(const CARD_NUMBER_T&);
-    };
+    static Customer* getCustomer(const CARD_NUMBER_T&);
+
+};
 
 #endif //MOOP_ATM_PROJECT_BANK_H

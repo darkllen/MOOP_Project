@@ -85,3 +85,8 @@ Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
     return getAccount(s.str());
 }
 
+Customer* Bank::getCustomer(const CARD_NUMBER_T&){
+    return nullptr;
+    //todo database
+}
+
