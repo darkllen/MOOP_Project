@@ -38,6 +38,7 @@ public:
     void setIsWithdrawal(bool);
     void changeCardReader(bool b);
     void changeDispenser(bool);
+    void changeReceipt(bool);
 
 
 private slots:

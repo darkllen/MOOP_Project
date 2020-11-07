@@ -342,6 +342,10 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             entered_reg=0;
 
         }
+    } else if (display_->getCurrentScreen() == ReceiptScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::MainMenuScreen);
+        }
     }
 }
 

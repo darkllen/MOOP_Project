@@ -26,6 +26,7 @@
 		<file>views/TransactionReader/ReadAmount.html</file>
 		<file>views/TransactionReader/ReadCard.html</file>
 		<file>views/TransactionReader/ReadReg.html</file>
+		<file>views/receipt.html</file>
 
 	</qresource>
 </RCC>

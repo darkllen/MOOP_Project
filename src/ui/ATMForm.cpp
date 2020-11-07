@@ -142,7 +142,7 @@ void ATMForm::on_empty_keypad_btn_clicked() {
 
 void ATMForm::on_receipt_btn_clicked() {
     qDebug() << "get receipt";
-    //TODO: Needs implementation
+    controller_->navigateToNewView(ReceiptScreen);
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
@@ -291,6 +291,11 @@ void ATMForm::changeDispenser(bool b){
 void ATMForm::changeCardReader(bool b){
     ui_->card_reader_btn->setEnabled(b);
 }
+
+void ATMForm::changeReceipt(bool b){
+    ui_->receipt_btn->setEnabled(b);
+}
+
 
 void ATMForm::setIsWithdrawal(bool b){
     isWithdrawal = b;

@@ -11,15 +11,11 @@
 #include "../models/ATMInfo.h"
 
 void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
-
         dispenser.cashIn(amount);
-
 }
 
 void Maintenance::takeCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
-
         dispenser.cashOut(amount);
-
 }
 
 bool Maintenance::checkStatus(const ATM::Hardware &h) {

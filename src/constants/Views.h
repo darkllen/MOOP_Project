@@ -29,7 +29,8 @@ enum Views {
     ReadAmountScreen,
     ReadCardScreen,
     ReadRegScreen,
-    ProcessScreen
+    ProcessScreen,
+    ReceiptScreen
 
 };
 
