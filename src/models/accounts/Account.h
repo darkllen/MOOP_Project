@@ -12,7 +12,7 @@ private:
     CASH_AMOUNT_T money_;
 public:
     Account(int ownerId, std::string IBAN, const BANK_NUMBER_T& bank_, const CASH_AMOUNT_T&);
-    ~Account() = default;
+    virtual ~Account() = default;
 
     BANK_NUMBER_T getBank() const;
     std::string getIBAN_() const;

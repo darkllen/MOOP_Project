@@ -23,7 +23,7 @@ bool InputValidation::validateTimePeriod(const QDateTime &begin, const QDateTime
 
 bool InputValidation::validateCashSum(CASH_AMOUNT_T amount, CARD_NUMBER_T n){
     try {
-        return amount<=Bank::getAccount(n)->getMoney();
+        return amount <= Bank::getAccount(n)->getMoney();
 
     } catch (DBException& e) {
         return false;

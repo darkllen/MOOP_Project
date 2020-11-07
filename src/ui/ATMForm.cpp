@@ -195,6 +195,9 @@ void ATMForm::on_dispenser_btn_clicked() {
                     catch (HardwareException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
+                    catch (TransactionException e) {
+                        QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
+                    }
                 } else {
                     QMessageBox::warning(nullptr, "Invalid input", "Cash amount is invalid!", QMessageBox::Ok);
                 }
@@ -222,6 +225,9 @@ void ATMForm::on_dispenser_btn_clicked() {
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
                     catch (HardwareException e) {
+                        QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
+                    }
+                    catch (TransactionException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
                 } else {
