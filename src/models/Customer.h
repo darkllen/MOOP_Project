@@ -16,6 +16,8 @@ public:
     ~Customer() = default;
 
     std::string getName(){return name_;}
+    std::string getAddress(){return address_;}
+
 };
 
 #endif //MOOP_ATM_PROJECT_CUSTOMER_H

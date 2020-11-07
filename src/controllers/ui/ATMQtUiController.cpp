@@ -141,12 +141,19 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
         } else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ShowAccountsScreen);
+            CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
+
+            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+            display_->runJs("document.getElementById(\"name\").innerHTML ='"+QString::fromStdString(Bank::getCustomer(n)->getName())+"';");
+            display_->runJs("document.getElementById(\"address\").innerHTML ='"+QString::fromStdString(Bank::getCustomer(n)->getAddress())+"';");
+
         } else if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::FinishAccountScreen);
         } else if (e == UIButtonsInput::R3) {
             navigateToNewView(Views::ChangePinScreen);
         } else if (e == UIButtonsInput::R2) {
-            navigateToNewView(Views::ChangeLimitScreen);
+            //todo remove or replace this view
+            //navigateToNewView(Views::ChangeLimitScreen);
         } else if (e == UIButtonsInput::R1) {
             navigateToNewView(Views::DoTransactionScreen);
         } else if (e == UIButtonsInput::R0) {
