@@ -183,10 +183,11 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserOutput(value);
                         changeDispenser(false);
-                        if(powerOff)
-                            controller_->navigateToNewView(PoweredOffScreen);
-                        else
+                        if(controller_->getIsOn())
                             controller_->navigateToNewView(MainMenuScreen);
+                        else
+                            controller_->navigateToNewView(PoweredOffScreen);
+
                     }
                     catch (HardwareException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
@@ -210,10 +211,10 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserInput(value);
                         changeDispenser(false);
-                        if(powerOff)
-                            controller_->navigateToNewView(PoweredOffScreen);
+                        if(controller_->getIsOn())
+                            controller_->navigateToNewView(MainMenuScreen);
                         else
-                             controller_->navigateToNewView(MainMenuScreen);
+                            controller_->navigateToNewView(PoweredOffScreen);
                     }
                     catch (HardwareException e) {
                         QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
@@ -295,11 +296,5 @@ void ATMForm::setIsWithdrawal(bool b){
     isWithdrawal = b;
 }
 
-void ATMForm::setPowerOff(bool b){
-    powerOff = b;
-}
-bool ATMForm::getPowerOff(){
-    return  powerOff;
-}
 
 

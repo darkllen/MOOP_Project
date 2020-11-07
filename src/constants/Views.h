@@ -27,6 +27,7 @@ enum Views {
     PutCashMScreen,
     TakeCashMScreen,
     ChangeStatusScreen,
+    InfoScreen,
     CardIsInvalidScreen,
     CardIsBlockedScreen
 };

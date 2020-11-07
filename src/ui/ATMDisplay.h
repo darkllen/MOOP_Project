@@ -32,6 +32,7 @@ public:
     Views getCurrentScreen() const;
 
     bool getIsLocked(){return isLocked_;}
+    bool getIsOn(){return isOn_;}
 };
 
 

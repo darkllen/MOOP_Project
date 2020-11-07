@@ -8,6 +8,7 @@
 #include <QtCore/QObject>
 
 #include "../ATMController.h"
+#include "../../ui/ATMDisplay.h"
 
 class ATMForm;
 class QMainWindow;
@@ -33,6 +34,9 @@ public:
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
     void changePINTries(int n);
+    bool getIsOn(){return display_->getIsOn();}
+
+    void enableDispencer(bool);
 
     // ATM calls:
     void printReceiptOutput() override;

@@ -71,6 +71,24 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
             AccountActions::makeTransaction(account, tr);
             break;
         }
+        case ATMEvent::PutCashMEvent: {
+            auto e = dynamic_cast<const EventToATM::PutCashMEvent &>(event);
+            atm_->getDispenser().cashIn(e.value);
+//            CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
+//            const Account account = *(Bank::getAccount(n));
+//            const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account, e.value, false);
+//            AccountActions::makeTransaction(account, tr);
+            break;
+        }
+        case ATMEvent::TakeCashMEvent: {
+            auto e = dynamic_cast<const EventToATM::TakeCashMEvent &>(event);
+            atm_->getDispenser().cashOut(e.value);
+//            CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
+//            const Account account = *(Bank::getAccount(n));
+//            const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account, e.value, true);
+//            AccountActions::makeTransaction(account, tr);
+            break;
+        }
         case ATMEvent::PINChangedEvent: {
             auto e = dynamic_cast<const EventToATM::PINChangedEvent &>(event);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();

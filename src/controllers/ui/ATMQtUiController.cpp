@@ -9,6 +9,7 @@
 #include "../../models/Bank.h"
 #include "../../models/accounts/Account.h"
 #include "../../models/atm_hardware/CardReader.h"
+#include "../../models/atm_hardware/Dispenser.h"
 #include "../../helpers/InputValidation.h"
 #include "../../constants/ATMLimits.h"
 
@@ -83,13 +84,13 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
     if (display_->getCurrentScreen() == MainMenuScreen) {
         if (e == UIButtonsInput::L3) {
-            atmForm_->changeDispenser(true);
-            atmForm_->setIsWithdrawal(false);
             navigateToNewView(Views::PutCashScreen);
+            enableDispencer(false);
+
         } else if (e == UIButtonsInput::L2) {
-            atmForm_->changeDispenser(true);
-            atmForm_->setIsWithdrawal(true);
             navigateToNewView(Views::TakeCashScreen);
+            enableDispencer(true);
+
         } else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ShowAccountsScreen);
         } else if (e == UIButtonsInput::L0) {
@@ -126,7 +127,15 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::MainMenuScreen);
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::WelcomeScreen);
-            atmForm_->changeCardReader(true);
+
+            if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
+                atmForm_->changeCardReader(false);
+                //todo wait while load and remove message
+                QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+                display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, cardReader тимчасово не працює';");
+            } else
+                atmForm_->changeCardReader(true);
+
             //todo erase all info?
         }
         if (e == UIButtonsInput::L0) {
@@ -156,15 +165,79 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         atmForm_->changeCardReader(false);
 
         if (e == UIButtonsInput::L3) {
-            atmForm_->changeDispenser(true);
-            atmForm_->setIsWithdrawal(false);
             navigateToNewView(Views::PutCashMScreen);
+            enableDispencer(false);
+
         } else if (e == UIButtonsInput::L2) {
-            atmForm_->changeDispenser(true);
-            atmForm_->setIsWithdrawal(true);
             navigateToNewView(Views::TakeCashMScreen);
+            enableDispencer(true);
+
         } else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ChangeStatusScreen);
+            //todo wait while load and remove message
+            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+
+            QString dis;
+            if(dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenserStatus()) dis = "Working";
+            else dis = "Not working";
+            QString cR;
+            if(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) cR = "Working";
+            else cR = "Not working";
+
+            display_->runJs("document.getElementById(\"dispenser_status\").innerHTML ='"+dis+"' ;");
+            display_->runJs("document.getElementById(\"cardreader_status\").innerHTML ='"+cR+"' ;");
+
+        } else if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::InfoScreen);
+            CASH_AMOUNT_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenser().getAvailableCashAmount();
+            //todo wait while load and remove message
+            QMessageBox::warning(nullptr, "Wait", QString::number(n), QMessageBox::Ok);
+            display_->runJs("document.getElementById(\"cash\").innerHTML ='"+QString::number(n)+"' ;");
+
+        }
+
+    } else if (display_->getCurrentScreen() == TakeCashMScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::PoweredOffScreen);
+        }
+    } else if (display_->getCurrentScreen() == PutCashMScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::PoweredOffScreen);
+        }
+    } else if (display_->getCurrentScreen() == ChangeStatusScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::PoweredOffScreen);
+        } else if (e == UIButtonsInput::L3) {
+            QString cR;
+            if(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
+                cR = "Not working";
+                dynamic_cast<ATMIO *>(mediator_)->getATM().setCardReaderStatus(false);
+            }
+            else {
+                cR = "Working";
+                dynamic_cast<ATMIO *>(mediator_)->getATM().setCardReaderStatus(true);
+            }
+            display_->runJs("document.getElementById(\"cardreader_status\").innerHTML ='"+cR+"' ;");
+
+        } else if (e == UIButtonsInput::L2) {
+            QString dis;
+            if(dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenserStatus()) {
+                dis = "Not working";
+                dynamic_cast<ATMIO *>(mediator_)->getATM().setDispenserStatus(false);
+
+            }
+            else {
+                dis = "Working";
+                dynamic_cast<ATMIO *>(mediator_)->getATM().setDispenserStatus(true);
+
+            }
+
+            display_->runJs("document.getElementById(\"dispenser_status\").innerHTML ='"+dis+"' ;");
+
+        }
+    } else if (display_->getCurrentScreen() == InfoScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::PoweredOffScreen);
         }
     }
 }
@@ -233,10 +306,30 @@ void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
     switch (state) {
         case On:
             display_->turnOn();
+            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
+            if(!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
+                //todo wait while load and remove message
+                QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+                display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, cardReader тимчасово не працює';");
+            }
             break;
         case Off:
             display_->turnOff();
+            atmForm_->changeCardReader(false);
             break;
     }
 }
+
+void ATMQtUiController::enableDispencer(bool isWithdrawal){
+    if (dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenserStatus()) {
+        atmForm_->changeDispenser(true);
+        atmForm_->setIsWithdrawal(isWithdrawal);
+    } else{
+        atmForm_->changeDispenser(false);
+        //todo wait while load and remove message
+        QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
+        display_->runJs("document.getElementById(\"warning\").innerHTML ='Перепрошуємо, діспенсер тимчасово не працює' ;");
+    }
+}
+
 

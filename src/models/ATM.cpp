@@ -73,6 +73,19 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     return ATM(ATMInfo(num, s.str(), ""),cash);
 }
 
+//todo connect to database
+bool ATM::getCardReaderStatus(){
+    return cardReader_->getState();
+}
+void ATM::setCardReaderStatus(bool b){
+    cardReader_->setState(b);
+}
+bool ATM::getDispenserStatus(){
+    return  dispenser_->getState();
+}
+void ATM::setDispenserStatus(bool b){
+    dispenser_->setState(b);
+}
 
 
 

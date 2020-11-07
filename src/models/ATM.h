@@ -42,6 +42,11 @@ public:
     Dispenser& getDispenser();
 
     static ATM getATM(const ATM_SERIAL_NUMBER_T& num);
+
+    bool getCardReaderStatus();
+    void setCardReaderStatus(bool);
+    bool getDispenserStatus();
+    void setDispenserStatus(bool);
 };
 
 

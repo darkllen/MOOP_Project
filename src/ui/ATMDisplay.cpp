@@ -15,6 +15,7 @@ ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
 void ATMDisplay::turnOn() {
     isOn_ = true;
     navigateTo(Views::WelcomeScreen);
+
 }
 
 void ATMDisplay::turnOff() {
@@ -25,9 +26,27 @@ void ATMDisplay::turnOff() {
 
 void ATMDisplay::navigateTo(Views view) {
     if (!isOn_) {
-        throw "Attempt to use the screen in OFF state";
-        //TODO: requires implementation
-    }
+        switch(view){
+            case PutCashMScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/putCashM.html"));
+                break;
+            case TakeCashMScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/takeCashM.html"));
+                break;
+            case ChangeStatusScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/changeStatus.html"));
+                break;
+            case InfoScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/info.html"));
+                break;
+            case PoweredOffScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
+                break;
+            default:
+                throw "Attempt to use the screen in OFF state";
+
+        }
+    } else
     switch (view) {
         case WelcomeScreen:
             webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
@@ -73,16 +92,9 @@ void ATMDisplay::navigateTo(Views view) {
         case CardIsInvalidScreen:
             webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
             break;
-        case PutCashMScreen:
-            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/putCashM.html"));
-            break;
-        case TakeCashMScreen:
-            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/takeCashM.html"));
-            break;
-        case ChangeStatusScreen:
-            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/changeStatus.html"));
-            break;
+
     }
+
     currentScreen_ = view;
 }
 

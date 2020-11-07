@@ -19,6 +19,7 @@
 		<file>views/PoweredOffScreen/changeStatus.html</file>
 		<file>views/PoweredOffScreen/putCashM.html</file>
 		<file>views/PoweredOffScreen/takeCashM.html</file>
+		<file>views/PoweredOffScreen/info.html</file>
 		<file>views/WelcomeScreen/index.html</file>
 		<file>views/WelcomeScreen/styles.css</file>
 
