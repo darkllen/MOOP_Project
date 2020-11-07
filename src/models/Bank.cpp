@@ -27,11 +27,13 @@ DebitCard Bank::getCard(const CARD_NUMBER_T& cardNumberT) {
                 .where("cardNum_ like :cardNum_")
                 .bind("cardNum_",cardNumberT).execute();
 
+        if (myResult.count() == 0){
+            throw DBException("no card was found");
+        }
         mysqlx::Row row = myResult.fetchOne();
         std::stringstream s;
         s << row[0];
         QStringList date(QString(QString::fromStdString(s.str())).split("-"));
-        //todo exception
         QDate expireDate_(date.at(0).toInt(),date.at(1).toInt(),date.at(2).toInt());
         CVV_T cvCode_(row[1].get<int>());
         CVV_T PIN_(row[2].get<int>());
