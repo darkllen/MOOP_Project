@@ -73,8 +73,10 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     bool cardReaderState(row[2].get<bool>());
     bool dispenserState(row[3].get<bool>());
 
+    std::string ad(s.str());
+    auto* inf = new ATMInfo(num, ad, "");
     //TODO YARIK
-    return ATM(ATMInfo(num, s.str(), ""),cash, cardReaderState, dispenserState);
+    return ATM(*inf,cash, cardReaderState, dispenserState);
 }
 
 //todo connect to database
