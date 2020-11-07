@@ -130,6 +130,22 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 }
 
 void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideButton e) {
+    if (display_->getCurrentScreen() == CardIsInvalidScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::WelcomeScreen);
+            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
+            entered_NUM = 0;
+            dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
+        }
+    } else
+    if (display_->getCurrentScreen() == CardBlockedScreen) {
+        if (e == UIButtonsInput::L0) {
+            navigateToNewView(Views::WelcomeScreen);
+            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
+            entered_NUM = 0;
+            dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
+        }
+    } else
     if (display_->getCurrentScreen() == PINEnteringScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::WelcomeScreen);
@@ -347,7 +363,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             }
             else {
                 mediator_->Notify(*this, EventToATM::RegularTransaction(entered_card, entered_amount, entered_reg));
-                display_->setReceipt(QString(entered_amount)+"$ will be transfered from card "+QString::number(n)+" to card "+QString(entered_card)+" every "+QString(entered_reg)+" days");
+                display_->setReceipt(QString::number(entered_amount)+"$ will be transfered from card "+QString::number(n)+" to card "+QString::number(entered_card)+" every "+QString::number(entered_reg)+" days");
 
             }
 
