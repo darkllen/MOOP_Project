@@ -19,3 +19,7 @@ CASH_AMOUNT_T Account::getMoney() const {
     return money_;
 }
 
+void Account::setMoney(CASH_AMOUNT_T cash) {
+    money_ = cash;
+}
+

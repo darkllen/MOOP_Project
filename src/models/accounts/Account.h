@@ -18,6 +18,7 @@ public:
     std::string getIBAN_() const;
 
     CASH_AMOUNT_T getMoney() const;
+    void setMoney(CASH_AMOUNT_T);
 
     int getOwnerId()const {return  ownerId_;}
 
