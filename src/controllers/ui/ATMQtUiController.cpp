@@ -90,11 +90,11 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             atmForm_->changeDispenser(true);
             atmForm_->setIsWithdrawal(true);
             navigateToNewView(Views::TakeCashScreen);
-        }  else if (e == UIButtonsInput::L1) {
+        } else if (e == UIButtonsInput::L1) {
             navigateToNewView(Views::ShowAccountsScreen);
         } else if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::FinishAccountScreen);
-        }else if (e == UIButtonsInput::R3) {
+        } else if (e == UIButtonsInput::R3) {
             navigateToNewView(Views::ChangePinScreen);
         } else if (e == UIButtonsInput::R2) {
             navigateToNewView(Views::ChangeLimitScreen);
@@ -103,11 +103,11 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::CardBalanceScreen);
 
-            CARD_NUMBER_T n = dynamic_cast<ATMIO*>(mediator_)->getATM().getCardReader().getCardNum();
+            CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
             ACCOUNT_BALANCE_AMOUNT_T balance = Bank::getAccount(n)->getMoney();
-            QString jsQ = "document.getElementById(\"bal_num\").innerHTML = "+QString::number(balance)+";";
+            QString jsQ = "document.getElementById(\"bal_num\").innerHTML = " + QString::number(balance) + ";";
             //todo wait while load and remove message
-                   QMessageBox::warning(nullptr, "Invalid input", jsQ, QMessageBox::Ok);
+            QMessageBox::warning(nullptr, "Invalid input", jsQ, QMessageBox::Ok);
             display_->runJs(jsQ);
         }
     } else if (display_->getCurrentScreen() == PutCashScreen) {
@@ -152,6 +152,20 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::MainMenuScreen);
         }
+    } else if (display_->getCurrentScreen() == PoweredOffScreen) {
+        atmForm_->changeCardReader(false);
+
+        if (e == UIButtonsInput::L3) {
+            atmForm_->changeDispenser(true);
+            atmForm_->setIsWithdrawal(false);
+            navigateToNewView(Views::PutCashMScreen);
+        } else if (e == UIButtonsInput::L2) {
+            atmForm_->changeDispenser(true);
+            atmForm_->setIsWithdrawal(true);
+            navigateToNewView(Views::TakeCashMScreen);
+        } else if (e == UIButtonsInput::L1) {
+            navigateToNewView(Views::ChangeStatusScreen);
+        }
     }
 }
 
@@ -165,8 +179,8 @@ void ATMQtUiController::dispenserInput(const CASH_AMOUNT_T n) {
 //    }
      if (display_->getCurrentScreen() == PutCashScreen) {
          mediator_->Notify(*this, EventToATM::PutCashEvent(n));
-    } else if (display_->getCurrentScreen() == TakeCashScreen) {
-         mediator_->Notify(*this, EventToATM::TakeCashEvent(n));
+    } else if (display_->getCurrentScreen() == PutCashMScreen) {
+         mediator_->Notify(*this, EventToATM::PutCashMEvent(n));
      }
 }
 
@@ -181,7 +195,11 @@ void ATMQtUiController::printReceiptOutput() {
 }
 
 void ATMQtUiController::dispenserOutput(CASH_AMOUNT_T n) {
-    //TODO: Requires implementation
+    if (display_->getCurrentScreen() == TakeCashScreen) {
+        mediator_->Notify(*this, EventToATM::TakeCashEvent(n));
+    } else if (display_->getCurrentScreen() == TakeCashMScreen) {
+        mediator_->Notify(*this, EventToATM::TakeCashMEvent(n));
+    }
 }
 
 void ATMQtUiController::navigateToNewView(Views view) {

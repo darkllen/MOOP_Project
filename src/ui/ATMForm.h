@@ -29,6 +29,7 @@ private:
     bool cardReaderStateIsInsert;
     bool isWithdrawal;
 
+    bool powerOff = false;
 public:
     explicit ATMForm(QMainWindow &mw, ATMQtUiController &atm_io);
     ~ATMForm() override;
@@ -38,6 +39,8 @@ public:
     void setIsWithdrawal(bool);
     void changeCardReader(bool b);
     void changeDispenser(bool);
+    void setPowerOff(bool);
+    bool getPowerOff();
 
 
 private slots:

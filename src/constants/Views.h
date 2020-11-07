@@ -24,6 +24,9 @@ enum Views {
     ShowAccountsScreen,
     TakeCashScreen,
     PoweredOffScreen,
+    PutCashMScreen,
+    TakeCashMScreen,
+    ChangeStatusScreen,
     CardIsInvalidScreen,
     CardIsBlockedScreen
 };

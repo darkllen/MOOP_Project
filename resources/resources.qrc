@@ -16,7 +16,11 @@
 		<file>views/MainMenuScreen/showAccounts.html</file>
 		<file>views/MainMenuScreen/takeCash.html</file>
 		<file>views/PoweredOffScreen/index.html</file>
+		<file>views/PoweredOffScreen/changeStatus.html</file>
+		<file>views/PoweredOffScreen/putCashM.html</file>
+		<file>views/PoweredOffScreen/takeCashM.html</file>
 		<file>views/WelcomeScreen/index.html</file>
 		<file>views/WelcomeScreen/styles.css</file>
+
 	</qresource>
 </RCC>

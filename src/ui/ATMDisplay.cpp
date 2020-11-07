@@ -73,6 +73,15 @@ void ATMDisplay::navigateTo(Views view) {
         case CardIsInvalidScreen:
             webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
             break;
+        case PutCashMScreen:
+            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/putCashM.html"));
+            break;
+        case TakeCashMScreen:
+            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/takeCashM.html"));
+            break;
+        case ChangeStatusScreen:
+            webEngineView_->load(QUrl("qrc:/views/PowerOffScreen/changeStatus.html"));
+            break;
     }
     currentScreen_ = view;
 }
