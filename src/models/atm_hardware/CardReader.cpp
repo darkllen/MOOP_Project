@@ -1,15 +1,17 @@
 //
 // Created by anna2 on 20.10.2020.
 //
+#include <mysqlx/xdevapi.h>
 #include "CardReader.h"
 #include "../../models/Bank.h"
 #include "../../controllers/PinVerificationService.h"
 #include "../../constants/ATMLimits.h"
 #include "../DebitCard.h"
 #include "../../exceptions/ATMException.h"
+#include "../../models/ATMInfo.h"
 
-CardReader::CardReader(ATM &atm)
-        : Hardware(atm), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm),
+CardReader::CardReader(ATM &atm, bool isOp)
+        : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm),
           verificationService_(new PinVerificationService) {}
 
 CardReader::~CardReader() {
@@ -82,4 +84,17 @@ void CardReader::acceptCard() {
     parent_.getMediator()->Notify(*atm_, EventToATMController::CardEvalResultEvent
             (EventToATMController::CardEvalResultEvent::Result::CardPINChecking)
     );
+}
+
+void CardReader::setState(bool isOp) {
+    isOperational_ = isOp ;
+    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
+    mysqlx::Session session(url);
+    mysqlx::Schema db = session.getSchema("moop");
+    mysqlx::Table atmInfo = db.getTable("ATMInfo");
+
+
+    atmInfo.update().set("cardReaderState", isOperational_).
+            where("serialNumber_ like :serialNumber_").
+            bind("serialNumber_", parent_.getATMInfo().getSerialNumber()).execute();
 }
