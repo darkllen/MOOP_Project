@@ -11,7 +11,7 @@
 namespace InputValidation {
     bool validatePin(PIN_T);
     bool validateTimePeriod(const QDateTime &begin, const QDateTime &end);
-    bool validateCashSum(CASH_AMOUNT_T);
+    bool validateCashSum(CASH_AMOUNT_T, CARD_NUMBER_T);
     bool validatePersonName(QString &s);
     bool validateCardNumber(CARD_NUMBER_T);
 };

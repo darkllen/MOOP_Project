@@ -29,7 +29,12 @@ enum Views {
     ChangeStatusScreen,
     InfoScreen,
     CardIsInvalidScreen,
-    CardIsBlockedScreen
+    CardIsBlockedScreen,
+    ReadAmountScreen,
+    ReadCardScreen,
+    ReadRegScreen,
+    ProcessScreen
+
 };
 
 #endif //ATM_VIEWS_H

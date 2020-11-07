@@ -50,7 +50,6 @@ void CardReader::onVerificationSuccess() const {
     );
 }
 
-//TODO show how many tries left on screen (yes, new views...)
 void CardReader::onVerificationFail() {
     ++evalTries;
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {

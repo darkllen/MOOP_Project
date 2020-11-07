@@ -20,7 +20,9 @@ struct ATMEvent {
         PutCashEvent,
         TakeCashEvent,
         PINChangedEvent,
-        PINIsWrong,
+        PINIsWrongEvent,
+        OneTimeTransactionEvent,
+        RegularTransactionEvent,
 
         PutCashMEvent,
         TakeCashMEvent,
@@ -65,7 +67,7 @@ namespace EventToATM {
     };
     struct PINIsWrong : public ATMEvent {
         int value;
-        explicit PINIsWrong(int n) : ATMEvent(EventType::PINIsWrong), value(n) {}
+        explicit PINIsWrong(int n) : ATMEvent(EventType::PINIsWrongEvent), value(n) {}
     };
 
     struct PutCashMEvent : public ATMEvent {
@@ -75,6 +77,17 @@ namespace EventToATM {
     struct TakeCashMEvent : public ATMEvent {
         CASH_AMOUNT_T value;
         explicit TakeCashMEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::TakeCashMEvent), value(n) {}
+    };
+    struct OneTimeTransaction : public ATMEvent {
+        CASH_AMOUNT_T value;
+        CARD_NUMBER_T num;
+        explicit OneTimeTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n) : ATMEvent(EventType::OneTimeTransactionEvent), value(n), num(m) {}
+    };
+    struct RegularTransaction : public ATMEvent {
+        CASH_AMOUNT_T value;
+        CARD_NUMBER_T num;
+        int reg;
+        explicit RegularTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n, int r) : ATMEvent(EventType::RegularTransactionEvent), value(n), num(m), reg(r) {}
     };
 };
 

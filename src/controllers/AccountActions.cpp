@@ -22,6 +22,7 @@ void AccountActions::makeTransaction(const Account & acc, const Transaction & tr
         mysqlx::Table myTable = db.getTable("Transactions");
         mysqlx::Table tableAcc = db.getTable("Account");
 
+        //todo change money in account and fix if to==from
         if (const auto* t = dynamic_cast<const OneTimeTransfer*>(&tr)){
             tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
             tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();

@@ -21,6 +21,13 @@ private:
     ATMDisplay *display_;
     unsigned int entered_NUM;
 
+    unsigned int entered_card;
+    unsigned int entered_amount;
+    unsigned int entered_reg=0;
+
+    bool isOneTime;
+
+
 public:
     explicit ATMQtUiController(QMainWindow &mw);
     ~ATMQtUiController() override;
@@ -36,6 +43,9 @@ public:
     void changePINTries(int n);
     bool getIsOn(){return display_->getIsOn();}
 
+    bool getIsOneTime(){return isOneTime;}
+    void setIsOneTime(bool b){isOneTime = b;}
+
     void enableDispencer(bool);
 
     // ATM calls:
@@ -44,6 +54,8 @@ public:
     void navigateToNewView(Views) override;
     void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) override;
     void ATMPowerChangeFromATM(ATMPowerState) override;
+
+    void downloadProcessScreen();
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

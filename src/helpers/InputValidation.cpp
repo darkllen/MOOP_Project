@@ -7,6 +7,7 @@
 #include "../constants/ATMLimits.h"
 #include "../models/Bank.h"
 #include "../models/DebitCard.h"
+#include "../models/accounts/Account.h"
 #include "../exceptions/ATMException.h"
 #include "InputValidation.h"
 
@@ -20,8 +21,13 @@ bool InputValidation::validateTimePeriod(const QDateTime &begin, const QDateTime
     return begin<end;
 }
 
-bool InputValidation::validateCashSum(CASH_AMOUNT_T amount){
-    return amount>0;
+bool InputValidation::validateCashSum(CASH_AMOUNT_T amount, CARD_NUMBER_T n){
+    try {
+        return amount<=Bank::getAccount(n)->getMoney();
+
+    } catch (DBException& e) {
+        return false;
+    }
 }
 
 bool InputValidation::validatePersonName(QString &s){

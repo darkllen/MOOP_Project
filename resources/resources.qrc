@@ -22,6 +22,10 @@
 		<file>views/PoweredOffScreen/info.html</file>
 		<file>views/WelcomeScreen/index.html</file>
 		<file>views/WelcomeScreen/styles.css</file>
+		<file>views/TransactionReader/Process.html</file>
+		<file>views/TransactionReader/ReadAmount.html</file>
+		<file>views/TransactionReader/ReadCard.html</file>
+		<file>views/TransactionReader/ReadReg.html</file>
 
 	</qresource>
 </RCC>

@@ -92,7 +92,18 @@ void ATMDisplay::navigateTo(Views view) {
         case CardIsInvalidScreen:
             webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
             break;
-
+        case ReadCardScreen:
+            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadCard.html"));
+            break;
+        case ReadAmountScreen:
+            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadAmount.html"));
+            break;
+        case ReadRegScreen:
+            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadReg.html"));
+            break;
+        case ProcessScreen:
+            webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
+            break;
     }
 
     currentScreen_ = view;
