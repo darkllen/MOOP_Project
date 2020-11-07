@@ -14,7 +14,7 @@
 #include "../../helpers/InputValidation.h"
 #include "../../constants/ATMLimits.h"
 #include "../../models/Customer.h"
-
+#include "../../models/accounts/SavingAccount.h"
 
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
@@ -163,7 +163,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::ShowAccountsScreen);
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
 
-            QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
             display_->runJs("document.getElementById(\"name\").innerHTML ='"+QString::fromStdString(Bank::getCustomer(n)->getName())+"';");
             display_->runJs("document.getElementById(\"address\").innerHTML ='"+QString::fromStdString(Bank::getCustomer(n)->getAddress())+"';");
 
@@ -180,9 +179,17 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::CardBalanceScreen);
 
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
-            ACCOUNT_BALANCE_AMOUNT_T balance = Bank::getAccount(n)->getMoney();
+            Account* account = Bank::getAccount(n);
+            ACCOUNT_BALANCE_AMOUNT_T balance = account->getMoney();
+
             QString jsQ = "document.getElementById(\"bal_num\").innerHTML = " + QString::number(balance) + ";";
             display_->runJs(jsQ);
+
+            if (const auto* t = dynamic_cast<const SavingAccount*>(account)){
+                QString jsQ = "document.getElementById(\"bal_lim\").innerHTML = " + QString::number(t->getLimit()) + ";";
+                display_->runJs(jsQ);
+            }
+
         }
     } else if (display_->getCurrentScreen() == PutCashScreen) {
         if (e == UIButtonsInput::L0) {
@@ -464,7 +471,6 @@ void ATMQtUiController::enableDispencer(bool isWithdrawal){
 }
 
 void ATMQtUiController::downloadProcessScreen() {
-    QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
     display_->runJs("document.getElementById(\"amount\").innerHTML ='"+QString::number(entered_amount)+"' ;");
     display_->runJs("document.getElementById(\"card\").innerHTML ='to "+QString::fromStdString(Bank::getCustomer(entered_card)->getName())+"' ;");
     if(entered_reg!=0)
@@ -474,7 +480,6 @@ void ATMQtUiController::downloadProcessScreen() {
 }
 
 void ATMQtUiController::updateEnNum() {
-    QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
     display_->runJs("document.getElementById(\"text\").innerHTML = '"+QString::number(entered_NUM)+"';");
 }
 

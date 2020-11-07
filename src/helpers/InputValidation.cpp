@@ -10,6 +10,8 @@
 #include "../models/accounts/Account.h"
 #include "../exceptions/ATMException.h"
 #include "InputValidation.h"
+#include "../models/accounts/CheckingAccount.h"
+#include "../models/accounts/SavingAccount.h"
 
 #include <regex>
 
@@ -22,10 +24,18 @@ bool InputValidation::validateTimePeriod(const QDateTime &begin, const QDateTime
 }
 
 bool InputValidation::validateCashSum(CASH_AMOUNT_T amount, CARD_NUMBER_T n){
+    //todo check limit in sav acc
     try {
-        return amount <= Bank::getAccount(n)->getMoney();
+        Account* account = Bank::getAccount(n);
+        if (const auto* t = dynamic_cast<const CheckingAccount*>(account)) {
+            return amount <= t->getMoney();
+        } else if (const auto* t = dynamic_cast<const SavingAccount*>(account)){
+            return amount + t->getLimit()<= t->getMoney();
 
-    } catch (DBException& e) {
+        } else throw TransactionException("Wrong account type");
+
+
+} catch (DBException& e) {
         return false;
     }
 }
