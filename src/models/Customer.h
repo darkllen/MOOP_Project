@@ -14,6 +14,8 @@ public:
     Customer(std::string name, std::string address) :
             name_(std::move(name)), address_(std::move(address)) {}
     ~Customer() = default;
+
+    std::string getName(){return name_;}
 };
 
 #endif //MOOP_ATM_PROJECT_CUSTOMER_H

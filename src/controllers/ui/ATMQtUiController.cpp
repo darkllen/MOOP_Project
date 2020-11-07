@@ -13,6 +13,7 @@
 #include "../../models/atm_hardware/Dispenser.h"
 #include "../../helpers/InputValidation.h"
 #include "../../constants/ATMLimits.h"
+#include "../../models/Customer.h"
 
 
 
@@ -405,7 +406,7 @@ void ATMQtUiController::enableDispencer(bool isWithdrawal){
 void ATMQtUiController::downloadProcessScreen() {
     QMessageBox::warning(nullptr, "Wait", "Wait", QMessageBox::Ok);
     display_->runJs("document.getElementById(\"amount\").innerHTML ='"+QString::number(entered_amount)+"' ;");
-    display_->runJs("document.getElementById(\"card\").innerHTML ='to "+QString::number(entered_card)+"' ;");//todo show customer name
+    display_->runJs("document.getElementById(\"card\").innerHTML ='to "+QString::fromStdString(Bank::getCustomer(entered_card)->getName())+"' ;");
     if(entered_reg!=0)
         display_->runJs("document.getElementById(\"days\").innerHTML ='every "+QString::number(entered_reg)+" days' ;");
 
