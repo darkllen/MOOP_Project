@@ -101,6 +101,5 @@ Customer* Bank::getCustomer(const CARD_NUMBER_T& num){
     std::string address(ad.str());
 
     return new Customer(name, address);
-    //todo database
 }
 
