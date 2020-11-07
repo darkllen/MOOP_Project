@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
   //    unsigned  __int64 n = 4321;
   //  Transaction* transaction = new AccountManaging(QDateTime::currentDateTime(), *account, 123123, AccountManaging::PIN, o, n);
   //  AccountActions::makeTransaction(*account, *transaction);
+  //  Customer* c = Bank::getCustomer(123123);
 
     QApplication qtApp(argc, argv);
     QApplication::setStyle(QStyleFactory::create("Fusion"));
@@ -42,8 +43,6 @@ int main(int argc, char *argv[]) {
 
 
     ATMController *controller = new ATMQtUiController(mw);
-    //ATMInfo atmInfo(0, "", "");
-    //TODO fix constructor. For now location isn`t copying at all
     ATM atm(ATM::getATM(1111));
     ATMIO *io = new ATMIO(atm, *controller);
     atm.powerStateChange(ATMPowerState::On);

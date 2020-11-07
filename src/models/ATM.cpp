@@ -75,7 +75,6 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
 
     std::string ad(s.str());
     auto* inf = new ATMInfo(num, ad, "");
-    //TODO YARIK
     return ATM(*inf,cash, cardReaderState, dispenserState);
 }
 
