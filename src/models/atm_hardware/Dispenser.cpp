@@ -31,7 +31,7 @@ void Dispenser::cashIn(CASH_AMOUNT_T amount) {
 }
 
 void Dispenser::cashOut(CASH_AMOUNT_T amount) {
-    if (availableCash_ - amount < 0){
+    if (availableCash_ < amount){
         throw HardwareException("Not enough cash left in dispenser");
     }
     availableCash_ -= amount;

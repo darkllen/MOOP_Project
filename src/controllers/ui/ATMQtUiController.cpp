@@ -350,9 +350,7 @@ void ATMQtUiController::ATMPowerChangeFromUI(ATMPowerState powerState) {
 }
 
 void ATMQtUiController::dispenserInput(const CASH_AMOUNT_T n) {
-//    if (display_->getCurrentScreen() == PINEnteringScreen) {
-    //TODO: Requires implementation
-//    }
+
      if (display_->getCurrentScreen() == PutCashScreen) {
          mediator_->Notify(*this, EventToATM::PutCashEvent(n));
     } else if (display_->getCurrentScreen() == PutCashMScreen) {

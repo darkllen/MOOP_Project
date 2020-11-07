@@ -12,6 +12,7 @@
 #include "../models/atm_hardware/Dispenser.h"
 #include "../controllers/PinVerificationService.h"
 #include "../controllers/AccountActions.h"
+#include "../controllers/Maintenance.h"
 #include "../models/TransactionManager.h"
 #include "../models/Bank.h"
 #include "../models/DebitCard.h"
@@ -67,6 +68,8 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
             atm_->getDispenser().cashOut(e.value);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
             Account account = *(Bank::getAccount(n));
+            if(e.value>account.getMoney())
+                throw HardwareException("You don`t have enough money on your card");
             const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), account, e.value, true);
             AccountActions::makeTransaction(account, tr);
             break;
@@ -91,12 +94,13 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         }
         case ATMEvent::PutCashMEvent: {
             auto e = dynamic_cast<const EventToATM::PutCashMEvent &>(event);
-            atm_->getDispenser().cashIn(e.value);
+            Maintenance::putCash(atm_->getDispenser(), e.value);
+
             break;
         }
         case ATMEvent::TakeCashMEvent: {
             auto e = dynamic_cast<const EventToATM::TakeCashMEvent &>(event);
-            atm_->getDispenser().cashOut(e.value);
+            Maintenance::takeCash(atm_->getDispenser(), e.value);
             break;
         }
         case ATMEvent::PINChangedEvent: {
