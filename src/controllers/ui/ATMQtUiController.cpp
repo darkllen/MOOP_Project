@@ -97,7 +97,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
                 navigateToNewView(Views::ReadAmountScreen);
                 entered_NUM = "";
             } else{
-                QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
+                changeWarning("Card number is invalid!");
             }
         }
     }
@@ -115,8 +115,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
                     navigateToNewView(Views::ReadRegScreen);
                 entered_NUM = "";
             } else{
-                QMessageBox::warning(nullptr, "Invalid input", "Cash amount is invalid!", QMessageBox::Ok);
-
+                changeWarning("Cash amount is invalid!");
             }
         }
     } else if (display_->getCurrentScreen() == ReadRegScreen) {
@@ -128,7 +127,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 
                 entered_NUM = "";
             } else{
-                QMessageBox::warning(nullptr, "Invalid input", "Regularity is invalid!", QMessageBox::Ok);
+                changeWarning("Regularity is invalid!");
             }
         }
     }

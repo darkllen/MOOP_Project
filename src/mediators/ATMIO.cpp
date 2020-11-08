@@ -56,22 +56,22 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         }
         case ATMEvent::PutCashEvent: {
             auto e = dynamic_cast<const EventToATM::PutCashEvent &>(event);
-            atm_->getDispenser().cashIn(e.value);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
             Account* account = Bank::getAccount(n);
             const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), *account, e.value, false);
             AccountActions::makeTransaction(*account, tr);
+            atm_->getDispenser().cashIn(e.value);
             break;
         }
         case ATMEvent::TakeCashEvent: {
             auto e = dynamic_cast<const EventToATM::TakeCashEvent &>(event);
-            atm_->getDispenser().cashOut(e.value);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
             Account* account = Bank::getAccount(n);
             if(e.value>account->getMoney())
                 throw HardwareException("You don`t have enough money on your card");
             const CashTransaction tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), *account, e.value, true);
             AccountActions::makeTransaction(*account, tr);
+            atm_->getDispenser().cashOut(e.value);
             break;
         }
         case ATMEvent::OneTimeTransactionEvent: {

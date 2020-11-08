@@ -45,7 +45,7 @@ const CashTransaction &TransactionManager::createTransaction(const QDateTime & d
 
         return *(new CashTransaction(date, from, amount, isWithdrawal));
     } else  if (const auto* t = dynamic_cast<const SavingAccount*>(&from)){
-        if(t->getMoney() >= t->getLimit() + amount)
+        if (((isWithdrawal)&&(t->getMoney() >= t->getLimit() + amount))||(!isWithdrawal))
             return *(new CashTransaction(date, from, amount, isWithdrawal));
         else
             throw TransactionException("You can't take this amount of money because of card limit");
