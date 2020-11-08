@@ -180,7 +180,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::ChangePinScreen);
         } else if (e == UIButtonsInput::R2) {
             //todo remove or replace this view
-            //navigateToNewView(Views::ChangeLimitScreen);
+            navigateToNewView(Views::TransactionHistoryScreen);
         } else if (e == UIButtonsInput::R1) {
             navigateToNewView(Views::DoTransactionScreen);
         } else if (e == UIButtonsInput::R0) {
@@ -240,7 +240,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::MainMenuScreen);
         }
-    } else if (display_->getCurrentScreen() == ChangeLimitScreen) {
+    } else if (display_->getCurrentScreen() == TransactionHistoryScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::MainMenuScreen);
         }

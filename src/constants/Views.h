@@ -12,7 +12,7 @@ enum Views {
     MainMenuScreen,
     FinishAccountScreen,
     CardBalanceScreen,
-    ChangeLimitScreen,
+    TransactionHistoryScreen,
     ChangePinScreen,
     DoTransactionScreen,
     PutCashScreen,

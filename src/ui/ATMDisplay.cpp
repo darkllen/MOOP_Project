@@ -65,8 +65,8 @@ void ATMDisplay::navigateTo(Views view) {
         case CardBalanceScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/cardBalance.html"));
             break;
-        case ChangeLimitScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changeLimit.html"));
+        case TransactionHistoryScreen:
+            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/transactionHistory.html"));
             break;
         case ChangePinScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changePin.html"));

@@ -9,7 +9,7 @@
 		<file>views/MainMenuScreen/index.html</file>
 		<file>views/MainMenuScreen/finishAccount.html</file>
 		<file>views/MainMenuScreen/cardBalance.html</file>
-		<file>views/MainMenuScreen/changeLimit.html</file>
+		<file>views/MainMenuScreen/transactionHistory.html</file>
 		<file>views/MainMenuScreen/changePin.html</file>
 		<file>views/MainMenuScreen/doTransaction.html</file>
 		<file>views/MainMenuScreen/putCash.html</file>
