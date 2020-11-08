@@ -74,7 +74,7 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     bool dispenserState(row[3].get<bool>());
 
     std::string ad(s.str());
-    auto* inf = new ATMInfo(num, ad, "");
+    auto* inf = new ATMInfo(num, ad);
     return ATM(*inf,cash, cardReaderState, dispenserState);
 }
 

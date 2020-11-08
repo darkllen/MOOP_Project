@@ -291,7 +291,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
            display_->runJs("document.getElementById(\"cash\").innerHTML ='"+QString::number(n)+"' ;");
             display_->runJs("document.getElementById(\"s_num\").innerHTML ='"+QString::number(atmInfo.getSerialNumber())+"' ;");
             display_->runJs("document.getElementById(\"location\").innerHTML ='"+QString::fromStdString(atmInfo.getLocation())+"' ;");
-            display_->runJs("document.getElementById(\"man_by\").innerHTML ='"+QString::fromStdString(atmInfo.getManagedBy())+"' ;");
 
 
         }
