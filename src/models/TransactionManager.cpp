@@ -48,7 +48,7 @@ const CashTransaction &TransactionManager::createTransaction(const QDateTime & d
         if (((isWithdrawal)&&(t->getMoney() >= t->getLimit() + amount))||(!isWithdrawal))
             return *(new CashTransaction(date, from, amount, isWithdrawal));
         else
-            throw TransactionException("You can't take this amount of money because of card limit");
+            throw TransactionException("You can`t take this amount of money because of card limit");
     } else throw TransactionException("Wrong account type");
 
     }
