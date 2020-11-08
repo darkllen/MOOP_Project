@@ -19,11 +19,11 @@ Q_OBJECT
 private:
     ATMForm *atmForm_;
     ATMDisplay *display_;
-    unsigned int entered_NUM;
+    QString entered_NUM;
 
-    unsigned int entered_card;
-    unsigned int entered_amount;
-    unsigned int entered_reg=0;
+    QString entered_card;
+    QString entered_amount;
+    QString entered_reg=0;
 
     bool isOneTime;
 
@@ -41,6 +41,7 @@ public:
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
     void changePINTries(int n);
+    void changeWarning(QString);
     bool getIsOn(){return display_->getIsOn();}
 
     bool getIsOneTime(){return isOneTime;}

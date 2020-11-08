@@ -56,8 +56,6 @@ void ATMDisplay::navigateTo(Views view) {
         case PINEnteringScreen:
             webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index.html"));
             break;
-        case CardBlockedScreen:
-            break;
         case MainMenuScreen:
             webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
             break;

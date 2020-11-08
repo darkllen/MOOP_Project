@@ -9,7 +9,7 @@
 #include "../constants/ATMTypes.h"
 
 namespace InputValidation {
-    bool validatePin(PIN_T);
+    bool validatePin(QString);
     bool validateTimePeriod(const QDateTime &begin, const QDateTime &end);
     bool validateCashSum(CASH_AMOUNT_T, CARD_NUMBER_T);
     bool validatePersonName(QString &s);

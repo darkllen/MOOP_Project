@@ -18,7 +18,7 @@
 
 
 ATMQtUiController::ATMQtUiController(QMainWindow &mw) :
-        ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())), entered_NUM(0) {}
+        ATMController(), atmForm_(new ATMForm(mw, *this)), display_(new ATMDisplay(atmForm_->getWebView())), entered_NUM("") {}
 
 ATMQtUiController::~ATMQtUiController() {
     delete atmForm_;
@@ -28,25 +28,31 @@ ATMQtUiController::~ATMQtUiController() {
 void ATMQtUiController::changePINTries(int n){
     if (display_->getCurrentScreen() == PINEnteringScreen) {
             QString jsQ = "document.getElementById(\"tries\").innerHTML = 'Tries left: "+ QString::number(ATMLimits::MAX_FAILED_PIN_EVALS - n) +"';";
-            entered_NUM = 0;
+            entered_NUM = "";
         display_->runJs("document.getElementById(\"text\").innerHTML =' ';");
         display_->runJs(jsQ);
         }
 }
 
+void ATMQtUiController::changeWarning(QString s){
+        QString jsQ = "document.getElementById(\"warning\").innerHTML = '"+ s +"';";
+        display_->runJs(jsQ);
+    }
+
+
 
 void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
-    if (display_->getCurrentScreen() == PINEnteringScreen || display_->getCurrentScreen() == ChangePinScreen) {
+    if ((display_->getCurrentScreen() == PINEnteringScreen || display_->getCurrentScreen() == ChangePinScreen)&&(entered_NUM.length()<ATMLimits::NUMBERS_IN_PIN)) {
         if (e != UIButtonsInput::D000 && e!= UIButtonsInput::DDot){
-            entered_NUM =entered_NUM*10 + e - 1;
+            entered_NUM = entered_NUM +QString::number(e - 1);
             QString jsQ = "document.getElementById(\"text\").innerHTML += '*';";
             display_->runJs(jsQ);
 
         }
     } else if(display_->getCurrentScreen() == ReadCardScreen || display_->getCurrentScreen() == ReadAmountScreen
                || display_->getCurrentScreen() == ReadRegScreen){
-        entered_NUM =entered_NUM*10 + e - 1;
-        QString jsQ = "document.getElementById(\"text\").innerHTML = '"+QString::number(entered_NUM)+"';";
+        entered_NUM =entered_NUM +QString::number(e - 1);
+        QString jsQ = "document.getElementById(\"text\").innerHTML = '"+entered_NUM+"';";
         display_->runJs(jsQ);
     }
 
@@ -58,36 +64,38 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
            || display_->getCurrentScreen() == ReadRegScreen)
          &&(e != UIButtonsInput::Enter)){
         if (e == UIButtonsInput::Cancel){
-            entered_NUM/=10;
+            entered_NUM = entered_NUM.mid(0,entered_NUM.length()-1);
             display_->runJs("var s = document.getElementById(\"text\").innerHTML;");
             display_->runJs("document.getElementById(\"text\").innerHTML = s.substring(0, s.length-1);");
 
         } else if (e == UIButtonsInput::Clear){
-            entered_NUM = 0;
+            entered_NUM = "";
             display_->runJs("document.getElementById(\"text\").innerHTML = ''");
         }
     } else if (display_->getCurrentScreen() == PINEnteringScreen) {
         if (e == UIButtonsInput::Enter) {
             if(InputValidation::validatePin(entered_NUM)){
-                mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM));
-                entered_NUM = 0;
-            }
+                changeWarning("");
+                mediator_->Notify(*this, EventToATM::PINSubmittedEvent(entered_NUM.toInt()));
+                entered_NUM = "";
+            } else changeWarning("Not enough digits in pin");
         }
     }
     else if (display_->getCurrentScreen() == ChangePinScreen) {
         if (e == UIButtonsInput::Enter) {
             if(InputValidation::validatePin(entered_NUM)){
-                mediator_->Notify(*this, EventToATM::PINChangedEvent(entered_NUM));
-                entered_NUM = 0;
+                changeWarning("");
+                mediator_->Notify(*this, EventToATM::PINChangedEvent(entered_NUM.toInt()));
+                entered_NUM = "";
                 navigateToNewView(Views::MainMenuScreen);
-            }
+            } else changeWarning("Not enough digits in pin");
         }
     } else if (display_->getCurrentScreen() == ReadCardScreen) {
         if (e == UIButtonsInput::Enter) {
-            if(InputValidation::validateCardNumber(entered_NUM)){
+            if(InputValidation::validateCardNumber(entered_NUM.toLongLong())){
                 entered_card = entered_NUM;
                 navigateToNewView(Views::ReadAmountScreen);
-                entered_NUM = 0;
+                entered_NUM = "";
             } else{
                 QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
             }
@@ -96,7 +104,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
     else if (display_->getCurrentScreen() == ReadAmountScreen) {
         if (e == UIButtonsInput::Enter) {
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
-            if(InputValidation::validateCashSum(entered_NUM, n)){
+            if(InputValidation::validateCashSum(entered_NUM.toLongLong(), n)){
                 entered_amount = entered_NUM;
                 if(isOneTime){
                     navigateToNewView(Views::ProcessScreen);
@@ -105,7 +113,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
 
                 else
                     navigateToNewView(Views::ReadRegScreen);
-                entered_NUM = 0;
+                entered_NUM = "";
             } else{
                 QMessageBox::warning(nullptr, "Invalid input", "Cash amount is invalid!", QMessageBox::Ok);
 
@@ -113,12 +121,12 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
         }
     } else if (display_->getCurrentScreen() == ReadRegScreen) {
         if (e == UIButtonsInput::Enter) {
-            if(entered_NUM>0){
+            if(entered_NUM.toLongLong()>0){
                 entered_reg = entered_NUM;
                 navigateToNewView(Views::ProcessScreen);
                 downloadProcessScreen();
 
-                entered_NUM = 0;
+                entered_NUM = "";
             } else{
                 QMessageBox::warning(nullptr, "Invalid input", "Regularity is invalid!", QMessageBox::Ok);
             }
@@ -131,15 +139,15 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::WelcomeScreen);
             atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
-            entered_NUM = 0;
+            entered_NUM = "";
             dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
         }
     } else
-    if (display_->getCurrentScreen() == CardBlockedScreen) {
+    if (display_->getCurrentScreen() == CardIsBlockedScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::WelcomeScreen);
             atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
-            entered_NUM = 0;
+            entered_NUM = "";
             dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
         }
     } else
@@ -147,7 +155,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::WelcomeScreen);
             atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
-            entered_NUM = 0;
+            entered_NUM = "";
             dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
         }
     } else if (display_->getCurrentScreen() == MainMenuScreen) {
@@ -329,7 +337,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
     }  else if (display_->getCurrentScreen() == ReadCardScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::DoTransactionScreen);
-            entered_NUM = 0;
+            entered_NUM = "";
         }
     } else if (display_->getCurrentScreen() == ReadAmountScreen) {
         if (e == UIButtonsInput::L0) {
@@ -354,19 +362,19 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
 
             if(isOneTime) {
-                mediator_->Notify(*this, EventToATM::OneTimeTransaction(entered_card, entered_amount));
-                display_->setReceipt(QString::number(entered_amount)+"$ was transfered from card "+QString::number(n)+" to card "+QString::number(entered_card));
+                mediator_->Notify(*this, EventToATM::OneTimeTransaction(entered_card.toLongLong(), entered_amount.toLongLong()));
+                display_->setReceipt(entered_amount+"$ was transfered from card "+QString::number(n)+" to card "+entered_card);
             }
             else {
-                mediator_->Notify(*this, EventToATM::RegularTransaction(entered_card, entered_amount, entered_reg));
-                display_->setReceipt(QString::number(entered_amount)+"$ will be transfered from card "+QString::number(n)+" to card "+QString::number(entered_card)+" every "+QString::number(entered_reg)+" days");
+                mediator_->Notify(*this, EventToATM::RegularTransaction(entered_card.toLongLong(), entered_amount.toLongLong(), entered_reg.toLong()));
+                display_->setReceipt(entered_amount+"$ will be transfered from card "+QString::number(n)+" to card "+entered_card+" every "+entered_reg+" days");
 
             }
 
             atmForm_->changeReceipt(true);
-            entered_card=0;
-            entered_amount=0;
-            entered_reg=0;
+            entered_card="";
+            entered_amount="";
+            entered_reg="";
 
         }
     } else if (display_->getCurrentScreen() == ReceiptScreen) {
@@ -471,16 +479,16 @@ void ATMQtUiController::enableDispencer(bool isWithdrawal){
 }
 
 void ATMQtUiController::downloadProcessScreen() {
-    display_->runJs("document.getElementById(\"amount\").innerHTML ='"+QString::number(entered_amount)+"' ;");
-    display_->runJs("document.getElementById(\"card\").innerHTML ='to "+QString::fromStdString(Bank::getCustomer(entered_card)->getName())+"' ;");
-    if(entered_reg!=0)
-        display_->runJs("document.getElementById(\"days\").innerHTML ='every "+QString::number(entered_reg)+" days' ;");
+    display_->runJs("document.getElementById(\"amount\").innerHTML ='"+entered_amount+"' ;");
+    display_->runJs("document.getElementById(\"card\").innerHTML ='to "+QString::fromStdString(Bank::getCustomer(entered_card.toLongLong())->getName())+"' ;");
+    if(entered_reg.toLong()!=0)
+        display_->runJs("document.getElementById(\"days\").innerHTML ='every "+entered_reg+" days' ;");
 
 
 }
 
 void ATMQtUiController::updateEnNum() {
-    display_->runJs("document.getElementById(\"text\").innerHTML = '"+QString::number(entered_NUM)+"';");
+    display_->runJs("document.getElementById(\"text\").innerHTML = '"+entered_NUM+"';");
 }
 
 

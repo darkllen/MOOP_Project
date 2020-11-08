@@ -15,8 +15,9 @@
 
 #include <regex>
 
-bool InputValidation::validatePin(PIN_T pin){
-    return pin < pow(10, ATMLimits::NUMBERS_IN_PIN);
+bool InputValidation::validatePin(QString pin){
+    return pin.length() == ATMLimits::NUMBERS_IN_PIN;
+    //return (pin < pow(10, ATMLimits::NUMBERS_IN_PIN)&&(pin>=pow(10, ATMLimits::NUMBERS_IN_PIN-1)));
 }
 
 bool InputValidation::validateTimePeriod(const QDateTime &begin, const QDateTime &end){

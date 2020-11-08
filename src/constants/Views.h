@@ -9,7 +9,6 @@
 enum Views {
     WelcomeScreen,
     PINEnteringScreen,
-    CardBlockedScreen,
     MainMenuScreen,
     FinishAccountScreen,
     CardBalanceScreen,
