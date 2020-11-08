@@ -77,19 +77,19 @@ void ATMIO::handleNotifyTargetATM(const ATMEvent &event) const {
         case ATMEvent::OneTimeTransactionEvent: {
             auto e = dynamic_cast<const EventToATM::OneTimeTransaction &>(event);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
-            Account from = *(Bank::getAccount(n));
-            const Account to = *(Bank::getAccount(e.num));
-            const OneTimeTransfer tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), to, from, e.value);
-            AccountActions::makeTransaction(from, tr);
+            Account* from = Bank::getAccount(n);
+            const Account* to = Bank::getAccount(e.num);
+            const OneTimeTransfer tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), *to, *from, e.value);
+            AccountActions::makeTransaction(*from, tr);
             break;
         }
         case ATMEvent::RegularTransactionEvent: {
             auto e = dynamic_cast<const EventToATM::RegularTransaction &>(event);
             CARD_NUMBER_T n = atm_->getCardReader().getCardNum();
-            Account from = *(Bank::getAccount(n));
-            const Account to = *(Bank::getAccount(e.num));
-            const RegularTransfer tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), to, from, e.value, e.reg);
-            AccountActions::makeTransaction(from, tr);
+            Account* from = Bank::getAccount(n);
+            const Account* to = Bank::getAccount(e.num);
+            const RegularTransfer tr = TransactionManager::createTransaction(QDateTime::currentDateTime(), *to, *from, e.value, e.reg);
+            AccountActions::makeTransaction(*from, tr);
             break;
         }
         case ATMEvent::PutCashMEvent: {
