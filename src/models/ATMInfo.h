@@ -14,6 +14,8 @@ public:
             serialNumber_(sn), location_(std::move(loc)), managedBy_(std::move(managedBy)) {}
 
     ATM_SERIAL_NUMBER_T getSerialNumber() const {return serialNumber_;}
+    std::string getLocation() const {return location_;}
+    std::string getManagedBy() const {return managedBy_;}
 };
 
 #endif //MOOP_ATM_PROJECT_ATMINFO_H

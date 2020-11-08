@@ -8,6 +8,7 @@
 #include "../../ui/ATMForm.h"
 #include "../../ui/ATMDisplay.h"
 #include "../../models/Bank.h"
+#include "../../models/ATMInfo.h"
 #include "../../models/accounts/Account.h"
 #include "../../models/atm_hardware/CardReader.h"
 #include "../../models/atm_hardware/Dispenser.h"
@@ -285,8 +286,13 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
         } else if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::InfoScreen);
+            ATMInfo atmInfo = dynamic_cast<ATMIO *>(mediator_)->getATM().getATMInfo();
             CASH_AMOUNT_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenser().getAvailableCashAmount();
            display_->runJs("document.getElementById(\"cash\").innerHTML ='"+QString::number(n)+"' ;");
+            display_->runJs("document.getElementById(\"s_num\").innerHTML ='"+QString::number(atmInfo.getSerialNumber())+"' ;");
+            display_->runJs("document.getElementById(\"location\").innerHTML ='"+QString::fromStdString(atmInfo.getLocation())+"' ;");
+            display_->runJs("document.getElementById(\"man_by\").innerHTML ='"+QString::fromStdString(atmInfo.getManagedBy())+"' ;");
+
 
         }
 
