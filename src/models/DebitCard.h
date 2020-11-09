@@ -21,7 +21,6 @@ public:
             cardNum_(cardNum), expireDate_(std::move(expireDate)), cvvCode_(cvvCode), pin_(pin), isBlocked_(isBlocked) {}
     ~DebitCard() = default;
 
-    //TODO make it private and friend of PINVerification
     PIN_T getPIN() const{return pin_;}
     void setIsBlocked(bool value);
     bool getIsBlocked() const{return isBlocked_;}

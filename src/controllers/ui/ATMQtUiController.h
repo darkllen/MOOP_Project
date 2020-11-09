@@ -29,7 +29,6 @@ private:
 
 
 public:
-    //TODO init is oneTime and other fields
     explicit ATMQtUiController(QMainWindow &mw);
     ~ATMQtUiController() override;
 

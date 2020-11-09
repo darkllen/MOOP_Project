@@ -27,7 +27,6 @@ public:
     class Hardware;
 
     explicit ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T & initialCash, const bool& cardReaderState, const bool& dispenserState);
-    //TODO: Requires proper implementation
     ATM(const ATM& atm) = delete;
     ~ATM();
 

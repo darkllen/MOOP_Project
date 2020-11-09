@@ -12,15 +12,11 @@
 #include "InputValidation.h"
 #include "../models/accounts/CheckingAccount.h"
 #include "../models/accounts/SavingAccount.h"
-
-#include <regex>
-
 bool InputValidation::validatePin(const QString &pin) {
     return pin.length() == ATMLimits::NUMBERS_IN_PIN;
 }
 
 bool InputValidation::validateCashSum(const CASH_AMOUNT_T &amount, const CARD_NUMBER_T &n) {
-    //todo check limit in sav acc
     try {
         Account *account = Bank::getAccount(n);
         if (const auto *t = dynamic_cast<const CheckingAccount *>(account)) {

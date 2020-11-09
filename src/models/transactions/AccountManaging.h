@@ -28,8 +28,6 @@ public:
         return res;
     }
 private:
-
-    //TODO: decide proper type handling
     VAL oldValue_;
     VAL newValue_;
     ValueChanged v_;
