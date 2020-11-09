@@ -12,14 +12,13 @@
 #include "../exceptions/ATMException.h"
 
 ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
-        : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io) {
+        : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io), isWithdrawal(false) {
     ui_->setupUi(&mw);
     configureSignalAndSlots();
     setMainWindowBackground(mw);
     initValues();
 }
 
-//TODO why only one pointer field is deleted?
 ATMForm::~ATMForm() {
     delete ui_;
 }
@@ -145,7 +144,6 @@ void ATMForm::on_receipt_btn_clicked() {
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
-//    if (cardReaderStateIsInsert) {
     bool ok;
     QString text = QInputDialog::getText(nullptr, "Card reader input dialog",
                                          "Please enter your card number:", QLineEdit::Normal,
@@ -160,9 +158,6 @@ void ATMForm::on_card_reader_btn_clicked() {
             QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
         }
     }
-//    } else {
-//        //TODO: Needs implementation
-//    }
 }
 
 void ATMForm::on_dispenser_btn_clicked() {
@@ -225,7 +220,6 @@ void ATMForm::on_dispenser_btn_clicked() {
             }
 
         }
-
     }
 }
 
@@ -271,16 +265,6 @@ void ATMForm::on_powerOff_action_triggered() {
 
 QWebEngineView &ATMForm::getWebView() {
     return *(ui_->display);
-}
-
-//TODO function is never used
-void ATMForm::toggleCardReaderMode() {
-    cardReaderStateIsInsert = !cardReaderStateIsInsert;
-    if (cardReaderStateIsInsert) {
-        //Todo: fix
-        ui_->card_reader_btn->setText("Insert card");
-        ui_->card_reader_btn->setText("Get back card");
-    }
 }
 
 void ATMForm::changeDispenser(bool b) {

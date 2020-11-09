@@ -23,7 +23,7 @@ private:
 
     QString entered_card;
     QString entered_amount;
-    QString entered_reg=nullptr;
+    QString entered_reg = nullptr;
 
     bool isOneTime;
 
@@ -42,13 +42,13 @@ public:
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
     void changePINTries(int n) override;
-    void changeWarning(const QString&);
-    bool getIsOn(){return display_->getIsOn();}
+    void changeWarning(const QString &);
+    bool getIsOn() { return display_->getIsOn(); }
 
-    bool getIsOneTime() const{return isOneTime;}
-    void setIsOneTime(const bool& b){isOneTime = b;}
+    bool getIsOneTime() const { return isOneTime; }
+    void setIsOneTime(const bool &b) { isOneTime = b; }
 
-    void enableDispencer(const bool&);
+    void enableDispencer(const bool &);
 
     // ATM calls:
     void printReceiptOutput() override;

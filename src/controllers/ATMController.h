@@ -10,12 +10,11 @@
 #include "../events/ATMEvent.h"
 #include "../constants/ATMTypes.h"
 
-class ATMController: public ATMBaseComponent {
+class ATMController : public ATMBaseComponent {
 public:
-    explicit ATMController(): ATMBaseComponent() {}
+    explicit ATMController() : ATMBaseComponent() {}
     virtual ~ATMController() {};
 
-    //TODO make const & ???
     virtual void dialPadInput(UIButtonsInput::DialPad) = 0;
     virtual void dialPadControlInput(UIButtonsInput::ControlPad) = 0;
     virtual void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) = 0;
@@ -23,9 +22,7 @@ public:
     virtual void cardReaderInput(CARD_NUMBER_T) = 0;
     virtual void ATMPowerChangeFromUI(ATMPowerState) = 0;
 
-    virtual void changePINTries(int n)=0;
-
-
+    virtual void changePINTries(int n) = 0;
     virtual void printReceiptOutput() = 0;
     virtual void dispenserOutput(CASH_AMOUNT_T) = 0;
     virtual void navigateToNewView(Views) = 0;

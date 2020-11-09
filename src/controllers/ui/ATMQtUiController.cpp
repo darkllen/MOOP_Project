@@ -221,7 +221,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
                 display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
             } else
                 atmForm_->changeCardReader(true);
-
             //todo erase all info?
         }
         if (e == UIButtonsInput::L0) {

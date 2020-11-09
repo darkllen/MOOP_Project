@@ -8,7 +8,7 @@
 #include "ATMDisplay.h"
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
-        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
+        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false), isLocked_(false) {}
 
 void ATMDisplay::turnOn() {
     isOn_ = true;
@@ -23,7 +23,7 @@ void ATMDisplay::turnOff() {
 
 void ATMDisplay::navigateTo(Views view) {
     if (!isOn_) {
-        switch(view){
+        switch (view) {
             case PutCashMScreen:
                 webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/putCashM.html"));
                 break;
@@ -40,77 +40,75 @@ void ATMDisplay::navigateTo(Views view) {
                 webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
                 break;
             default:
-                //TODO throw exception, not std::string
-                throw "Attempt to use the screen in OFF state";
+                throw std::exception("Attempt to use the screen in OFF state");
         }
     } else
-    switch (view) {
-        case WelcomeScreen:
-            webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
-            break;
-        case PINEnteringScreen:
-            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index.html"));
-            break;
-        case MainMenuScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
-            break;
-        case FinishAccountScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/finishAccount.html"));
-            break;
-        case CardBalanceScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/cardBalance.html"));
-            break;
-        case TransactionHistoryScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/transactionHistory.html"));
-            break;
-        case ChangePinScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changePin.html"));
-            break;
-        case DoTransactionScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/doTransaction.html"));
-            break;
-        case PutCashScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/putCash.html"));
-            break;
-        case ShowAccountsScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/showAccounts.html"));
-            break;
-        case TakeCashScreen:
-            webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/takeCash.html"));
-            break;
-        case PoweredOffScreen:
-            webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
-            break;
-        case CardIsBlockedScreen:
-            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardBlocked/index.html"));
-            break;
-        case CardIsInvalidScreen:
-            webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
-            break;
-        case ReadCardScreen:
-            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadCard.html"));
-            break;
-        case ReadAmountScreen:
-            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadAmount.html"));
-            break;
-        case ReadRegScreen:
-            webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadReg.html"));
-            break;
-        case ProcessScreen:
-            webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
-            break;
-        case ReceiptScreen:
-            webEngineView_->load(QUrl("qrc:/views/receipt.html"));
-            break;
-        default:
-            //TODO throw exception, not std::string
-            throw "Attempt to use the screen in ON state";
-    }
-        ATMDisplay::waitForLoad(*webEngineView_);
-        currentScreen_ = view;
+        switch (view) {
+            case WelcomeScreen:
+                webEngineView_->load(QUrl("qrc:/views/WelcomeScreen/index.html"));
+                break;
+            case PINEnteringScreen:
+                webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardPINChecking/index.html"));
+                break;
+            case MainMenuScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/index.html"));
+                break;
+            case FinishAccountScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/finishAccount.html"));
+                break;
+            case CardBalanceScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/cardBalance.html"));
+                break;
+            case TransactionHistoryScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/transactionHistory.html"));
+                break;
+            case ChangePinScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/changePin.html"));
+                break;
+            case DoTransactionScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/doTransaction.html"));
+                break;
+            case PutCashScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/putCash.html"));
+                break;
+            case ShowAccountsScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/showAccounts.html"));
+                break;
+            case TakeCashScreen:
+                webEngineView_->load(QUrl("qrc:/views/MainMenuScreen/takeCash.html"));
+                break;
+            case PoweredOffScreen:
+                webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
+                break;
+            case CardIsBlockedScreen:
+                webEngineView_->load(QUrl("qrc:/views/CardEventScreen/CardBlocked/index.html"));
+                break;
+            case CardIsInvalidScreen:
+                webEngineView_->load(QUrl("qrc:/views/CardEventScreen/InvalidCardInserted/index.html"));
+                break;
+            case ReadCardScreen:
+                webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadCard.html"));
+                break;
+            case ReadAmountScreen:
+                webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadAmount.html"));
+                break;
+            case ReadRegScreen:
+                webEngineView_->load(QUrl("qrc:/views/TransactionReader/ReadReg.html"));
+                break;
+            case ProcessScreen:
+                webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
+                break;
+            case ReceiptScreen:
+                webEngineView_->load(QUrl("qrc:/views/receipt.html"));
+                break;
+            default:
+                throw std::exception("Attempt to use the screen in ON state");
+        }
+    ATMDisplay::waitForLoad(*webEngineView_);
+    currentScreen_ = view;
 }
 
-void ATMDisplay::runJs(const QString& js){
+void ATMDisplay::runJs(const QString &js) {
     webEngineView_->page()->runJavaScript(js);
 };
 
@@ -119,8 +117,7 @@ Views ATMDisplay::getCurrentScreen() const {
 }
 
 
-bool ATMDisplay::waitForLoad(QWebEngineView& view)
-{
+bool ATMDisplay::waitForLoad(QWebEngineView &view) {
     QEventLoop loopLoad;
     QTimer timer;
     QObject::connect(&view, SIGNAL(loadFinished(bool)), &loopLoad, SLOT(quit()));
@@ -128,8 +125,7 @@ bool ATMDisplay::waitForLoad(QWebEngineView& view)
     QObject::connect(&timer, SIGNAL(timeout()), &loopLoad, SLOT(quit()));
     timer.start(2000);
     loopLoad.exec();
-    if(timer.isActive())
-    {
+    if (timer.isActive()) {
         timer.stop();
         view.stop();
         return false;

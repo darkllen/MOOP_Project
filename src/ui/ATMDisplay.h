@@ -12,31 +12,30 @@ class QWebEngineView;
 
 class ATMDisplay {
 private:
-    QWebEngineView* webEngineView_;
+    QWebEngineView *webEngineView_;
     Views currentScreen_;
     bool isOn_;
 
-    bool isLocked_;
-    QString receipt="";
+    QString receipt = "";
 
 public:
-    //TODO init isLocked_
-    explicit ATMDisplay(QWebEngineView& webEngineView);
-    //TODO realize because of pointer field?
-    ~ATMDisplay() = default;
+    explicit ATMDisplay(QWebEngineView &webEngineView);
+    ~ATMDisplay() {
+        delete webEngineView_;
+        webEngineView_ = nullptr;
+    };
 
     void turnOn();
     void turnOff();
 
     void navigateTo(Views view);
-    void runJs(const QString& js);
+    void runJs(const QString &js);
 
     Views getCurrentScreen() const;
 
-    bool getIsLocked() const{return isLocked_;}
-    bool getIsOn() const{return isOn_;}
-    QString getReceipt(){return receipt;}
-    void setReceipt(const QString& s){receipt = s;}
+    bool getIsOn() const { return isOn_; }
+    QString getReceipt() { return receipt; }
+    void setReceipt(const QString &s) { receipt = s; }
 
     static bool waitForLoad(QWebEngineView &view);
 };

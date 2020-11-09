@@ -39,7 +39,6 @@ set(SOURCE_FILES
         src/models/transactions/OneTimeTransfer.h
         src/models/transactions/RegularTransfer.h
         src/models/accounts/SavingAccount.h
-        src/models/SessionManager.h
         src/models/transactions/Transaction.h
         src/models/TransactionManager.h
         src/models/atm_hardware/Dispenser.h
@@ -57,7 +56,6 @@ set(SOURCE_FILES
         src/models/atm_hardware/Dispenser.cpp
         src/models/accounts/Account.cpp
         src/models/Bank.cpp
-        src/models/SessionManager.cpp
         src/models/TransactionManager.cpp
         src/helpers/InputValidation.cpp
         src/ui/ATMDisplay.cpp

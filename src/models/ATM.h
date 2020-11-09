@@ -12,12 +12,9 @@ class ATMInfo;
 class Dispenser;
 class CardReader;
 class TransactionManager;
-class SessionManager;
 
 class ATM: public ATMBaseComponent {
 private:
-
-    bool isPoweredOn_;
 
     const ATMInfo *atmInfo_;
 
@@ -25,14 +22,13 @@ private:
     CardReader *cardReader_;
 
     TransactionManager *tsManager_;
-    SessionManager *sessionManager_;
 
 public:
     class Hardware;
 
     explicit ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T & initialCash, const bool& cardReaderState, const bool& dispenserState);
-    //TODO realize
-    ATM(const  ATM& atm) = default;
+    //TODO: Requires proper implementation
+    ATM(const ATM& atm) = delete;
     ~ATM();
 
     void powerStateChange(ATMPowerState state);

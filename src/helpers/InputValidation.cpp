@@ -15,42 +15,32 @@
 
 #include <regex>
 
-bool InputValidation::validatePin(const QString& pin){
+bool InputValidation::validatePin(const QString &pin) {
     return pin.length() == ATMLimits::NUMBERS_IN_PIN;
-    //return (pin < pow(10, ATMLimits::NUMBERS_IN_PIN)&&(pin>=pow(10, ATMLimits::NUMBERS_IN_PIN-1)));
 }
 
-bool InputValidation::validateTimePeriod(const QDateTime &begin, const QDateTime &end){
-    return begin<end;
-}
-
-bool InputValidation::validateCashSum(const CASH_AMOUNT_T& amount, const CARD_NUMBER_T& n){
+bool InputValidation::validateCashSum(const CASH_AMOUNT_T &amount, const CARD_NUMBER_T &n) {
     //todo check limit in sav acc
     try {
-        Account* account = Bank::getAccount(n);
-        if (const auto* t = dynamic_cast<const CheckingAccount*>(account)) {
+        Account *account = Bank::getAccount(n);
+        if (const auto *t = dynamic_cast<const CheckingAccount *>(account)) {
             return amount <= t->getMoney();
-        } else if (const auto* t = dynamic_cast<const SavingAccount*>(account)){
-            return amount + t->getLimit()<= t->getMoney();
+        } else if (const auto *t = dynamic_cast<const SavingAccount *>(account)) {
+            return amount + t->getLimit() <= t->getMoney();
 
         } else throw TransactionException("Wrong account type");
 
 
-} catch (DBException& e) {
+    } catch (DBException &e) {
         return false;
     }
 }
 
-bool InputValidation::validatePersonName(const QString &s){
-    std::regex nameSurnameRegex("[a-zA-Z]{2,}\\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\\s?([a-zA-Z]{1,})?)");
-    return std::regex_match (s.toStdString(),nameSurnameRegex);
-}
-
-bool InputValidation::validateCardNumber(const CARD_NUMBER_T& n){
+bool InputValidation::validateCardNumber(const CARD_NUMBER_T &n) {
     try {
         Bank::getCard(n);
         return true;
-    } catch (DBException& e) {
+    } catch (DBException &e) {
         return false;
     }
 }
