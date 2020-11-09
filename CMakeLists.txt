@@ -89,7 +89,7 @@ endif ()
 
 
 # bundle executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES})
 find_package(Qt5 COMPONENTS Widgets WebEngineWidgets REQUIRED)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::WebEngineWidgets ${MYSQL_CONN_LIB})
 
