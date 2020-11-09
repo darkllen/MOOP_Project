@@ -203,6 +203,9 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             if (const auto *t = dynamic_cast<const SavingAccount *>(account)) {
                 QString jsQ = "document.getElementById(\"bal_lim\").innerHTML = " + QString::number(t->getLimit()) + ";";
                 display_->runJs(jsQ);
+            } else
+            {
+                display_->runJs("document.getElementById(\"limit_header\").innerHTML = '';");
             }
 
         }
