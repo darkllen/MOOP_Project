@@ -14,7 +14,8 @@ public:
     AccountActions() = default;
     ~AccountActions() = default;
 
-    static void makeTransaction(Account &, const Transaction &);
+    template<class T>
+    static void makeTransaction(Account &, const T &);
     static QList<Transaction*> viewHistory(const Account &);
 };
 

@@ -5,26 +5,21 @@
 #ifndef MOOP_ATM_PROJECT_TESTER_H
 #define MOOP_ATM_PROJECT_TESTER_H
 
-//TODO: Requires implementation
+#include "../models/ATM.h"
+#include "../controllers/ATMController.h"
 
-//#include "../controllers/interfaces/ATMController.h"
-//
-//class Tester {
-//private:
-//
-//    ATM *atm;
-//    ATMController *controller;
-//
-//public:
-//    Tester(ATM &, ATMController &);
-//
-//    void testInput();
-//    void testOutput();
-//    void testDispenser();
-//    void testCardReader();
-//    void testSecurityCheck();
-//    void testTransactions();
-//    void testDBConnection();
-//};
+class Tester {
+private:
+    ATM* _atm;
+public:
+    Tester(ATM &atm);
+    void testEval();
+    void testOutput();
+    void testDispenser();
+    void testCardReader();
+    void testTransactions();
+};
+
+
 
 #endif //MOOP_ATM_PROJECT_TESTER_H

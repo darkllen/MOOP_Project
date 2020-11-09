@@ -8,7 +8,7 @@
 #include "ATMDisplay.h"
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
-        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false), isLocked_(false) {}
+        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
 
 void ATMDisplay::turnOn() {
     isOn_ = true;
