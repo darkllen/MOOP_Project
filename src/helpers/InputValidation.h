@@ -9,11 +9,11 @@
 #include "../constants/ATMTypes.h"
 
 namespace InputValidation {
-    bool validatePin(QString);
+    bool validatePin(const QString&);
     bool validateTimePeriod(const QDateTime &begin, const QDateTime &end);
-    bool validateCashSum(CASH_AMOUNT_T, CARD_NUMBER_T);
-    bool validatePersonName(QString &s);
-    bool validateCardNumber(CARD_NUMBER_T);
+    bool validateCashSum(const CASH_AMOUNT_T&, const CARD_NUMBER_T&);
+    bool validatePersonName(const QString &s);
+    bool validateCardNumber(const CARD_NUMBER_T&);
 };
 
 #endif //MOOP_ATM_PROJECT_INPUTVALIDATION_H
