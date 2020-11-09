@@ -53,9 +53,11 @@ void ATMQtUiController::dialPadInput(const UIButtonsInput::DialPad e) {
         }
     } else if (display_->getCurrentScreen() == ReadCardScreen || display_->getCurrentScreen() == ReadAmountScreen
                || display_->getCurrentScreen() == ReadRegScreen) {
-        entered_NUM = entered_NUM + QString::number(e - 1);
-        QString jsQ = "document.getElementById(\"text\").innerHTML = '" + entered_NUM + "';";
-        display_->runJs(jsQ);
+        if (e != UIButtonsInput::D000 && e != UIButtonsInput::DDot) {
+            entered_NUM = entered_NUM + QString::number(e - 1);
+            QString jsQ = "document.getElementById(\"text\").innerHTML = '" + entered_NUM + "';";
+            display_->runJs(jsQ);
+        }
     }
 
 }
