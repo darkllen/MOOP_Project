@@ -145,29 +145,29 @@ void ATMForm::on_receipt_btn_clicked() {
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
-    if (cardReaderStateIsInsert) {
-        bool ok;
-        QString text = QInputDialog::getText(nullptr, "Card reader input dialog",
-                                             "Please enter your card number:", QLineEdit::Normal,
-                                             "", &ok);
-        if (ok && !text.isEmpty()) {
-            bool convertSuccess;
-            CARD_NUMBER_T value = text.toULongLong(&convertSuccess, 10);
-            if (convertSuccess) {
-                controller_->cardReaderInput(value);
-                changeCardReader(false);
-            } else {
-                QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
-            }
+//    if (cardReaderStateIsInsert) {
+    bool ok;
+    QString text = QInputDialog::getText(nullptr, "Card reader input dialog",
+                                         "Please enter your card number:", QLineEdit::Normal,
+                                         "", &ok);
+    if (ok && !text.isEmpty()) {
+        bool convertSuccess;
+        CARD_NUMBER_T value = text.toULongLong(&convertSuccess, 10);
+        if (convertSuccess) {
+            controller_->cardReaderInput(value);
+            changeCardReader(false);
+        } else {
+            QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
         }
-    } else {
-        //TODO: Needs implementation
     }
+//    } else {
+//        //TODO: Needs implementation
+//    }
 }
 
 void ATMForm::on_dispenser_btn_clicked() {
-    if (ui_->dispenser_btn->isEnabled()){
-        if(isWithdrawal) {
+    if (ui_->dispenser_btn->isEnabled()) {
+        if (isWithdrawal) {
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
                                                  "Please input cash amount to take:", QLineEdit::Normal,
@@ -179,25 +179,23 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserOutput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn()) {
+                        if (controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
                             changeReceipt(true);
-                        }
-                        else
+                        } else
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
-                    catch (const TransactionException& e) {
+                    catch (const TransactionException &e) {
                         controller_->changeWarning(e.what());
                     }
-                    catch (const HardwareException& e) {
+                    catch (const HardwareException &e) {
                         controller_->changeWarning(e.what());
                     }
                 } else {
                     controller_->changeWarning("Cash amount is invalid");
                 }
             }
-        }
-        else{
+        } else {
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
                                                  "Please input cash amount to put in dispenser:", QLineEdit::Normal,
@@ -209,17 +207,16 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserInput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn()) {
+                        if (controller_->getIsOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
                             changeReceipt(true);
-                        }
-                        else
+                        } else
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
-                    catch (const TransactionException& e) {
+                    catch (const TransactionException &e) {
                         controller_->changeWarning(e.what());
                     }
-                    catch (const HardwareException& e) {
+                    catch (const HardwareException &e) {
                         controller_->changeWarning(e.what());
                     }
                 } else {
@@ -286,24 +283,23 @@ void ATMForm::toggleCardReaderMode() {
     }
 }
 
-void ATMForm::changeDispenser(bool b){
+void ATMForm::changeDispenser(bool b) {
     ui_->dispenser_btn->setEnabled(b);
 }
 
-void ATMForm::changeCardReader(bool b){
+void ATMForm::changeCardReader(bool b) {
     ui_->card_reader_btn->setEnabled(b);
 }
 
-void ATMForm::changeReceipt(bool b){
+void ATMForm::changeReceipt(bool b) {
     ui_->receipt_btn->setEnabled(b);
 }
 
-bool ATMForm::getIsReceiptEnable(){
+bool ATMForm::getIsReceiptEnable() {
     return ui_->receipt_btn->isEnabled();
 }
 
-
-void ATMForm::setIsWithdrawal(bool b){
+void ATMForm::setIsWithdrawal(bool b) {
     isWithdrawal = b;
 }
 

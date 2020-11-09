@@ -2,6 +2,7 @@
 #define MOOP_ATM_PROJECT_ACCOUNT_H
 
 #include <string>
+#include <QtCore/QString>
 #include "../../constants/ATMTypes.h"
 
 class Account {
@@ -22,6 +23,9 @@ public:
 
     int getOwnerId()const {return  ownerId_;}
 
+    QString print() const{
+        return QString("Account:\n\t\tIBAN: " + QString(IBAN_.c_str()) + "\n\t\tBank: " + QString::number(bank_));
+    }
 };
 
 #endif //MOOP_ATM_PROJECT_ACCOUNT_H

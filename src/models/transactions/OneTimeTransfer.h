@@ -17,13 +17,20 @@ private:
     CASH_AMOUNT_T amount_;
 
 public:
-    OneTimeTransfer(const QDateTime &dateTime, const Account &to, const Account &from, const CASH_AMOUNT_T & amount) :
+    OneTimeTransfer(const QDateTime &dateTime, const Account &to, const Account &from, const CASH_AMOUNT_T &amount) :
             Transaction(dateTime, from), to_(to), amount_(amount) {}
     ~OneTimeTransfer() = default;
-    CASH_AMOUNT_T getAmount() const {return amount_;};
-    const Account& getTo() const {return  to_;} ;
-};
+    CASH_AMOUNT_T getAmount() const { return amount_; };
+    const Account &getTo() const { return to_; };
 
+    QString print() const override {
+        QString res = "Time and date: " + getTime().toString() + "\n";
+        res += "Account from: " + getFrom().print() + "\n";
+        res += "Account to: " + to_.print() + "\n";
+        res += "Transferred " + QString::number(amount_);
+        return res;
+    }
+};
 
 
 #endif //MOOP_ATM_PROJECT_ONETIMETRANSFER_H
