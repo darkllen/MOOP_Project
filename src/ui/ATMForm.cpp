@@ -56,6 +56,7 @@ void ATMForm::configureSignalAndSlots() {
     connect(ui_->d2l_btn, &QPushButton::clicked, this, &ATMForm::on_d2l_btn_clicked);
     connect(ui_->d3l_btn, &QPushButton::clicked, this, &ATMForm::on_d3l_btn_clicked);
 
+    connect(ui_->actionExit, &QAction::triggered, this, &ATMForm::on_exit_action_triggered);
     connect(ui_->actionPowerOn, &QAction::triggered, this, &ATMForm::on_powerOn_action_triggered);
     connect(ui_->actionPowerOff, &QAction::triggered, this, &ATMForm::on_powerOff_action_triggered);
 }
@@ -304,6 +305,10 @@ bool ATMForm::getIsReceiptEnable(){
 
 void ATMForm::setIsWithdrawal(bool b){
     isWithdrawal = b;
+}
+
+void ATMForm::on_exit_action_triggered() {
+    QApplication::exit();
 }
 
 

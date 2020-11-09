@@ -1512,35 +1512,35 @@
    <property name="nativeMenuBar">
     <bool>false</bool>
    </property>
-   <widget class="QMenu" name="menuATM">
+   <widget class="QMenu" name="menuProgram">
     <property name="title">
-     <string>ATM</string>
+     <string>Program</string>
     </property>
+    <widget class="QMenu" name="menuATM">
+     <property name="title">
+      <string>ATM</string>
+     </property>
+     <addaction name="actionPowerOn"/>
+     <addaction name="actionPowerOff"/>
+    </widget>
+    <addaction name="menuATM"/>
+    <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuExit">
-    <property name="title">
-     <string>Exit</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuATMPower">
-    <property name="title">
-     <string>ATMPower</string>
-    </property>
-    <addaction name="actionPowerOn"/>
-    <addaction name="actionPowerOff"/>
-   </widget>
-   <addaction name="menuATM"/>
-   <addaction name="menuExit"/>
-   <addaction name="menuATMPower"/>
+   <addaction name="menuProgram"/>
   </widget>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
   <action name="actionPowerOn">
    <property name="text">
-    <string>PowerOn</string>
+    <string>Power on</string>
    </property>
   </action>
   <action name="actionPowerOff">
    <property name="text">
-    <string>PowerOff</string>
+    <string>Power off</string>
    </property>
   </action>
  </widget>

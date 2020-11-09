@@ -76,6 +76,7 @@ public:
     void on_d2l_btn_clicked();
     void on_d3l_btn_clicked();
 
+    void on_exit_action_triggered();
     void on_powerOn_action_triggered();
     void on_powerOff_action_triggered();
 
