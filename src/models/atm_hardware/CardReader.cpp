@@ -11,17 +11,11 @@
 #include "../../models/ATMInfo.h"
 
 CardReader::CardReader(ATM &atm, const bool& isOp)
-        : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm),
-          verificationService_(new PinVerificationService) {}
-
-CardReader::~CardReader() {
-    delete verificationService_;
-    verificationService_ = nullptr;
-}
+        : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm){}
 
 void CardReader::evalPIN(const PIN_T& pin) {
     try {
-        bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
+        bool verificationResult = PinVerificationService::verify(inserted_card_n_, pin);
         verificationResult ? onVerificationSuccess() : onVerificationFail();
     }
     catch (const DBException& e) {

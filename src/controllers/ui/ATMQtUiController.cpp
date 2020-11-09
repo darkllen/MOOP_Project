@@ -6,7 +6,6 @@
 #include <QtWidgets/QInputDialog>
 #include "ATMQtUiController.h"
 #include "../../ui/ATMForm.h"
-#include "../../ui/ATMDisplay.h"
 #include "../../models/Bank.h"
 #include "../../models/ATMInfo.h"
 #include "../../models/accounts/Account.h"
@@ -35,7 +34,7 @@ void ATMQtUiController::changePINTries(int n){
         }
 }
 
-void ATMQtUiController::changeWarning(QString s){
+void ATMQtUiController::changeWarning(const QString& s){
         QString jsQ = "document.getElementById(\"warning\").innerHTML = '"+ s +"';";
         display_->runJs(jsQ);
     }
@@ -472,7 +471,7 @@ void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
     }
 }
 
-void ATMQtUiController::enableDispencer(bool isWithdrawal){
+void ATMQtUiController::enableDispencer(const bool& isWithdrawal){
     if (dynamic_cast<ATMIO *>(mediator_)->getATM().getDispenserStatus()) {
         atmForm_->changeDispenser(true);
         atmForm_->setIsWithdrawal(isWithdrawal);

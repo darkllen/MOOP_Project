@@ -5,10 +5,9 @@
 #include "PinVerificationService.h"
 #include "../models/Bank.h"
 #include "../models/DebitCard.h"
-#include "../constants/ATMTypes.h"
 #include "../exceptions/ATMException.h"
 
-bool PinVerificationService::verify(const CARD_NUMBER_T cardNum, const PIN_T pin) {
+bool PinVerificationService::verify(const CARD_NUMBER_T& cardNum, const PIN_T& pin) {
     try{
         return pin == Bank::getCard(cardNum).getPIN();
     } catch (std::exception& e) {

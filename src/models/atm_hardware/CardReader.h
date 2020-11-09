@@ -17,7 +17,6 @@ private:
     unsigned char evalTries;
 
     ATM *atm_;
-    PinVerificationService *verificationService_;
 
     void onVerificationSuccess() const;
     void onVerificationFail();
@@ -25,7 +24,7 @@ private:
     void acceptCard();
 public:
     explicit CardReader(ATM &atm, const bool& isOp);
-    ~CardReader() override;
+    ~CardReader() override = default;
 
     void evalPIN(const PIN_T&);
     void setInsertedCardN(const CARD_NUMBER_T&);

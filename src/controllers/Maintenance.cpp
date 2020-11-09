@@ -10,11 +10,11 @@
 #include "../models/ATM.h"
 #include "../models/ATMInfo.h"
 
-void Maintenance::putCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
+void Maintenance::putCash(Dispenser &dispenser, const CASH_AMOUNT_T& amount) {
         dispenser.cashIn(amount);
 }
 
-void Maintenance::takeCash(Dispenser &dispenser, CASH_AMOUNT_T amount) {
+void Maintenance::takeCash(Dispenser &dispenser, const CASH_AMOUNT_T& amount) {
         dispenser.cashOut(amount);
 }
 
@@ -22,6 +22,6 @@ bool Maintenance::checkStatus(const ATM::Hardware &h) {
     return h.getState();
 }
 
-void Maintenance::changeStatus(ATM::Hardware &h, bool isOperational) {
+void Maintenance::changeStatus(ATM::Hardware &h, const bool& isOperational) {
     h.setState(isOperational);
 }

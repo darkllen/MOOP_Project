@@ -15,6 +15,7 @@ public:
     explicit ATMController(): ATMBaseComponent() {}
     virtual ~ATMController() {};
 
+    //TODO make const & ???
     virtual void dialPadInput(UIButtonsInput::DialPad) = 0;
     virtual void dialPadControlInput(UIButtonsInput::ControlPad) = 0;
     virtual void sideDisplayBtnInput(UIButtonsInput::DisplaySideButton) = 0;
