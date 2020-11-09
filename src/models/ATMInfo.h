@@ -9,7 +9,7 @@ private:
     std::string location_;
 
 public:
-    ATMInfo(ATM_SERIAL_NUMBER_T sn, std::string loc) :
+    ATMInfo(const ATM_SERIAL_NUMBER_T& sn, std::string loc) :
             serialNumber_(sn), location_(std::move(loc)) {}
 
     ATM_SERIAL_NUMBER_T getSerialNumber() const {return serialNumber_;}

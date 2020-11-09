@@ -30,9 +30,9 @@ private:
 public:
     class Hardware;
 
-    explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash, bool cardReaderState, bool dispenserState);
+    explicit ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T & initialCash, const bool& cardReaderState, const bool& dispenserState);
+    //TODO realize
     ATM(const  ATM& atm) = default;
-
     ~ATM();
 
     void powerStateChange(ATMPowerState state);
@@ -44,9 +44,9 @@ public:
     static ATM getATM(const ATM_SERIAL_NUMBER_T& num);
 
     bool getCardReaderStatus();
-    void setCardReaderStatus(bool);
+    void setCardReaderStatus(const bool&);
     bool getDispenserStatus();
-    void setDispenserStatus(bool);
+    void setDispenserStatus(const bool&);
 
     void resetCardReader();
 

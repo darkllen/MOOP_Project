@@ -14,5 +14,6 @@ using BANK_NUMBER_T = unsigned __int64;
 using ATM_SERIAL_NUMBER_T = unsigned __int32;
 using CASH_AMOUNT_T = unsigned __int32;
 using ACCOUNT_BALANCE_AMOUNT_T = unsigned __int64;
+using VAL = unsigned __int64;
 
 #endif //MOOP_ATM_PROJECT_ATMTYPES_H

@@ -3,18 +3,9 @@
 //
 
 #include "TransactionManager.h"
-#include "transactions/OneTimeTransfer.h"
-#include "transactions/RegularTransfer.h"
-#include "transactions/CashTransaction.h"
-#include "transactions/AccountManaging.h"
 #include "accounts/CheckingAccount.h"
 #include "accounts/SavingAccount.h"
-#include "accounts/Account.h"
 #include "../exceptions/ATMException.h"
-
-
-
-
 
 const OneTimeTransfer &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, const CASH_AMOUNT_T & amount) {
     if (const auto* t = dynamic_cast<const CheckingAccount*>(&from)){
@@ -28,7 +19,7 @@ const OneTimeTransfer &TransactionManager::createTransaction(const QDateTime & d
 
 }
 
-const RegularTransfer &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, const CASH_AMOUNT_T & amount, int reg) {
+const RegularTransfer &TransactionManager::createTransaction(const QDateTime & date, const Account & to, const Account & from, const CASH_AMOUNT_T & amount, const int& reg) {
     if (const auto* t = dynamic_cast<const CheckingAccount*>(&from)){
         return *(new RegularTransfer(date, to, from, amount, reg));
     } else  if (const auto* t = dynamic_cast<const SavingAccount*>(&from)){
@@ -40,9 +31,8 @@ const RegularTransfer &TransactionManager::createTransaction(const QDateTime & d
 
 }
 
-const CashTransaction &TransactionManager::createTransaction(const QDateTime & date, const Account & from, const ACCOUNT_BALANCE_AMOUNT_T & amount, bool isWithdrawal) {
+const CashTransaction &TransactionManager::createTransaction(const QDateTime & date, const Account & from, const ACCOUNT_BALANCE_AMOUNT_T & amount, const bool& isWithdrawal) {
     if (const auto* t = dynamic_cast<const CheckingAccount*>(&from)){
-
         return *(new CashTransaction(date, from, amount, isWithdrawal));
     } else  if (const auto* t = dynamic_cast<const SavingAccount*>(&from)){
         if (((isWithdrawal)&&(t->getMoney() >= t->getLimit() + amount))||(!isWithdrawal))
@@ -53,7 +43,6 @@ const CashTransaction &TransactionManager::createTransaction(const QDateTime & d
 
     }
 
-const AccountManaging &TransactionManager::createTransaction(const QDateTime & date,const Account & from, const CARD_NUMBER_T & card_n, AccountManaging::ValueChanged valueType, unsigned __int64 oldValue, unsigned __int64 newValue) {
+const AccountManaging &TransactionManager::createTransaction(const QDateTime & date,const Account & from, const CARD_NUMBER_T & card_n, const AccountManaging::ValueChanged& valueType, const VAL& oldValue, const VAL& newValue) {
     return *(new AccountManaging(date, from, card_n, valueType, oldValue, newValue));
-
 }

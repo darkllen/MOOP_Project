@@ -3,15 +3,13 @@
 //
 #include <mysqlx/xdevapi.h>
 #include "ATM.h"
-#include "../events/ATMEvent.h"
-
 #include "atm_hardware/CardReader.h"
 #include "atm_hardware/Dispenser.h"
 #include "TransactionManager.h"
 #include "ATMInfo.h"
 #include "SessionManager.h"
 
-ATM::ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash, bool cardReaderState, bool dispenserState) :
+ATM::ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T & initialCash, const bool& cardReaderState, const bool& dispenserState) :
         ATMBaseComponent(),
         isPoweredOn_(false),
         atmInfo_(&atmInfo),
@@ -81,13 +79,13 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
 bool ATM::getCardReaderStatus(){
     return cardReader_->getState();
 }
-void ATM::setCardReaderStatus(bool b){
+void ATM::setCardReaderStatus(const bool& b){
     cardReader_->setState(b);
 }
 bool ATM::getDispenserStatus(){
     return  dispenser_->getState();
 }
-void ATM::setDispenserStatus(bool b){
+void ATM::setDispenserStatus(const bool& b){
     dispenser_->setState(b);
 }
 

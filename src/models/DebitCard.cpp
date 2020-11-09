@@ -10,7 +10,6 @@ void DebitCard::setIsBlocked(bool value) {
     mysqlx::Schema db = session.getSchema("moop");
     mysqlx::Table myTable = db.getTable("Transactions");
     mysqlx::Table tableCard = db.getTable("DebitCard");
-
     tableCard.update().set("isBlocked_", value).where("cardNum_ like :cardNum_").bind("cardNum_", cardNum_).execute();
 }
 

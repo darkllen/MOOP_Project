@@ -17,7 +17,6 @@ private:
     CASH_AMOUNT_T amount_;
 
 public:
-
     OneTimeTransfer(const QDateTime &dateTime, const Account &to, const Account &from, const CASH_AMOUNT_T & amount) :
             Transaction(dateTime, from), to_(to), amount_(amount) {}
     ~OneTimeTransfer() = default;

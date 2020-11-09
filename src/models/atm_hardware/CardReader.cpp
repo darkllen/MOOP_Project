@@ -10,7 +10,7 @@
 #include "../../exceptions/ATMException.h"
 #include "../../models/ATMInfo.h"
 
-CardReader::CardReader(ATM &atm, bool isOp)
+CardReader::CardReader(ATM &atm, const bool& isOp)
         : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm),
           verificationService_(new PinVerificationService) {}
 
@@ -19,7 +19,7 @@ CardReader::~CardReader() {
     verificationService_ = nullptr;
 }
 
-void CardReader::evalPIN(const PIN_T pin) {
+void CardReader::evalPIN(const PIN_T& pin) {
     try {
         bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
         verificationResult ? onVerificationSuccess() : onVerificationFail();
@@ -29,7 +29,7 @@ void CardReader::evalPIN(const PIN_T pin) {
     }
 }
 
-void CardReader::setInsertedCardN(const CARD_NUMBER_T n) {
+void CardReader::setInsertedCardN(const CARD_NUMBER_T& n) {
     inserted_card_n_ = n;
     try {
         DebitCard debitCard = Bank::getCard(inserted_card_n_);
@@ -86,7 +86,7 @@ void CardReader::acceptCard() {
     );
 }
 
-void CardReader::setState(bool isOp) {
+void CardReader::setState(const bool& isOp) {
     isOperational_ = isOp ;
     const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
     mysqlx::Session session(url);

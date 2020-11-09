@@ -14,7 +14,7 @@ protected:
     ATM &parent_;
     bool isOperational_;
 public:
-    explicit Hardware(ATM &parent, bool isOp) : parent_(parent), isOperational_(isOp) {}
+    explicit Hardware(ATM &parent, const bool& isOp) : parent_(parent), isOperational_(isOp) {}
     virtual ~Hardware() = default;
 
     bool getState() const { return isOperational_; }

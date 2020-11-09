@@ -13,7 +13,7 @@
 #include "accounts/SavingAccount.h"
 #include "Customer.h"
 
-Bank::Bank(BANK_NUMBER_T id, std::string address, std::string name) :
+Bank::Bank(const BANK_NUMBER_T& id, std::string address, std::string name) :
         id_(id), address_(std::move(address)),
         name_(std::move(name)) {}
 
