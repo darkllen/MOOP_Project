@@ -5,13 +5,13 @@
 #include "Bank.h"
 
 #include "../exceptions/ATMException.h"
-#include <mysqlx/xdevapi.h>
 #include <string>
 #include "DebitCard.h"
 #include "accounts/Account.h"
 #include "accounts/CheckingAccount.h"
 #include "accounts/SavingAccount.h"
 #include "Customer.h"
+#include "../controllers/DBConnection.h"
 
 Bank::Bank(const BANK_NUMBER_T& id, std::string address, std::string name) :
         id_(id), address_(std::move(address)),
@@ -19,10 +19,8 @@ Bank::Bank(const BANK_NUMBER_T& id, std::string address, std::string name) :
 
 DebitCard Bank::getCard(const CARD_NUMBER_T& cardNumberT) {
     try {
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("DebitCard");
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("DebitCard");
         mysqlx::RowResult myResult = myTable.select("expireDate_","cvCode_","PIN_",	"isBlocked_")
                 .where("cardNum_ like :cardNum_")
                 .bind("cardNum_",cardNumberT).execute();
@@ -46,10 +44,8 @@ DebitCard Bank::getCard(const CARD_NUMBER_T& cardNumberT) {
 
 Account* Bank::getAccount(const std::string & IBAN_) {
     try {
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Account");
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Account");
         mysqlx::RowResult myResult = myTable.select("ownerId_","bank_id","limit_",	"interestRate_", "money_")
                 .where("IBAN_ like :IBAN_")
                 .bind("IBAN_",IBAN_).execute();
@@ -68,10 +64,8 @@ Account* Bank::getAccount(const std::string & IBAN_) {
 }
 
 Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
-    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-    mysqlx::Session session(url);
-    mysqlx::Schema db = session.getSchema("moop");
-    mysqlx::Table myTable = db.getTable("DebitCard");
+    DBConnection connection;
+    mysqlx::Table myTable = connection.getTable("DebitCard");
     mysqlx::RowResult myResult = myTable.select("accountIBAN")
             .where("cardNum_ like :cardNum_")
             .bind("cardNum_",cardNumberT).execute();
@@ -84,11 +78,8 @@ Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
 
 Customer* Bank::getCustomer(const CARD_NUMBER_T& num){
     int id = getAccount(num)->getOwnerId();
-
-    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-    mysqlx::Session session(url);
-    mysqlx::Schema db = session.getSchema("moop");
-    mysqlx::Table myTable = db.getTable("Сustomer");
+    DBConnection connection;
+    mysqlx::Table myTable = connection.getTable("Сustomer");
     mysqlx::RowResult myResult = myTable.select("name_", "address")
             .where("id like :idd")
             .bind("idd",id).execute();

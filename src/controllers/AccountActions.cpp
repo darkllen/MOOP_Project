@@ -12,6 +12,7 @@
 #include "../models/transactions/AccountManaging.h"
 #include "../models/Bank.h"
 #include "../exceptions/ATMException.h"
+#include "../controllers/DBConnection.h"
 #include "../constants/ATMTypes.h"
 
 //void AccountActions::makeTransaction(Account & acc, const Transaction & tr) {
@@ -70,10 +71,8 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
     CARD_NUMBER_T card_n;
     QList<Transaction*> transactions;
     try {
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Transactions");
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Transactions");
         mysqlx::RowResult myResult = myTable.select("id","time_","from_","to_",	"amount_",	"regularity_",	"isWithdrawal_",	"valueChanged_",	"oldValue_",	"newValue_")
                 .where("from_ like :from_")
                 .bind("from_",acc.getIBAN_()).execute();
@@ -131,11 +130,9 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
 template<>
 void AccountActions::makeTransaction(Account& acc, const OneTimeTransfer & t) {
     try {
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Transactions");
-        mysqlx::Table tableAcc = db.getTable("Account");
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Transactions");
+        mysqlx::Table tableAcc = connection.getTable("Account");
 
         if (!(t.getTo().getIBAN_() == acc.getIBAN_())){
             tableAcc.update().set("money_", acc.getMoney()-t.getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
@@ -153,15 +150,12 @@ void AccountActions::makeTransaction(Account& acc, const OneTimeTransfer & t) {
 template<>
 void AccountActions::makeTransaction(Account& acc, const AccountManaging & t) {
     try{
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Transactions");
-        mysqlx::Table tableAcc = db.getTable("Account");
-
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Transactions");
+        mysqlx::Table tableAcc = connection.getTable("Account");
         switch (t.getValueType()) {
             case AccountManaging::PIN:
-                mysqlx::Table tableCard = db.getTable("DebitCard");
+                mysqlx::Table tableCard = connection.getTable("DebitCard");
                 tableCard.update().set("PIN_", t.getNewValue()).where("cardNum_ like :cardNum_").bind("cardNum_", t.getCardNum()).execute();
                 myTable.insert("time_", "from_", "valueChanged_", "oldValue_", "newValue_")
                         .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), 0, t.getOldValue(), t.getNewValue()).execute();
@@ -174,13 +168,9 @@ void AccountActions::makeTransaction(Account& acc, const AccountManaging & t) {
 template<>
 void AccountActions::makeTransaction(Account& acc, const RegularTransfer & t) {
     try{
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Transactions");
-        mysqlx::Table tableAcc = db.getTable("Account");
-
-
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Transactions");
+        mysqlx::Table tableAcc = connection.getTable("Account");
         if (!(t.getTo().getIBAN_() == acc.getIBAN_())){
             tableAcc.update().set("money_", acc.getMoney()-t.getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
             acc.setMoney(acc.getMoney()-t.getAmount());
@@ -196,11 +186,9 @@ void AccountActions::makeTransaction(Account& acc, const RegularTransfer & t) {
 template<>
 void AccountActions::makeTransaction(Account& acc, const CashTransaction & t) {
     try{
-        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-        mysqlx::Session session(url);
-        mysqlx::Schema db = session.getSchema("moop");
-        mysqlx::Table myTable = db.getTable("Transactions");
-        mysqlx::Table tableAcc = db.getTable("Account");
+        DBConnection connection;
+        mysqlx::Table myTable = connection.getTable("Transactions");
+        mysqlx::Table tableAcc = connection.getTable("Account");
 
         if (t.getIsWithdrawal()){
             tableAcc.update().set("money_", acc.getMoney()-t.getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
