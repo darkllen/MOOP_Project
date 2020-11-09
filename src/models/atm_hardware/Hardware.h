@@ -18,7 +18,7 @@ public:
     virtual ~Hardware() = default;
 
     bool getState() const { return isOperational_; }
-    virtual void setState(bool isOp) = 0;
+    virtual void setState(const bool& isOp) = 0;
 };
 
 
