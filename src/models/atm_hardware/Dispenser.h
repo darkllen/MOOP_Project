@@ -12,7 +12,7 @@ private:
     CASH_AMOUNT_T availableCash_;
 
 public:
-    explicit Dispenser(ATM&, CASH_AMOUNT_T = 0, bool isOp = true);
+    explicit Dispenser(ATM &, CASH_AMOUNT_T = 0, bool isOp = true);
     ~Dispenser() override = default;
 
     CASH_AMOUNT_T getAvailableCashAmount() const { return availableCash_; }

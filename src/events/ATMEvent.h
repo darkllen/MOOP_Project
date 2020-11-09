@@ -5,7 +5,7 @@
 #ifndef MOOP_ATM_PROJECT_ATMEVENT_H
 #define MOOP_ATM_PROJECT_ATMEVENT_H
 
-#include "../constants/Views.h"
+#include "../ui/views/Views.h"
 #include "../constants/ATMTypes.h"
 #include "UIInput.h"
 
@@ -34,7 +34,7 @@ struct ATMEvent {
 };
 
 namespace EventToATM {
-    struct ATMPowerStateEvent: public ATMEvent {
+    struct ATMPowerStateEvent : public ATMEvent {
         ATMPowerState value;
         explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
     };
@@ -57,14 +57,17 @@ namespace EventToATM {
         CASH_AMOUNT_T value;
         explicit PutCashEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::PutCashEvent), value(n) {}
     };
+
     struct TakeCashEvent : public ATMEvent {
         CASH_AMOUNT_T value;
         explicit TakeCashEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::TakeCashEvent), value(n) {}
     };
+
     struct PINChangedEvent : public ATMEvent {
         PIN_T value;
         explicit PINChangedEvent(PIN_T n) : ATMEvent(EventType::PINChangedEvent), value(n) {}
     };
+
     struct PINIsWrong : public ATMEvent {
         int value;
         explicit PINIsWrong(int n) : ATMEvent(EventType::PINIsWrongEvent), value(n) {}
@@ -74,25 +77,30 @@ namespace EventToATM {
         CASH_AMOUNT_T value;
         explicit PutCashMEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::PutCashMEvent), value(n) {}
     };
+
     struct TakeCashMEvent : public ATMEvent {
         CASH_AMOUNT_T value;
         explicit TakeCashMEvent(CASH_AMOUNT_T n) : ATMEvent(EventType::TakeCashMEvent), value(n) {}
     };
+
     struct OneTimeTransaction : public ATMEvent {
         CASH_AMOUNT_T value;
         CARD_NUMBER_T num;
-        explicit OneTimeTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n) : ATMEvent(EventType::OneTimeTransactionEvent), value(n), num(m) {}
+        explicit OneTimeTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n) : ATMEvent(EventType::OneTimeTransactionEvent),
+                                                                        value(n), num(m) {}
     };
+
     struct RegularTransaction : public ATMEvent {
         CASH_AMOUNT_T value;
         CARD_NUMBER_T num;
         int reg;
-        explicit RegularTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n, int r) : ATMEvent(EventType::RegularTransactionEvent), value(n), num(m), reg(r) {}
+        explicit RegularTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n, int r) : ATMEvent(
+                EventType::RegularTransactionEvent), value(n), num(m), reg(r) {}
     };
 };
 
 namespace EventToATMController {
-    struct ATMPowerStateEvent: public ATMEvent {
+    struct ATMPowerStateEvent : public ATMEvent {
         ATMPowerState value;
         explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
     };
@@ -111,9 +119,9 @@ namespace EventToATMController {
     };
 
 
-    struct NewViewEvent : public ATMEvent {
-        Views value;
-        explicit NewViewEvent(Views s) : ATMEvent(EventType::NewViewEvent), value(s) {}
+    struct NewScreenEvent : public ATMEvent {
+        ScreenEnum value;
+        explicit NewScreenEvent(ScreenEnum s) : ATMEvent(EventType::NewViewEvent), value(s) {}
     };
 }
 

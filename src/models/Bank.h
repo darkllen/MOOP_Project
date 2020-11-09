@@ -6,7 +6,9 @@
 #include "../constants/ATMTypes.h"
 
 class Account;
+
 class DebitCard;
+
 class Customer;
 
 class Bank {
@@ -20,9 +22,9 @@ public:
     Bank(BANK_NUMBER_T, std::string, std::string);
     ~Bank() = default;
     static DebitCard getCard(const CARD_NUMBER_T &);
-    static Account* getAccount(const std::string&);
-    static Account* getAccount(const CARD_NUMBER_T&);
-    static Customer* getCustomer(const CARD_NUMBER_T&);
+    static Account *getAccount(const std::string &);
+    static Account *getAccount(const CARD_NUMBER_T &);
+    static Customer *getCustomer(const CARD_NUMBER_T &);
 
 };
 

@@ -8,6 +8,7 @@
 #include "../events/ATMEvent.h"
 
 class ATMBaseComponent;
+
 class ATMMediator {
 public:
     virtual void Notify(const ATMBaseComponent &sender, const ATMEvent &event) const = 0;
@@ -29,7 +30,9 @@ public:
 };
 
 class ATM;
+
 class ATMController;
+
 class ATMIO : public ATMMediator {
 private:
     ATM *atm_;
@@ -41,7 +44,6 @@ private:
 public:
     ATMIO(ATM &atm, ATMController &controller);
     void Notify(const ATMBaseComponent &sender, const ATMEvent &event) const override;
-    ATM& getATM(){return *atm_;}
 };
 
 

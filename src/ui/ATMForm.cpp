@@ -57,15 +57,15 @@ void ATMForm::configureSignalAndSlots() {
     connect(ui_->d2l_btn, &QPushButton::clicked, this, &ATMForm::on_d2l_btn_clicked);
     connect(ui_->d3l_btn, &QPushButton::clicked, this, &ATMForm::on_d3l_btn_clicked);
 
-    connect(ui_->actionPowerOn, &QAction::triggered, this, &ATMForm::on_powerOn_action_triggered);
-    connect(ui_->actionPowerOff, &QAction::triggered, this, &ATMForm::on_powerOff_action_triggered);
+    connect(ui_->actionPowerOnATM, &QAction::triggered, this, &ATMForm::on_powerOn_action_triggered);
+    connect(ui_->actionPowerOffATM, &QAction::triggered, this, &ATMForm::on_powerOff_action_triggered);
+    connect(ui_->actionExit, &QAction::triggered, this, &ATMForm::on_actionExit_triggered);
 }
 
 void ATMForm::initValues() {
     ui_->dispenser_btn->setEnabled(false);
     ui_->receipt_btn->setEnabled(false);
 }
-
 
 void ATMForm::setMainWindowBackground(QMainWindow &mw) {
     mw.setWindowFlags(Qt::MSWindowsFixedSizeDialogHint);
@@ -170,8 +170,8 @@ void ATMForm::on_card_reader_btn_clicked() {
 void ATMForm::on_dispenser_btn_clicked() {
     qDebug() << "dispenser";
 
-    if (ui_->dispenser_btn->isEnabled()){
-        if(isWithdrawal) {
+    if (ui_->dispenser_btn->isEnabled()) {
+        if (isWithdrawal) {
 
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
@@ -184,11 +184,10 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserOutput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn()) {
+                        if (controller_->getIsPoweredOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
                             changeReceipt(true);
-                        }
-                        else
+                        } else
                             controller_->navigateToNewView(PoweredOffScreen);
 
                     }
@@ -203,8 +202,7 @@ void ATMForm::on_dispenser_btn_clicked() {
                 }
             }
 
-        }
-        else{
+        } else {
 
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
@@ -217,11 +215,10 @@ void ATMForm::on_dispenser_btn_clicked() {
                     try {
                         controller_->dispenserInput(value);
                         changeDispenser(false);
-                        if(controller_->getIsOn()) {
+                        if (controller_->getIsPoweredOn()) {
                             controller_->navigateToNewView(MainMenuScreen);
                             changeReceipt(true);
-                        }
-                        else
+                        } else
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
                     catch (HardwareException e) {
@@ -282,6 +279,11 @@ void ATMForm::on_powerOff_action_triggered() {
     controller_->ATMPowerChangeFromUI(ATMPowerState::Off);
 }
 
+void ATMForm::on_actionExit_triggered() {
+    QApplication::quit();
+    //TODO: implement proper exit for program
+}
+
 QWebEngineView &ATMForm::getWebView() {
     return *(ui_->display);
 }
@@ -295,24 +297,24 @@ void ATMForm::toggleCardReaderMode() {
     }
 }
 
-void ATMForm::changeDispenser(bool b){
+void ATMForm::changeDispenser(bool b) {
     ui_->dispenser_btn->setEnabled(b);
 }
 
-void ATMForm::changeCardReader(bool b){
+void ATMForm::changeCardReader(bool b) {
     ui_->card_reader_btn->setEnabled(b);
 }
 
-void ATMForm::changeReceipt(bool b){
+void ATMForm::changeReceipt(bool b) {
     ui_->receipt_btn->setEnabled(b);
 }
 
-bool ATMForm::getIsReceiptEnable(){
+bool ATMForm::getIsReceiptEnable() {
     return ui_->receipt_btn->isEnabled();
 }
 
 
-void ATMForm::setIsWithdrawal(bool b){
+void ATMForm::setIsWithdrawal(bool b) {
     isWithdrawal = b;
 }
 

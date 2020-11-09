@@ -5,37 +5,39 @@
 #ifndef ATM_ATMDISPLAY_H
 #define ATM_ATMDISPLAY_H
 
-#include "../constants/Views.h"
+#include "views/Views.h"
+#include <any>
+
 
 
 class QWebEngineView;
 
 class ATMDisplay {
 private:
-    QWebEngineView* webEngineView_;
-    Views currentScreen_;
-    bool isOn_;
+    QWebEngineView *webEngineView_;
 
+    ScreenEnum currentScreen_;
+
+    bool isPoweredOn_;
     bool isLocked_;
-    QString receipt="";
+    QString receipt = "";
 
 public:
-    explicit ATMDisplay(QWebEngineView& webEngineView);
+    explicit ATMDisplay(QWebEngineView &webEngineView);
     ~ATMDisplay() = default;
 
     void turnOn();
     void turnOff();
-    void reset();
 
-    void navigateTo(Views view);
-    void runJs(const QString& js);
+    void navigateTo(ScreenEnum sc);
 
-    Views getCurrentScreen() const;
+    ScreenEnum getCurrentScreen() { return currentScreen_; }
 
-    bool getIsLocked(){return isLocked_;}
-    bool getIsOn(){return isOn_;}
-    QString getReceipt(){return receipt;}
-    void setReceipt(QString s){receipt = s;}
+    bool getIsLocked() const { return isLocked_; }
+    bool getIsPoweredOn() const { return isPoweredOn_; }
+
+    QString getReceipt() { return receipt; }
+    void setReceipt(QString s) { receipt = std::move(s); }
 
     static bool waitForLoad(QWebEngineView &view);
 };

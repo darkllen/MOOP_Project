@@ -10,9 +10,21 @@
 #include "../events/ATMEvent.h"
 #include "../constants/ATMTypes.h"
 
-class ATMController: public ATMBaseComponent {
+class ATMController : public ATMBaseComponent {
+//protected:
+//    class DialPadBuffer {
+//        //TODO: implement buffer
+//    };
+//
+//    DialPadBuffer &getDialPadBuffer() {
+//        return *dialPadBuffer_;
+//    }
+//
+//private:
+//    DialPadBuffer *dialPadBuffer_;
+
 public:
-    explicit ATMController(): ATMBaseComponent() {}
+    explicit ATMController() : ATMBaseComponent(), dialPadBuffer_(new DialPadBuffer) {}
     virtual ~ATMController() {};
 
     virtual void dialPadInput(UIButtonsInput::DialPad) = 0;
@@ -22,7 +34,7 @@ public:
     virtual void cardReaderInput(CARD_NUMBER_T) = 0;
     virtual void ATMPowerChangeFromUI(ATMPowerState) = 0;
 
-    virtual void changePINTries(int n)=0;
+    virtual void changePINTries(int n) = 0;
 
 
     virtual void printReceiptOutput() = 0;

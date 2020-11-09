@@ -11,6 +11,7 @@
 #include "../../constants/ATMTypes.h"
 
 class Account;
+
 class OneTimeTransfer : public Transaction {
 private:
     const Account &to_;
@@ -18,13 +19,14 @@ private:
 
 public:
 
-    OneTimeTransfer(const QDateTime &dateTime, const Account &to, const Account &from, const CASH_AMOUNT_T & amount) :
-            Transaction(dateTime, from), to_(to), amount_(amount) {}
+    OneTimeTransfer(
+            const QDateTime &dateTime, const Account &to, const Account &from, const CASH_AMOUNT_T &amount
+    ) : Transaction(dateTime, from), to_(to), amount_(amount) {}
     ~OneTimeTransfer() = default;
-    CASH_AMOUNT_T getAmount() const {return amount_;};
-    const Account& getTo() const {return  to_;} ;
-};
 
+    CASH_AMOUNT_T getAmount() const { return amount_; };
+    const Account &getTo() const { return to_; };
+};
 
 
 #endif //MOOP_ATM_PROJECT_ONETIMETRANSFER_H

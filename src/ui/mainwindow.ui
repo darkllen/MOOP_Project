@@ -1058,7 +1058,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="palette">
@@ -1512,35 +1512,35 @@
    <property name="nativeMenuBar">
     <bool>false</bool>
    </property>
-   <widget class="QMenu" name="menuATM">
+   <widget class="QMenu" name="menuProgram">
     <property name="title">
-     <string>ATM</string>
+     <string>Program</string>
     </property>
+    <widget class="QMenu" name="menuATM_power">
+     <property name="title">
+      <string>ATM power</string>
+     </property>
+     <addaction name="actionPowerOnATM"/>
+     <addaction name="actionPowerOffATM"/>
+    </widget>
+    <addaction name="menuATM_power"/>
+    <addaction name="actionExit"/>
    </widget>
-   <widget class="QMenu" name="menuExit">
-    <property name="title">
-     <string>Exit</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuATMPower">
-    <property name="title">
-     <string>ATMPower</string>
-    </property>
-    <addaction name="actionPowerOn"/>
-    <addaction name="actionPowerOff"/>
-   </widget>
-   <addaction name="menuATM"/>
-   <addaction name="menuExit"/>
-   <addaction name="menuATMPower"/>
+   <addaction name="menuProgram"/>
   </widget>
-  <action name="actionPowerOn">
+  <action name="actionExit">
    <property name="text">
-    <string>PowerOn</string>
+    <string>Exit</string>
    </property>
   </action>
-  <action name="actionPowerOff">
+  <action name="actionPowerOnATM">
    <property name="text">
-    <string>PowerOff</string>
+    <string>Power on</string>
+   </property>
+  </action>
+  <action name="actionPowerOffATM">
+   <property name="text">
+    <string>Power off</string>
    </property>
   </action>
  </widget>

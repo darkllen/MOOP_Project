@@ -9,12 +9,16 @@
 #include "../mediators/ATMIO.h"
 
 class ATMInfo;
+
 class Dispenser;
+
 class CardReader;
+
 class TransactionManager;
+
 class SessionManager;
 
-class ATM: public ATMBaseComponent {
+class ATM : public ATMBaseComponent {
 private:
 
     bool isPoweredOn_;
@@ -31,17 +35,17 @@ public:
     class Hardware;
 
     explicit ATM(const ATMInfo &atmInfo, unsigned __int32 initialCash, bool cardReaderState, bool dispenserState);
-    ATM(const  ATM& atm) = default;
+    ATM(const ATM &atm) = default;
 
     ~ATM();
 
     void powerStateChange(ATMPowerState state);
-    const ATMInfo& getATMInfo() const;
+    const ATMInfo &getATMInfo() const;
 
-    CardReader& getCardReader();
-    Dispenser& getDispenser();
+    CardReader &getCardReader();
+    Dispenser &getDispenser();
 
-    static ATM getATM(const ATM_SERIAL_NUMBER_T& num);
+    static ATM getATM(const ATM_SERIAL_NUMBER_T &num);
 
     bool getCardReaderStatus();
     void setCardReaderStatus(bool);
@@ -49,7 +53,6 @@ public:
     void setDispenserStatus(bool);
 
     void resetCardReader();
-
 };
 
 

@@ -24,7 +24,7 @@ void CardReader::evalPIN(const PIN_T pin) {
         bool verificationResult = verificationService_->verify(inserted_card_n_, pin);
         verificationResult ? onVerificationSuccess() : onVerificationFail();
     }
-    catch (const DBException& e) {
+    catch (const DBException &e) {
         //Todo: wrong card
     }
 }
@@ -57,7 +57,7 @@ void CardReader::onVerificationFail() {
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {
         blockCard();
     }
-    parent_.getMediator()->Notify(*atm_, EventToATM::PINIsWrong (evalTries)
+    parent_.getMediator()->Notify(*atm_, EventToATM::PINIsWrong(evalTries)
     );
 }
 
@@ -87,7 +87,7 @@ void CardReader::acceptCard() {
 }
 
 void CardReader::setState(bool isOp) {
-    isOperational_ = isOp ;
+    isOperational_ = isOp;
     const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
     mysqlx::Session session(url);
     mysqlx::Schema db = session.getSchema("moop");

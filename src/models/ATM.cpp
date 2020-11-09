@@ -62,36 +62,40 @@ ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
     mysqlx::Session session(url);
     mysqlx::Schema db = session.getSchema("moop");
     mysqlx::Table myTable = db.getTable("ATMInfo");
-    mysqlx::RowResult myResult = myTable.select("location_","availableCashAmount_", "cardReaderState", "dispenserState")
+    mysqlx::RowResult myResult = myTable.select("location_", "availableCashAmount_", "cardReaderState",
+                                                "dispenserState")
             .where("serialNumber_ like :serialNumber_")
-            .bind("serialNumber_",num).execute();
+            .bind("serialNumber_", num).execute();
 
     mysqlx::Row row = myResult.fetchOne();
     std::stringstream s;
     s << row[0];
-    CASH_AMOUNT_T cash (row[1].get<int>());
+    CASH_AMOUNT_T cash(row[1].get<int>());
     bool cardReaderState(row[2].get<bool>());
     bool dispenserState(row[3].get<bool>());
 
     std::string ad(s.str());
-    auto* inf = new ATMInfo(num, ad, "");
-    return ATM(*inf,cash, cardReaderState, dispenserState);
+    auto *inf = new ATMInfo(num, ad, "");
+    return ATM(*inf, cash, cardReaderState, dispenserState);
 }
 
-bool ATM::getCardReaderStatus(){
+bool ATM::getCardReaderStatus() {
     return cardReader_->getState();
 }
-void ATM::setCardReaderStatus(bool b){
+
+void ATM::setCardReaderStatus(bool b) {
     cardReader_->setState(b);
 }
-bool ATM::getDispenserStatus(){
-    return  dispenser_->getState();
+
+bool ATM::getDispenserStatus() {
+    return dispenser_->getState();
 }
-void ATM::setDispenserStatus(bool b){
+
+void ATM::setDispenserStatus(bool b) {
     dispenser_->setState(b);
 }
 
-void ATM::resetCardReader(){
+void ATM::resetCardReader() {
     cardReader_->reset();
 }
 

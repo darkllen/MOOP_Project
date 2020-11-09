@@ -11,7 +11,9 @@
 #include "../../ui/ATMDisplay.h"
 
 class ATMForm;
+
 class QMainWindow;
+
 class ATMDisplay;
 
 class ATMQtUiController : public QObject, public ATMController {
@@ -23,7 +25,7 @@ private:
 
     QString entered_card;
     QString entered_amount;
-    QString entered_reg=0;
+    QString entered_reg = 0;
 
     bool isOneTime;
 
@@ -40,14 +42,11 @@ public:
     void cardReaderInput(CARD_NUMBER_T) override;
     void ATMPowerChangeFromUI(ATMPowerState) override;
 
-    void changePINTries(int n);
-    void changeWarning(QString);
-    bool getIsOn(){return display_->getIsOn();}
-
-    bool getIsOneTime(){return isOneTime;}
-    void setIsOneTime(bool b){isOneTime = b;}
-
+    bool getIsPoweredOn() { return display_->getIsPoweredOn(); }
     void enableDispencer(bool);
+    void changePINTries(int n);
+    bool getIsOneTime() { return isOneTime; }
+    void setIsOneTime(bool b) { isOneTime = b; }
 
     // ATM calls:
     void printReceiptOutput() override;
@@ -57,8 +56,10 @@ public:
     void ATMPowerChangeFromATM(ATMPowerState) override;
 
     void downloadProcessScreen();
-
     void updateEnNum();
+
+    template <typename T>
+    T& ATMQtUiController::f();
 };
 
 #endif //MOOP_ATM_PROJECT_ATMQTUICONTROLLER_H

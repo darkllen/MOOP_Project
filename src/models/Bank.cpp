@@ -17,42 +17,42 @@ Bank::Bank(BANK_NUMBER_T id, std::string address, std::string name) :
         id_(id), address_(std::move(address)),
         name_(std::move(name)) {}
 
-DebitCard Bank::getCard(const CARD_NUMBER_T& cardNumberT) {
+DebitCard Bank::getCard(const CARD_NUMBER_T &cardNumberT) {
     try {
         const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
         mysqlx::Session session(url);
         mysqlx::Schema db = session.getSchema("moop");
         mysqlx::Table myTable = db.getTable("DebitCard");
-        mysqlx::RowResult myResult = myTable.select("expireDate_","cvCode_","PIN_",	"isBlocked_")
+        mysqlx::RowResult myResult = myTable.select("expireDate_", "cvCode_", "PIN_", "isBlocked_")
                 .where("cardNum_ like :cardNum_")
-                .bind("cardNum_",cardNumberT).execute();
+                .bind("cardNum_", cardNumberT).execute();
 
-        if (myResult.count() == 0){
+        if (myResult.count() == 0) {
             throw DBException("no card was found");
         }
         mysqlx::Row row = myResult.fetchOne();
         std::stringstream s;
         s << row[0];
         QStringList date(QString(QString::fromStdString(s.str())).split("-"));
-        QDate expireDate_(date.at(0).toInt(),date.at(1).toInt(),date.at(2).toInt());
+        QDate expireDate_(date.at(0).toInt(), date.at(1).toInt(), date.at(2).toInt());
         CVV_T cvCode_(row[1].get<int>());
         CVV_T PIN_(row[2].get<int>());
         bool isBlocked_(row[3].get<bool>());
         return DebitCard(cardNumberT, QDateTime(expireDate_), cvCode_, PIN_, isBlocked_);
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         throw DBException(e.what());
     }
 }
 
-Account* Bank::getAccount(const std::string & IBAN_) {
+Account *Bank::getAccount(const std::string &IBAN_) {
     try {
         const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
         mysqlx::Session session(url);
         mysqlx::Schema db = session.getSchema("moop");
         mysqlx::Table myTable = db.getTable("Account");
-        mysqlx::RowResult myResult = myTable.select("ownerId_","bank_id","limit_",	"interestRate_", "money_")
+        mysqlx::RowResult myResult = myTable.select("ownerId_", "bank_id", "limit_", "interestRate_", "money_")
                 .where("IBAN_ like :IBAN_")
-                .bind("IBAN_",IBAN_).execute();
+                .bind("IBAN_", IBAN_).execute();
 
         mysqlx::Row row = myResult.fetchOne();
         int ownerId_ = row.get(0).get<int>();
@@ -62,19 +62,19 @@ Account* Bank::getAccount(const std::string & IBAN_) {
         unsigned int limit_(row[2].get<unsigned int>());
         float interestRate_(row[3].get<double>());
         return new SavingAccount(ownerId_, IBAN_, bankNumberT, limit_, interestRate_, money);
-    } catch (std::exception& e) {
+    } catch (std::exception &e) {
         throw DBException(e.what());
     }
 }
 
-Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
+Account *Bank::getAccount(const CARD_NUMBER_T &cardNumberT) {
     const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
     mysqlx::Session session(url);
     mysqlx::Schema db = session.getSchema("moop");
     mysqlx::Table myTable = db.getTable("DebitCard");
     mysqlx::RowResult myResult = myTable.select("accountIBAN")
             .where("cardNum_ like :cardNum_")
-            .bind("cardNum_",cardNumberT).execute();
+            .bind("cardNum_", cardNumberT).execute();
 
     mysqlx::Row rowIBAN = myResult.fetchOne();
     std::stringstream s;
@@ -82,7 +82,7 @@ Account* Bank::getAccount(const CARD_NUMBER_T& cardNumberT) {
     return getAccount(s.str());
 }
 
-Customer* Bank::getCustomer(const CARD_NUMBER_T& num){
+Customer *Bank::getCustomer(const CARD_NUMBER_T &num) {
     int id = getAccount(num)->getOwnerId();
 
     const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
@@ -91,7 +91,7 @@ Customer* Bank::getCustomer(const CARD_NUMBER_T& num){
     mysqlx::Table myTable = db.getTable("Сustomer");
     mysqlx::RowResult myResult = myTable.select("name_", "address")
             .where("id like :idd")
-            .bind("idd",id).execute();
+            .bind("idd", id).execute();
 
 
     mysqlx::Row rowCustomer = myResult.fetchOne();

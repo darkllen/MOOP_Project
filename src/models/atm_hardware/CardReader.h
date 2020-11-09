@@ -33,7 +33,7 @@ public:
     void setInsertedCardN(CARD_NUMBER_T);
     void returnCard();
 
-    CARD_NUMBER_T getCardNum(){return inserted_card_n_;}
+    CARD_NUMBER_T getCardNum() { return inserted_card_n_; }
     void setState(bool isOp) override;
 
     inline void reset() {
