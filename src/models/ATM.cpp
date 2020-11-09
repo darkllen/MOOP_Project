@@ -1,12 +1,12 @@
 //
 // Created by kuchm on 04.10.2020.
 //
-#include <mysqlx/xdevapi.h>
 #include "ATM.h"
 #include "atm_hardware/CardReader.h"
 #include "atm_hardware/Dispenser.h"
 #include "TransactionManager.h"
 #include "ATMInfo.h"
+#include "../controllers/DBConnection.h"
 
 ATM::ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T &initialCash, const bool &cardReaderState, const bool &dispenserState) :
         ATMBaseComponent(),
@@ -49,10 +49,8 @@ void ATM::powerStateChange(ATMPowerState state) {
 }
 
 ATM ATM::getATM(const ATM_SERIAL_NUMBER_T &num) {
-    const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-    mysqlx::Session session(url);
-    mysqlx::Schema db = session.getSchema("moop");
-    mysqlx::Table myTable = db.getTable("ATMInfo");
+    DBConnection connection;
+    mysqlx::Table myTable = connection.getTable("ATMInfo");
     mysqlx::RowResult myResult = myTable.select("location_", "availableCashAmount_", "cardReaderState", "dispenserState")
             .where("serialNumber_ like :serialNumber_")
             .bind("serialNumber_", num).execute();

@@ -174,8 +174,18 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         } else if (e == UIButtonsInput::R3) {
             navigateToNewView(Views::ChangePinScreen);
         } else if (e == UIButtonsInput::R2) {
-            //todo remove or replace this view
             navigateToNewView(Views::TransactionHistoryScreen);
+            CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
+            Account *account = Bank::getAccount(n);
+            QList<Transaction *> transactions = AccountActions::viewHistory(*account);
+            std::reverse(transactions.begin(), transactions.end());
+            QString res;
+            for (auto &transaction : transactions) {
+                res += transaction->print() + "\n\n";
+            }
+            res.replace(QString("\n"), QString("<br>"));
+            res.replace(QString("\t"), QString("&nbsp;&nbsp;&nbsp;&nbsp;"));
+            display_->runJs(R"(document.getElementById("text").innerHTML = ")" + res + R"(";)");
         } else if (e == UIButtonsInput::R1) {
             navigateToNewView(Views::DoTransactionScreen);
         } else if (e == UIButtonsInput::R0) {
@@ -380,20 +390,6 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
     } else if (display_->getCurrentScreen() == ReceiptScreen) {
         if (e == UIButtonsInput::L0) {
             navigateToNewView(Views::MainMenuScreen);
-        }
-    }
-    if (display_->getCurrentScreen() == TransactionHistoryScreen) {
-        if (e == UIButtonsInput::R0) {
-            CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
-            Account *account = Bank::getAccount(n);
-            QList<Transaction *> transactions = AccountActions::viewHistory(*account);
-            QString res;
-            for (auto &transaction : transactions) {
-                res += transaction->print() + "\n\n";
-            }
-            res.replace(QString("\n"), QString("<br>"));
-            res.replace(QString("\t"), QString("&nbsp;&nbsp;&nbsp;&nbsp;"));
-            display_->runJs(R"(document.getElementById("text").innerHTML = ")" + res + R"(";)");
         }
     }
 }
