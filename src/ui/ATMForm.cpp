@@ -19,6 +19,7 @@ ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
     initValues();
 }
 
+//TODO why only one pointer field is deleted?
 ATMForm::~ATMForm() {
     delete ui_;
 }

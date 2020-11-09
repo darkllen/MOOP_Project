@@ -22,6 +22,7 @@ private:
 public:
     //TODO init isLocked_
     explicit ATMDisplay(QWebEngineView& webEngineView);
+    //TODO realize because of pointer field?
     ~ATMDisplay() = default;
 
     void turnOn();
