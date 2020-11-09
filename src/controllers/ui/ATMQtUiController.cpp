@@ -227,6 +227,8 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
         } else if (e == UIButtonsInput::R0) {
             navigateToNewView(Views::WelcomeScreen);
             dynamic_cast<ATMIO *>(mediator_)->getATM().resetCardReader();
+            atmForm_->changeDispenser(false);
+            atmForm_->changeReceipt(false);
 
             if (!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
                 atmForm_->changeCardReader(false);
