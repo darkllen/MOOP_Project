@@ -291,10 +291,12 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
 
     } else if (display_->getCurrentScreen() == TakeCashMScreen) {
         if (e == UIButtonsInput::L0) {
+            atmForm_->changeDispenser(false);
             navigateToNewView(Views::PoweredOffScreen);
         }
     } else if (display_->getCurrentScreen() == PutCashMScreen) {
         if (e == UIButtonsInput::L0) {
+            atmForm_->changeDispenser(false);
             navigateToNewView(Views::PoweredOffScreen);
         }
     } else if (display_->getCurrentScreen() == ChangeStatusScreen) {
@@ -459,7 +461,7 @@ void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultE
         }
         case EventToATMController::CardEvalResultEvent::CardIsBlocked: {
             display_->navigateTo(Views::CardIsBlockedScreen);
-            atmForm_->changeCardReader(true);
+            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
             break;
         }
 
@@ -469,15 +471,23 @@ void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultE
 void ATMQtUiController::ATMPowerChangeFromATM(ATMPowerState state) {
     switch (state) {
         case On:
-            display_->turnOn();
-            atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
-            if (!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
-                display_->runJs("document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
+            if(!display_->getIsOn()) {
+                display_->turnOn();
+                atmForm_->changeCardReader(dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus());
+                atmForm_->changeDispenser(false);
+                if (!dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReaderStatus()) {
+                    display_->runJs(
+                            "document.getElementById(\"warning\").innerHTML ='Sorry, the cardreader is temporarily down';");
+                }
             }
             break;
         case Off:
-            display_->turnOff();
-            atmForm_->changeCardReader(false);
+            if(display_->getIsOn()) {
+                display_->turnOff();
+                atmForm_->changeCardReader(false);
+                atmForm_->changeDispenser(false);
+                atmForm_->changeReceipt(false);
+            }
             break;
     }
 }
