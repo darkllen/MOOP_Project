@@ -28,8 +28,8 @@ private:
 
     bool cardReaderStateIsInsert;
     bool isWithdrawal;
-
 public:
+    //TODO init cardReaderStateIsInsert and isWithdrawal
     explicit ATMForm(QMainWindow &mw, ATMQtUiController &atm_io);
     ~ATMForm() override;
 
@@ -81,6 +81,7 @@ public:
 
     void initValues();
     void toggleCardReaderMode();
+
 };
 
 #endif //MOOP_ATM_PROJECT_ATMFORM_H

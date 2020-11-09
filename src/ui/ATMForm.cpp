@@ -9,8 +9,6 @@
 
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
-#include "../events/UIInput.h"
-#include "../constants/ATMTypes.h"
 #include "../exceptions/ATMException.h"
 
 ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
@@ -141,9 +139,7 @@ void ATMForm::on_empty_keypad_btn_clicked() {
 }
 
 void ATMForm::on_receipt_btn_clicked() {
-    qDebug() << "get receipt";
     controller_->printReceiptOutput();
-
 }
 
 void ATMForm::on_card_reader_btn_clicked() {
@@ -168,11 +164,8 @@ void ATMForm::on_card_reader_btn_clicked() {
 }
 
 void ATMForm::on_dispenser_btn_clicked() {
-    qDebug() << "dispenser";
-
     if (ui_->dispenser_btn->isEnabled()){
         if(isWithdrawal) {
-
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
                                                  "Please input cash amount to take:", QLineEdit::Normal,
@@ -190,25 +183,19 @@ void ATMForm::on_dispenser_btn_clicked() {
                         }
                         else
                             controller_->navigateToNewView(PoweredOffScreen);
-
                     }
-                    catch (TransactionException e) {
+                    catch (const TransactionException& e) {
                         controller_->changeWarning(e.what());
-                        //QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
-                    catch (HardwareException e) {
+                    catch (const HardwareException& e) {
                         controller_->changeWarning(e.what());
-                       // QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
-
                 } else {
                     controller_->changeWarning("Cash amount is invalid");
                 }
             }
-
         }
         else{
-
             bool ok;
             QString text = QInputDialog::getText(nullptr, "Dispenser input dialog",
                                                  "Please input cash amount to put in dispenser:", QLineEdit::Normal,
@@ -227,17 +214,12 @@ void ATMForm::on_dispenser_btn_clicked() {
                         else
                             controller_->navigateToNewView(PoweredOffScreen);
                     }
-                    catch (TransactionException e) {
+                    catch (const TransactionException& e) {
                         controller_->changeWarning(e.what());
-
-                        //QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
-                    catch (HardwareException e) {
+                    catch (const HardwareException& e) {
                         controller_->changeWarning(e.what());
-
-                       // QMessageBox::warning(nullptr, "Invalid input", e.what(), QMessageBox::Ok);
                     }
-
                 } else {
                     controller_->changeWarning("Cash amount is invalid");
                 }
@@ -246,8 +228,6 @@ void ATMForm::on_dispenser_btn_clicked() {
         }
 
     }
-
-//    controller_->dispenserInput(0);
 }
 
 void ATMForm::on_d0r_btn_clicked() {
@@ -294,6 +274,7 @@ QWebEngineView &ATMForm::getWebView() {
     return *(ui_->display);
 }
 
+//TODO function is never used
 void ATMForm::toggleCardReaderMode() {
     cardReaderStateIsInsert = !cardReaderStateIsInsert;
     if (cardReaderStateIsInsert) {

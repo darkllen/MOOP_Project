@@ -6,10 +6,6 @@
 #include <QTimer>
 #include <QtCore/qeventloop.h>
 #include "ATMDisplay.h"
-#include "../models/Bank.h"
-#include "../models/accounts/Account.h"
-
-
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
         webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
@@ -17,7 +13,6 @@ ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
 void ATMDisplay::turnOn() {
     isOn_ = true;
     navigateTo(Views::WelcomeScreen);
-
 }
 
 void ATMDisplay::turnOff() {
@@ -45,8 +40,8 @@ void ATMDisplay::navigateTo(Views view) {
                 webEngineView_->load(QUrl("qrc:/views/PoweredOffScreen/index.html"));
                 break;
             default:
+                //TODO throw exception, not std::string
                 throw "Attempt to use the screen in OFF state";
-
         }
     } else
     switch (view) {
@@ -107,9 +102,12 @@ void ATMDisplay::navigateTo(Views view) {
         case ReceiptScreen:
             webEngineView_->load(QUrl("qrc:/views/receipt.html"));
             break;
+        default:
+            //TODO throw exception, not std::string
+            throw "Attempt to use the screen in ON state";
     }
-    ATMDisplay::waitForLoad(*webEngineView_);
-    currentScreen_ = view;
+        ATMDisplay::waitForLoad(*webEngineView_);
+        currentScreen_ = view;
 }
 
 void ATMDisplay::runJs(const QString& js){

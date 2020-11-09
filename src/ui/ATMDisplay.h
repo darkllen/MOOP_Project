@@ -20,22 +20,22 @@ private:
     QString receipt="";
 
 public:
+    //TODO init isLocked_
     explicit ATMDisplay(QWebEngineView& webEngineView);
     ~ATMDisplay() = default;
 
     void turnOn();
     void turnOff();
-    void reset();
 
     void navigateTo(Views view);
     void runJs(const QString& js);
 
     Views getCurrentScreen() const;
 
-    bool getIsLocked(){return isLocked_;}
-    bool getIsOn(){return isOn_;}
+    bool getIsLocked() const{return isLocked_;}
+    bool getIsOn() const{return isOn_;}
     QString getReceipt(){return receipt;}
-    void setReceipt(QString s){receipt = s;}
+    void setReceipt(const QString& s){receipt = s;}
 
     static bool waitForLoad(QWebEngineView &view);
 };
