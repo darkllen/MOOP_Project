@@ -29,8 +29,8 @@ enum Views {
     ReadCardScreen,
     ReadRegScreen,
     ProcessScreen,
-    ReceiptScreen
-
+    ReceiptScreen,
+    ConnectionErrorScreen
 };
 
 #endif //ATM_VIEWS_H

@@ -10,7 +10,7 @@
 bool PinVerificationService::verify(const CARD_NUMBER_T& cardNum, const PIN_T& pin) {
     try{
         return pin == Bank::getCard(cardNum).getPIN();
-    } catch (std::exception& e) {
+    } catch (const std::exception& e) {
         throw DBException(e.what());
     }
 }

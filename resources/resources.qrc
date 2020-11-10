@@ -27,6 +27,6 @@
 		<file>views/TransactionReader/ReadCard.html</file>
 		<file>views/TransactionReader/ReadReg.html</file>
 		<file>views/receipt.html</file>
-
+		<file>views/ConnectionErrorScreen/index.html</file>
 	</qresource>
 </RCC>

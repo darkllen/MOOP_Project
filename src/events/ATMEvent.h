@@ -23,10 +23,9 @@ struct ATMEvent {
         PINIsWrongEvent,
         OneTimeTransactionEvent,
         RegularTransactionEvent,
-
         PutCashMEvent,
         TakeCashMEvent,
-
+        ATMDBConnectionErrorEvent
     };
     EventType type;
     explicit ATMEvent(EventType eventType) : type(eventType) {}
@@ -34,7 +33,7 @@ struct ATMEvent {
 };
 
 namespace EventToATM {
-    struct ATMPowerStateEvent: public ATMEvent {
+    struct ATMPowerStateEvent : public ATMEvent {
         ATMPowerState value;
         explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
     };
@@ -87,12 +86,13 @@ namespace EventToATM {
         CASH_AMOUNT_T value;
         CARD_NUMBER_T num;
         int reg;
-        explicit RegularTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n, int r) : ATMEvent(EventType::RegularTransactionEvent), value(n), num(m), reg(r) {}
+        explicit RegularTransaction(CARD_NUMBER_T m, CASH_AMOUNT_T n, int r) : ATMEvent(EventType::RegularTransactionEvent), value(n), num(m),
+                                                                               reg(r) {}
     };
 };
 
 namespace EventToATMController {
-    struct ATMPowerStateEvent: public ATMEvent {
+    struct ATMPowerStateEvent : public ATMEvent {
         ATMPowerState value;
         explicit ATMPowerStateEvent(ATMPowerState e) : ATMEvent(EventType::ATMPowerStateEvent), value(e) {}
     };
@@ -110,10 +110,13 @@ namespace EventToATMController {
                 value(eventType) {}
     };
 
-
     struct NewViewEvent : public ATMEvent {
         Views value;
         explicit NewViewEvent(Views s) : ATMEvent(EventType::NewViewEvent), value(s) {}
+    };
+
+    struct ATMDBConnectionErrorEvent : public ATMEvent {
+        explicit ATMDBConnectionErrorEvent() : ATMEvent(EventType::ATMDBConnectionErrorEvent) {}
     };
 }
 
