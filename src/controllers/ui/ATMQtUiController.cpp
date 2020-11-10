@@ -99,7 +99,9 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             }
         } else if (display_->getCurrentScreen() == ReadCardScreen) {
             if (e == UIButtonsInput::Enter) {
-                if (InputValidation::validateCardNumber(entered_NUM.toLongLong())) {
+                bool ok=true;
+                unsigned __int64 num = entered_NUM.toULong(&ok);
+                if (ok&&InputValidation::validateCardNumber(num)) {
                     entered_card = entered_NUM;
                     navigateToNewView(Views::ReadAmountScreen);
                     entered_NUM = "";
@@ -110,7 +112,9 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
         } else if (display_->getCurrentScreen() == ReadAmountScreen) {
             if (e == UIButtonsInput::Enter) {
                 CARD_NUMBER_T n = dynamic_cast<ATMIO *>(mediator_)->getATM().getCardReader().getCardNum();
-                if (InputValidation::validateCashSum(entered_NUM.toLongLong(), n)) {
+                bool ok=true;
+                unsigned __int32 am = entered_NUM.toUInt(&ok);
+                if (ok && InputValidation::validateCashSum(am, n)) {
                     entered_amount = entered_NUM;
                     if (isOneTime) {
                         navigateToNewView(Views::ProcessScreen);
@@ -124,7 +128,9 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             }
         } else if (display_->getCurrentScreen() == ReadRegScreen) {
             if (e == UIButtonsInput::Enter) {
-                if (entered_NUM.toLongLong() > 0) {
+                bool ok=true;
+                unsigned __int32 r = entered_NUM.toUInt(&ok);
+                if (ok && r > 0) {
                     entered_reg = entered_NUM;
                     navigateToNewView(Views::ProcessScreen);
                     downloadProcessScreen();

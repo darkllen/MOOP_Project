@@ -169,7 +169,7 @@ void ATMForm::on_dispenser_btn_clicked() {
                                                  "", &ok);
             if (ok && !text.isEmpty()) {
                 bool convertSuccess;
-                CASH_AMOUNT_T value = text.toULongLong(&convertSuccess, 10);
+                CASH_AMOUNT_T value = text.toUInt(&convertSuccess, 10);
                 if (convertSuccess) {
                     try {
                         controller_->dispenserOutput(value);
@@ -197,7 +197,7 @@ void ATMForm::on_dispenser_btn_clicked() {
                                                  "", &ok);
             if (ok && !text.isEmpty()) {
                 bool convertSuccess;
-                CASH_AMOUNT_T value = text.toULongLong(&convertSuccess, 10);
+                CASH_AMOUNT_T value = text.toUInt(&convertSuccess, 10);
                 if (convertSuccess) {
                     try {
                         controller_->dispenserInput(value);
