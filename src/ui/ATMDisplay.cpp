@@ -101,6 +101,9 @@ void ATMDisplay::navigateTo(Views view) {
             case ReceiptScreen:
                 webEngineView_->load(QUrl("qrc:/views/receipt.html"));
                 break;
+            case ConnectionErrorScreen:
+                webEngineView_->load(QUrl("qrc:/views/ConnectionErrorScreen/index.html"));
+                break;
             default:
                 throw std::exception("Attempt to use the screen in ON state");
         }

@@ -9,6 +9,7 @@
 #include "../../exceptions/ATMException.h"
 #include "../../models/ATMInfo.h"
 #include "../../controllers/DBConnection.h"
+#include "../../events/ATMEvent.h"
 
 CardReader::CardReader(ATM &atm, const bool& isOp)
         : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm){}
@@ -19,7 +20,7 @@ void CardReader::evalPIN(const PIN_T& pin) {
         verificationResult ? onVerificationSuccess() : onVerificationFail();
     }
     catch (const DBException& e) {
-        //Todo: wrong card
+        atm_->getMediator()->Notify(*atm_, EventToATMController::ATMDBConnectionErrorEvent());
     }
 }
 
@@ -65,7 +66,7 @@ void CardReader::blockCard() {
         DebitCard debitCard = Bank::getCard(inserted_card_n_);
         debitCard.setIsBlocked(true);
     } catch (const DBException &e) {
-        //TODO: requires proper implementation
+        atm_->getMediator()->Notify(*atm_, EventToATMController::ATMDBConnectionErrorEvent());
     }
     parent_.getMediator()->Notify(*atm_, EventToATMController::CardEvalResultEvent
             (EventToATMController::CardEvalResultEvent::Result::CardIsBlocked)
@@ -84,7 +85,6 @@ void CardReader::setState(const bool& isOp) {
     isOperational_ = isOp ;
     DBConnection connection;
     mysqlx::Table atmInfo = connection.getTable("ATMInfo");
-
 
     atmInfo.update().set("cardReaderState", isOperational_).
             where("serialNumber_ like :serialNumber_").

@@ -55,9 +55,9 @@ public:
     void navigateToNewView(Views) override;
     void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) override;
     void ATMPowerChangeFromATM(ATMPowerState) override;
+    void DBConnectionFailed() override;
 
     void downloadProcessScreen();
-
     void updateEnNum();
 };
 

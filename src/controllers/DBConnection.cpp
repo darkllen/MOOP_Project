@@ -3,10 +3,11 @@
 //
 
 #include "DBConnection.h"
-mysqlx::Table DBConnection::getTable(const std::string & s) {
+#include "../exceptions/ATMException.h"
+
+mysqlx::Table DBConnection::getTable(const std::string &s) {
     mysqlx::Schema db = session.getSchema("moop");
     return db.getTable(s);
 }
 
-DBConnection::DBConnection(): session(DB::url) {
-}
+DBConnection::DBConnection() : session(DB::url) {}

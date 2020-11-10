@@ -28,6 +28,7 @@ public:
     virtual void navigateToNewView(Views) = 0;
     virtual void showCardEvalResult(EventToATMController::CardEvalResultEvent::Result) = 0;
     virtual void ATMPowerChangeFromATM(ATMPowerState) = 0;
+    virtual void DBConnectionFailed() = 0;
 };
 
 #endif //MOOP_ATM_PROJECT_ATMCONTROLLER_H
