@@ -6,6 +6,7 @@
 #define MOOP_ATM_PROJECT_ONETIMETRANSFER_H
 
 #include <QtCore/qdatetime.h>
+#include <QtCore/qlocale.h>
 
 #include "Transaction.h"
 #include "../../constants/ATMTypes.h"
@@ -24,7 +25,8 @@ public:
     const Account &getTo() const { return to_; };
 
     QString print() const override {
-        QString res = "Time and date: " + getTime().toString() + "\n";
+        QLocale ukr(QLocale::Ukrainian, QLocale::Ukraine);
+        QString res = "Time and date: " + ukr.toString(getTime(),"HH:mm dd.MM.yyyy") + "\n";
         res += "Account from: " + getFrom().print() + "\n";
         res += "Account to: " + to_.print() + "\n";
         res += "Transferred " + QString::number(amount_);

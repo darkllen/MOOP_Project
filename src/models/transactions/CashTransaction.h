@@ -6,6 +6,7 @@
 #define MOOP_ATM_PROJECT_CASHTRANSACTION_H
 
 #include <QtCore/qdatetime.h>
+#include <QtCore/qlocale.h>
 #include "Transaction.h"
 #include "../../constants/ATMTypes.h"
 #include "../models/accounts/Account.h"
@@ -26,7 +27,8 @@ public:
     bool getIsWithdrawal() const { return isWithdrawal_; }
 
     QString print() const override {
-        QString res = "Time and date: " + getTime().toString() + "\n";
+        QLocale ukr(QLocale::Ukrainian, QLocale::Ukraine);
+        QString res = "Time and date: " + ukr.toString(getTime(),"HH:mm dd.MM.yyyy") + "\n";
         res += getFrom().print() + "\n";
         if (isWithdrawal_) {
             res += "Cash withdrawal of -" + QString::number(amount_) + "$";
