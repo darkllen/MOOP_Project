@@ -155,7 +155,7 @@ void ATMForm::on_card_reader_btn_clicked() {
             controller_->cardReaderInput(value);
             changeCardReader(false);
         } else {
-            QMessageBox::warning(nullptr, "Invalid input", "Card number is invalid!", QMessageBox::Ok);
+            controller_->changeWarning("Card is invalid");
         }
     }
 }
