@@ -84,7 +84,7 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
             std::stringstream s;
             s << row[1];
             QStringList date(QString(QString::fromStdString(s.str())).split("-"));
-            QDate time_(date.at(0).toInt(),date.at(1).toInt(),date.at(2).toInt());
+            QDateTime dateTime_(QDateTime::fromString(QString::fromStdString(s.str()),Qt::ISODate));
 
             std::stringstream IBAN1;
             IBAN1 << row[2];
@@ -97,20 +97,20 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
 
                 int amount_(row[4].get<int>());
                 int regularity_(row[5].get<int>());
-                transactions.append(new RegularTransfer(QDateTime(time_), *to_, *from_, amount_, regularity_));
+                transactions.append(new RegularTransfer(dateTime_, *to_, *from_, amount_, regularity_));
                 continue;
             }
             if (!row[6].isNull()){
                 bool isWithdrawal_(row[6].get<bool>());
                 int amount_(row[4].get<int>());
-                transactions.append(new CashTransaction(QDateTime(time_), *from_, amount_, isWithdrawal_));
+                transactions.append(new CashTransaction(dateTime_, *from_, amount_, isWithdrawal_));
                 continue;
             }
             if (!row[7].isNull()){
                 int valueChanged_(row[7].get<int>());
                 unsigned __int64 oldValue_(row[8].get<int>());
                 unsigned __int64 newValue_(row[9].get<int>());
-                transactions.append(new AccountManaging(QDateTime(time_), *from_, card_n, AccountManaging::ValueChanged(valueChanged_), oldValue_, newValue_));
+                transactions.append(new AccountManaging(dateTime_, *from_, card_n, AccountManaging::ValueChanged(valueChanged_), oldValue_, newValue_));
                 continue;
             }
             std::stringstream IBAN2;
@@ -118,7 +118,7 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
             Account* to_ = Bank::getAccount(IBAN2.str());
 
             int amount_(row[4].get<int>());
-            transactions.append(new OneTimeTransfer(QDateTime(time_), *to_, *from_, amount_));
+            transactions.append(new OneTimeTransfer(dateTime_, *to_, *from_, amount_));
         }
     } catch (std::exception& e) {
         throw DBException(e.what());
@@ -141,7 +141,7 @@ void AccountActions::makeTransaction(Account& acc, const OneTimeTransfer & t) {
 
         }
         myTable.insert("time_", "from_", "to_", "amount_")
-                .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getTo().getIBAN_(), t.getAmount()).execute();
+                .values(QDateTime::currentDateTime().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getTo().getIBAN_(), t.getAmount()).execute();
     } catch (std::exception& e) {
         throw DBException(e.what());
     }
@@ -158,7 +158,7 @@ void AccountActions::makeTransaction(Account& acc, const AccountManaging & t) {
                 mysqlx::Table tableCard = connection.getTable("DebitCard");
                 tableCard.update().set("PIN_", t.getNewValue()).where("cardNum_ like :cardNum_").bind("cardNum_", t.getCardNum()).execute();
                 myTable.insert("time_", "from_", "valueChanged_", "oldValue_", "newValue_")
-                        .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), 0, t.getOldValue(), t.getNewValue()).execute();
+                        .values(QDateTime::currentDateTime().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), 0, t.getOldValue(), t.getNewValue()).execute();
                 break;
         }
     } catch (std::exception& e) {
@@ -177,7 +177,7 @@ void AccountActions::makeTransaction(Account& acc, const RegularTransfer & t) {
             tableAcc.update().set("money_", t.getTo().getMoney()+t.getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t.getTo().getIBAN_()).execute();
         }
         myTable.insert("time_", "from_", "to_", "amount_", "regularity_")
-                .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getTo().getIBAN_(), t.getAmount(), t.getRegularity()).execute();
+                .values(QDateTime::currentDateTime().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getTo().getIBAN_(), t.getAmount(), t.getRegularity()).execute();
     } catch (std::exception& e) {
         throw DBException(e.what());
     }
@@ -199,7 +199,7 @@ void AccountActions::makeTransaction(Account& acc, const CashTransaction & t) {
         }
 
         myTable.insert("time_", "from_", "amount_", "isWithdrawal_")
-                .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getAmount(), t.getIsWithdrawal()).execute();
+                .values(QDateTime::currentDateTime().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t.getAmount(), t.getIsWithdrawal()).execute();
     } catch (std::exception& e) {
         throw DBException(e.what());
     }
