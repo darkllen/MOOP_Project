@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-    <h2 style="margin-bottom: -7px;">MainMenuScreen</h2>
-    <h2 style="font-size: medium;display: inline-block;">Put cash</h2>
-    <h2 style="font-size: medium; display: inline-block; float: right">Change PIN</h2>
-    <br>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">Take cash</h2>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right">Transaction history</h2>
-    <br>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">Show information</h2>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right">Transaction</h2>
-    <br>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">End work</h2>
-    <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right">Show balance</h2>
+    <style type="text/css">
+        body {
+            background-color: #1d1e1f;
+            margin: 0 3vw 0 3vw;
+            color: lightgreen;
+        }
 
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            height: 90vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <h2 style="text-align: center; margin-bottom: 0;">Main menu</h2>
+        <div id="main">
+            <h2>Put cash</h2>
+            <h2 style="text-align: right;">Change PIN</h2>
+            <h2>Take cash</h2>
+            <h2 style="text-align: right;">Transaction history</h2>
+            <h2>Show information</h2>
+            <h2 style="text-align: right;">Transaction</h2>
+            <h2>End work</h2>
+            <h2 style="text-align: right;">Show balance</h2>
+        </div>
+    </div>
 </body>
+
 </html>

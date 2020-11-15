@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-</head>
-<body style="background-color:#1d1e1f;color:lightgreen;">
-<h2>Info:</h2>
-<div>Cash in ATM:</div>
-<div id = 'cash'></div>
-<div>Serial number:</div>
-<div id = 's_num'></div>
-<div>Location:</div>
-<div id = 'location'></div>
-<h2 style="font-size: medium;position: fixed;bottom: 15px;">Back</h2>
+    <style type="text/css">
+        body {
+            background-color: #1d1e1f;
+            margin: 0 3vw 0 3vw;
+            color: lightgreen;
+        }
 
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            height: 85vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <h2 style="text-align: center; margin-bottom: 0;">Info</h2>
+        <div id="main">
+            <h2>Cash in ATM</h2>
+            <h2 id='cash'></h2>
+            <h2>Serial number</h2>
+            <h2 id='s_num'></h2>
+            <h2>Location</h2>
+            <h2 id='location'></h2>
+            <h2>Back</h2>
+        </div>
+    </div>
 </body>
+
 </html>

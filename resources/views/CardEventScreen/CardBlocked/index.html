@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-    <h2>CardBlocked</h2>
-    <h2 style="font-size: medium;position: fixed;bottom: 15px;">Back</h2>
+    <style type="text/css">
+        body {
+            margin: 0 3vw 0 3vw;
+            background-color: #1d1e1f;
+            color: lightgreen;
+        }
 
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            display: flex;
+            flex-flow: column;
+            height: 100vh;
+        }
+
+        #main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 85vh;
+        }
+
+        #nav {
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <div id="main">
+            <h2>Your card was blocked!</h2>
+        </div>
+        <div id="nav">
+            <h2>Back</h2>
+        </div>
+    </div>
 </body>
+
 </html>

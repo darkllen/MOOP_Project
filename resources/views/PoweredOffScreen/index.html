@@ -1,20 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            background-color: #1d1e1f;
+            margin: 0 3vw 0 3vw;
+            color: lightgreen;
+        }
+
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            height: calc(100vh - 20px);
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            grid-gap: 10px;
+        }
+    </style>
 </head>
-<body style="background-color:#1d1e1f;color:lightgreen;">
-    <h2 style="margin-bottom: -7px;">Maintenance</h2>
-       <h2 style="font-size: medium;display: inline-block;">Put cash</h2>
-       <h2 style="font-size: medium; display: inline-block; float: right"> </h2>
-       <br>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">Take cash</h2>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right"> </h2>
-       <br>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">Change status</h2>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right"></h2>
-       <br>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;">ATM Info</h2>
-       <h2 style="font-size: medium; margin-top: 30px;display: inline-block;float: right"></h2>
+
+<body>
+    <div id="content">
+        <h2 style="text-align: center; margin-bottom: 0;">Maintenance</h2>
+        <div id="main">
+            <h2>Put cash</h2>
+            <h2>Take cash</h2>
+            <h2>Change status</h2>
+            <h2>ATM Info</h2>
+        </div>
+    </div>
+    
+
 </body>
+
 </html>

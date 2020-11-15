@@ -1,14 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-<h2>Card balance:</h2>
-<h2 id = 'bal_num'></h2>
-<h2 style="margin-top: 30px" id = 'limit_header'>Card limit:</h2>
-<h2 id = 'bal_lim'></h2>
-<h2 style="font-size: medium;position: fixed;bottom: 15px;">Back</h2>
+    <style type="text/css">
+        body {
+            background-color: #1d1e1f;
+            margin: 0 3vw 0 3vw;
+            color: lightgreen;
+        }
 
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            height: 85vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <h2 style="text-align: center; margin-bottom: 0;">Card info</h2>
+        <div id="main">
+            <h2>Card balance:</h2>
+            <h2 id='bal_num'></h2>
+            <h2 id='limit_header'>Card limit:</h2>
+            <h2 id='bal_lim'></h2>
+            <h2></h2>
+            <h2></h2>
+            <h2>Back</h2>
+        </div>
+    </div>
 </body>
+
 </html>

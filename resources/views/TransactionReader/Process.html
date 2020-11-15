@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-<h2>Are you sure to transfer </h2>
-<h2 id = 'amount'></h2>
-<h2 id = 'card'></h2>
-<h2 id = 'days'></h2>
-<h2 style="font-size: medium;position: fixed;bottom: 15px;">No</h2>
-<h2 style="font-size: medium; position: fixed;bottom: 15px;right:5px;">Yes</h2>
+    <style type="text/css">
+        body {
+            margin: 0 3vw 0 3vw;
+            background-color: #1d1e1f;
+            color: lightgreen;
+        }
 
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            display: flex;
+            flex-flow: column;
+            height: 100vh;
+        }
+
+        #main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 85vh;
+        }
+
+        #nav {
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align: center;">Confirm or cancel the transfer</h2>
+    <h2 style="text-align: center;" id='amount'></h2>
+    <h2 style="text-align: center;" id='card'></h2>
+    <h2 style="text-align: center;" id='days'></h2>
+    <h2 style="font-size: medium;position: fixed;bottom: 15px;">Cancel</h2>
+    <h2 style="font-size: medium; position: fixed;bottom: 15px;right:5px;">Confirm</h2>
 </body>
+
 </html>

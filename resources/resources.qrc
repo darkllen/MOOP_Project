@@ -2,8 +2,6 @@
     <qresource>
         <file>green_background.png</file>
 		<file>views/CardEventScreen/CardBlocked/index.html</file>
-		<file>views/CardEventScreen/CardReturn/index.html</file>
-		<file>views/CardEventScreen/InvalidCardInserted/index.html</file>
 		<file>views/CardEventScreen/InvalidCardInserted/index.html</file>
 		<file>views/CardEventScreen/CardPINChecking/index.html</file>
 		<file>views/MainMenuScreen/index.html</file>

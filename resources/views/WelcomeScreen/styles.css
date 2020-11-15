@@ -1,3 +1,22 @@
+body {
+    margin: 0 3vw 0 3vw;
+    color: rgb(46, 46, 46);
+    min-height: 100vh;
+    background-color: #1d1e1f;
+    color: lightgreen;
+}
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
 h2 {
-    color: blue
+    font-weight: 300;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
 }

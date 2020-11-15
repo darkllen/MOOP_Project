@@ -1,10 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <style type="text/css">
+        body {
+            background-color: #1d1e1f;
+            margin: 0 3vw 0 3vw;
+            color: lightgreen;
+        }
+
+        h2 {
+            font-weight: 300;
+            font-size: 18px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        #content {
+            display: flex;
+            flex-flow: column;
+            height: 100vh;
+        }
+
+        #main {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 85vh;
+        }
+
+        #main div {
+            overflow-x: hidden;
+            overflow-y: scroll;
+            overflow-wrap: break-word;
+            height: 160px;
+            width: 100%;
+        }
+
+        #nav {
+            margin-top: auto;
+            margin-bottom: 12px;
+        }
+    </style>
 </head>
+
 <body>
-<h2>Transaction history</h2>
-<div id = 'text'></div>
+    <div id="content">
+        <h2 style="text-align: center;">History of transactions</h2>
+        <div id="main">
+            <div id='text'></div>
+        </div>
+        <div id="nav">
+            <h2>Back</h2>
+        </div>
+    </div>
 </body>
+
 </html>
