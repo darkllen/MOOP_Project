@@ -41,7 +41,7 @@ private:
 public:
     ATMIO(ATM &atm, ATMController &controller);
     void Notify(const ATMBaseComponent &sender, const ATMEvent &event) const override;
-    ATM& getATM(){return *atm_;}
+    ATM &getATM() { return *atm_; }
 };
 
 

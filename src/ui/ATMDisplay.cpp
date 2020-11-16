@@ -103,7 +103,7 @@ void ATMDisplay::navigateTo(Views view) {
                 webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
                 break;
             case ReceiptScreen:
-                webEngineView_->load(QUrl("qrc:/views/receipt_.html"));
+                webEngineView_->load(QUrl("qrc:/views/receipt.html"));
                 break;
             case ConnectionErrorScreen:
                 webEngineView_->load(QUrl("qrc:/views/ConnectionErrorScreen/index.html"));

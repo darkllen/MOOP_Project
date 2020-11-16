@@ -23,15 +23,15 @@ private:
     void blockCard();
     void acceptCard();
 public:
-    explicit CardReader(ATM &atm, const bool& isOp);
+    explicit CardReader(ATM &atm, const bool &isOp);
     ~CardReader() override = default;
 
-    void evalPIN(const PIN_T&);
-    void setInsertedCardN(const CARD_NUMBER_T&);
+    void evalPIN(const PIN_T &);
+    void setInsertedCardN(const CARD_NUMBER_T &);
     void returnCard();
 
-    CARD_NUMBER_T getCardNum() const{return inserted_card_n_;}
-    void setState(const bool& isOp) override;
+    CARD_NUMBER_T getCardNum() const { return inserted_card_n_; }
+    void setState(const bool &isOp) override;
 
     inline void reset() {
         cardIsInserted_ = false;

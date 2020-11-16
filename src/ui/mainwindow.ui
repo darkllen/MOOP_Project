@@ -1008,7 +1008,7 @@
              <cursorShape>ClosedHandCursor</cursorShape>
             </property>
             <property name="text">
-             <string>Get receipt_</string>
+             <string>Get receipt</string>
             </property>
             <property name="checkable">
              <bool>false</bool>

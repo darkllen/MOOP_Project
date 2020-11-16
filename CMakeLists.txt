@@ -60,7 +60,11 @@ set(SOURCE_FILES
         src/helpers/InputValidation.cpp
         src/ui/ATMDisplay.cpp
         src/ui/ATMDisplay.h
-        src/events/UIInput.h src/constants/Views.h src/models/DebitCard.cpp src/tests/Tester.cpp src/controllers/DBConnection.cpp src/controllers/DBConnection.h)
+        src/events/UIInput.h src/constants/Views.h
+        src/models/DebitCard.cpp
+        src/tests/Tester.cpp
+        src/controllers/DBConnection.cpp
+        src/controllers/DBConnection.h)
 
 # changing output folder for .exe and .dll
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
