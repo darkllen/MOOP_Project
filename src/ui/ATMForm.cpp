@@ -21,6 +21,7 @@ ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
 
 ATMForm::~ATMForm() {
     delete ui_;
+    ui_ = nullptr;
 }
 
 void ATMForm::configureSignalAndSlots() {

@@ -8,7 +8,7 @@
 #include "ATMDisplay.h"
 
 ATMDisplay::ATMDisplay(QWebEngineView &webEngineView) :
-        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false) {}
+        webEngineView_(&webEngineView), currentScreen_(WelcomeScreen), isOn_(false), receipt_("") {}
 
 void ATMDisplay::turnOn() {
     isOn_ = true;
@@ -20,6 +20,10 @@ void ATMDisplay::turnOff() {
     isOn_ = false;
 }
 
+ATMDisplay::~ATMDisplay() {
+    delete webEngineView_;
+    webEngineView_ = nullptr;
+};
 
 void ATMDisplay::navigateTo(Views view) {
     if (!isOn_) {
@@ -99,7 +103,7 @@ void ATMDisplay::navigateTo(Views view) {
                 webEngineView_->load(QUrl("qrc:/views/TransactionReader/Process.html"));
                 break;
             case ReceiptScreen:
-                webEngineView_->load(QUrl("qrc:/views/receipt.html"));
+                webEngineView_->load(QUrl("qrc:/views/receipt_.html"));
                 break;
             case ConnectionErrorScreen:
                 webEngineView_->load(QUrl("qrc:/views/ConnectionErrorScreen/index.html"));

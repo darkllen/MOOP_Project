@@ -133,10 +133,6 @@ void ATMIO::handleNotifyTargetATMController(const ATMEvent &event) const {
             );
             break;
         }
-        case ATMEvent::NewViewEvent: {
-            controller_->navigateToNewView(dynamic_cast<const EventToATMController::NewViewEvent &>(event).value);
-            break;
-        }
         case ATMEvent::PINIsWrongEvent: {
             auto e = dynamic_cast<const EventToATM::PINIsWrong &>(event);
             controller_->changePINTries(e.value);

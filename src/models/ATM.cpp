@@ -38,11 +38,11 @@ Dispenser &ATM::getDispenser() {
 void ATM::powerStateChange(ATMPowerState state) {
     switch (state) {
         case On: {
-            mediator_->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::On));
+            getMediator()->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::On));
             break;
         }
         case Off: {
-            mediator_->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::Off));
+            getMediator()->Notify(*this, EventToATMController::ATMPowerStateEvent(ATMPowerState::Off));
             break;
         }
     }

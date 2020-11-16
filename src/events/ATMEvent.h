@@ -105,14 +105,7 @@ namespace EventToATMController {
             CardPINChecking
         };
         Result value;
-        explicit CardEvalResultEvent(Result eventType) :
-                ATMEvent(EventType::CardEvalResultEvent),
-                value(eventType) {}
-    };
-
-    struct NewViewEvent : public ATMEvent {
-        Views value;
-        explicit NewViewEvent(Views s) : ATMEvent(EventType::NewViewEvent), value(s) {}
+        explicit CardEvalResultEvent(Result eventType) : ATMEvent(EventType::CardEvalResultEvent), value(eventType) {}
     };
 
     struct ATMDBConnectionErrorEvent : public ATMEvent {

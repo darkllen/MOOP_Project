@@ -30,11 +30,6 @@ public:
     explicit HardwareException(const char *msg) : ATMException(msg) {}
 };
 
-class IOException : public ATMException {
-public:
-    explicit IOException(const char *msg) : ATMException(msg) {}
-};
-
 class TransactionException : public ATMException {
 public:
     explicit TransactionException(const char *msg) : ATMException(msg) {}

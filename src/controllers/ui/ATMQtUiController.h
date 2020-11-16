@@ -19,14 +19,13 @@ Q_OBJECT
 private:
     ATMForm *atmForm_;
     ATMDisplay *display_;
-    QString entered_NUM;
 
-    QString entered_card;
-    QString entered_amount;
-    QString entered_reg = nullptr;
+    QString entered_NUM_;
+    QString entered_card_;
+    QString entered_amount_;
+    QString entered_reg_;
 
-    bool isOneTime;
-
+    bool isOneTime_;
 
 public:
     explicit ATMQtUiController(QMainWindow &mw);
@@ -44,8 +43,8 @@ public:
     void changeWarning(const QString &);
     bool getIsOn() { return display_->getIsOn(); }
 
-    bool getIsOneTime() const { return isOneTime; }
-    void setIsOneTime(const bool &b) { isOneTime = b; }
+    bool getIsOneTime() const { return isOneTime_; }
+    void setIsOneTime(const bool &b) { isOneTime_ = b; }
 
     void enableDispencer(const bool &);
 

@@ -16,8 +16,6 @@
 #include "ui/ATMForm.h"
 
 
-#define NDEBUG
-
 void showErrorScreen(QMainWindow &mw, int &resultCode);
 void showATM(QMainWindow &mw, int &resultCode);
 

@@ -14,7 +14,7 @@ public:
 };
 
 class ATMBaseComponent {
-protected:
+private:
     ATMMediator *mediator_;
 
 public:

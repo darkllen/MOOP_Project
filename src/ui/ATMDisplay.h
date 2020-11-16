@@ -15,15 +15,11 @@ private:
     QWebEngineView *webEngineView_;
     Views currentScreen_;
     bool isOn_;
-
-    QString receipt = "";
+    QString receipt_;
 
 public:
     explicit ATMDisplay(QWebEngineView &webEngineView);
-    ~ATMDisplay() {
-        delete webEngineView_;
-        webEngineView_ = nullptr;
-    };
+    ~ATMDisplay();
 
     void turnOn();
     void turnOff();
@@ -34,8 +30,8 @@ public:
     Views getCurrentScreen() const;
 
     bool getIsOn() const { return isOn_; }
-    QString getReceipt() { return receipt; }
-    void setReceipt(const QString &s) { receipt = s; }
+    QString getReceipt() { return receipt_; }
+    void setReceipt(const QString &s) { receipt_ = s; }
 
     static bool waitForLoad(QWebEngineView &view);
 };
