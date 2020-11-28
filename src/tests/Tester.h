@@ -10,16 +10,15 @@
 
 class Tester {
 private:
-    ATM* _atm;
+    ATM *_atm;
 public:
-    Tester(ATM &atm);
+    explicit Tester(ATM &atm);
     void testEval();
     void testOutput();
     void testDispenser();
     void testCardReader();
     void testTransactions();
 };
-
 
 
 #endif //MOOP_ATM_PROJECT_TESTER_H

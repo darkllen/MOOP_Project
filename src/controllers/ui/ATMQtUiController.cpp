@@ -99,9 +99,9 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             }
         } else if (display_->getCurrentScreen() == ReadCardScreen) {
             if (e == UIButtonsInput::Enter) {
-                bool ok=true;
+                bool ok = true;
                 unsigned __int64 num = entered_NUM_.toULong(&ok);
-                if (ok&&InputValidation::validateCardNumber(num)) {
+                if (ok && InputValidation::validateCardNumber(num)) {
                     entered_card_ = entered_NUM_;
                     navigateToNewView(Views::ReadAmountScreen);
                     entered_NUM_ = "";
@@ -112,7 +112,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
         } else if (display_->getCurrentScreen() == ReadAmountScreen) {
             if (e == UIButtonsInput::Enter) {
                 CARD_NUMBER_T n = dynamic_cast<ATMIO *>(getMediator())->getATM().getCardReader().getCardNum();
-                bool ok=true;
+                bool ok = true;
                 unsigned __int32 am = entered_NUM_.toUInt(&ok);
                 if (ok && InputValidation::validateCashSum(am, n)) {
                     entered_amount_ = entered_NUM_;
@@ -128,7 +128,7 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
             }
         } else if (display_->getCurrentScreen() == ReadRegScreen) {
             if (e == UIButtonsInput::Enter) {
-                bool ok=true;
+                bool ok = true;
                 unsigned __int32 r = entered_NUM_.toUInt(&ok);
                 if (ok && r > 0) {
                     entered_reg_ = entered_NUM_;
@@ -391,7 +391,8 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
                 display_->setReceipt(entered_amount_ + "$ was transfered from card " + QString::number(n) + " to card " + entered_card_);
             } else {
                 getMediator()->Notify(*this,
-                                  EventToATM::RegularTransaction(entered_card_.toLongLong(), entered_amount_.toLongLong(), entered_reg_.toLong()));
+                                      EventToATM::RegularTransaction(entered_card_.toLongLong(), entered_amount_.toLongLong(),
+                                                                     entered_reg_.toLong()));
                 display_->setReceipt(
                         entered_amount_ + "$ will be transfered from card " + QString::number(n) + " to card " + entered_card_ + " every " +
                         entered_reg_ + " days");
@@ -477,7 +478,6 @@ void ATMQtUiController::showCardEvalResult(EventToATMController::CardEvalResultE
             atmForm_->changeCardReader(dynamic_cast<ATMIO *>(getMediator())->getATM().getCardReaderStatus());
             break;
         }
-
     }
 }
 

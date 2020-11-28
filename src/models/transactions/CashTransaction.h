@@ -28,7 +28,7 @@ public:
 
     QString print() const override {
         QLocale ukr(QLocale::Ukrainian, QLocale::Ukraine);
-        QString res = "Time and date: " + ukr.toString(getTime(),"HH:mm dd.MM.yyyy") + "\n";
+        QString res = "Time and date: " + ukr.toString(getTime(), "HH:mm dd.MM.yyyy") + "\n";
         res += getFrom().print() + "\n";
         if (isWithdrawal_) {
             res += "Cash withdrawal of -" + QString::number(amount_) + "$";

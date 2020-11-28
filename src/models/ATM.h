@@ -13,7 +13,7 @@ class Dispenser;
 class CardReader;
 class TransactionManager;
 
-class ATM: public ATMBaseComponent {
+class ATM : public ATMBaseComponent {
 private:
 
     const ATMInfo *atmInfo_;
@@ -26,22 +26,22 @@ private:
 public:
     class Hardware;
 
-    explicit ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T & initialCash, const bool& cardReaderState, const bool& dispenserState);
-    ATM(const ATM& atm) = delete;
+    explicit ATM(const ATMInfo &atmInfo, const CASH_AMOUNT_T &initialCash, const bool &cardReaderState, const bool &dispenserState);
+    ATM(const ATM &atm) = delete;
     ~ATM();
 
     void powerStateChange(ATMPowerState state);
-    const ATMInfo& getATMInfo() const;
+    const ATMInfo &getATMInfo() const;
 
-    CardReader& getCardReader();
-    Dispenser& getDispenser();
+    CardReader &getCardReader();
+    Dispenser &getDispenser();
 
-    static ATM getATM(const ATM_SERIAL_NUMBER_T& num);
+    static ATM getATM(const ATM_SERIAL_NUMBER_T &num);
 
     bool getCardReaderStatus();
-    void setCardReaderStatus(const bool&);
+    void setCardReaderStatus(const bool &);
     bool getDispenserStatus();
-    void setDispenserStatus(const bool&);
+    void setDispenserStatus(const bool &);
 
     void resetCardReader();
 

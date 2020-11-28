@@ -11,20 +11,20 @@
 #include "../../controllers/DBConnection.h"
 #include "../../events/ATMEvent.h"
 
-CardReader::CardReader(ATM &atm, const bool& isOp)
-        : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm){}
+CardReader::CardReader(ATM &atm, const bool &isOp)
+        : Hardware(atm, isOp), cardIsInserted_(false), inserted_card_n_(0), evalTries(0), atm_(&atm) {}
 
-void CardReader::evalPIN(const PIN_T& pin) {
+void CardReader::evalPIN(const PIN_T &pin) {
     try {
         bool verificationResult = PinVerificationService::verify(inserted_card_n_, pin);
         verificationResult ? onVerificationSuccess() : onVerificationFail();
     }
-    catch (const DBException& e) {
+    catch (const DBException &e) {
         atm_->getMediator()->Notify(*atm_, EventToATMController::ATMDBConnectionErrorEvent());
     }
 }
 
-void CardReader::setInsertedCardN(const CARD_NUMBER_T& n) {
+void CardReader::setInsertedCardN(const CARD_NUMBER_T &n) {
     inserted_card_n_ = n;
     try {
         DebitCard debitCard = Bank::getCard(inserted_card_n_);
@@ -52,7 +52,7 @@ void CardReader::onVerificationFail() {
     if (evalTries == ATMLimits::MAX_FAILED_PIN_EVALS) {
         blockCard();
     }
-    parent_.getMediator()->Notify(*atm_, EventToATM::PINIsWrong (evalTries)
+    parent_.getMediator()->Notify(*atm_, EventToATM::PINIsWrong(evalTries)
     );
 }
 
@@ -81,8 +81,8 @@ void CardReader::acceptCard() {
     );
 }
 
-void CardReader::setState(const bool& isOp) {
-    isOperational_ = isOp ;
+void CardReader::setState(const bool &isOp) {
+    isOperational_ = isOp;
     DBConnection connection;
     mysqlx::Table atmInfo = connection.getTable("ATMInfo");
 

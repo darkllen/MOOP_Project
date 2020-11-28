@@ -12,7 +12,7 @@
 class AccountManaging : public Transaction {
 public:
     enum ValueChanged {
-        PIN,
+        PIN
     };
     ValueChanged getValueType() const { return v_; }
     CARD_NUMBER_T getCardNum() const { return card_n_; }
