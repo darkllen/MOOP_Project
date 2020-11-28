@@ -24,29 +24,31 @@
 
         #main {
             display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 85vh;
         }
 
         #nav {
-            margin-top: auto;
+            margin-top: 0;
             margin-bottom: 12px;
         }
     </style>
 </head>
 
 <body>
-    <div id="content">
-        <div id="main">
-            <h2>Enter the amount of money</h2>
-            <h2 id='text'></h2>
-            <h2 id='warning'></h2>
-        </div>
-        <div id="nav">
-            <h2 style="position: fixed;bottom: 15px;">Back</h2>
-        </div>
+<div id="content">
+    <div id="main">
+        <h2>Enter the amount of money</h2>
+        <h2 id='text'></h2>
+        <h2 id='warning'></h2>
     </div>
+    <div id="nav">
+        <h2>Back</h2>
+    </div>
+</div>
 </body>
 
 </html>
