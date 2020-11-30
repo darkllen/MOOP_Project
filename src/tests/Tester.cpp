@@ -22,7 +22,7 @@ Tester::Tester(ATM &atm) : _atm(&atm) {
 }
 
 void Tester::testEval() {
-    assert(PinVerificationService::verify(9999, 9999));
+    assert(PinVerificationService::verify(9999999999999999, 9999));
 }
 
 void Tester::testOutput() {
@@ -81,14 +81,14 @@ void Tester::testTransactions() {
 
     assert(Bank::getAccount("XXYY999999")->getMoney() == 1000);
 
-    AccountManaging t4 = TransactionManager::createTransaction(QDateTime(), *accFrom, 9999, AccountManaging::PIN, 9999, 8888);
+    AccountManaging t4 = TransactionManager::createTransaction(QDateTime(), *accFrom, 9999999999999999, AccountManaging::PIN, 9999, 8888);
     AccountActions::makeTransaction(*accFrom, t4);
 
-    assert(Bank::getCard(9999).getPIN() == 8888);
+    assert(Bank::getCard(9999999999999999).getPIN() == 8888);
 
-    AccountManaging t5 = TransactionManager::createTransaction(QDateTime(), *accFrom, 9999, AccountManaging::PIN, 8888, 9999);
+    AccountManaging t5 = TransactionManager::createTransaction(QDateTime(), *accFrom, 9999999999999999, AccountManaging::PIN, 8888, 9999);
     AccountActions::makeTransaction(*accFrom, t5);
-    assert(Bank::getCard(9999).getPIN() == 9999);
+    assert(Bank::getCard(9999999999999999).getPIN() == 9999);
 
     delete accTo;
     delete accFrom;
