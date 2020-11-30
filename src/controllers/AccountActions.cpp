@@ -15,58 +15,6 @@
 #include "../controllers/DBConnection.h"
 #include "../constants/ATMTypes.h"
 
-//void AccountActions::makeTransaction(Account & acc, const Transaction & tr) {
-//    try {
-//        const char *url = ("mysqlx://root:qwerty@91.196.194.253:33060");
-//        mysqlx::Session session(url);
-//        mysqlx::Schema db = session.getSchema("moop");
-//        mysqlx::Table myTable = db.getTable("Transactions");
-//        mysqlx::Table tableAcc = db.getTable("Account");
-//
-//        if (const auto* t = dynamic_cast<const OneTimeTransfer*>(&tr)){
-//            if (!(t->getTo().getIBAN_() == acc.getIBAN_())){
-//                tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-//                acc.setMoney(acc.getMoney()-t->getAmount());
-//                tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
-//
-//            }
-//            myTable.insert("time_", "from_", "to_", "amount_")
-//                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount()).execute();
-//        } else if (const auto* t = dynamic_cast<const RegularTransfer*>(&tr)){
-//            if (!(t->getTo().getIBAN_() == acc.getIBAN_())){
-//                tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-//                acc.setMoney(acc.getMoney()-t->getAmount());
-//                tableAcc.update().set("money_", t->getTo().getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", t->getTo().getIBAN_()).execute();
-//            }
-//            myTable.insert("time_", "from_", "to_", "amount_", "regularity_")
-//                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getTo().getIBAN_(), t->getAmount(), t->getRegularity()).execute();
-//        }else if (const auto* t = dynamic_cast<const AccountManaging*>(&tr)){
-//            switch (t->getValueType()) {
-//                case AccountManaging::PIN:
-//                    mysqlx::Table tableCard = db.getTable("DebitCard");
-//                    tableCard.update().set("PIN_", t->getNewValue()).where("cardNum_ like :cardNum_").bind("cardNum_", t->getCardNum()).execute();
-//                    myTable.insert("time_", "from_", "valueChanged_", "oldValue_", "newValue_")
-//                            .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), 0, t->getOldValue(), t->getNewValue()).execute();
-//                    break;
-//            }
-//
-//        } else if (const auto* t = dynamic_cast<const CashTransaction*>(&tr)){
-//            if (t->getIsWithdrawal()){
-//                tableAcc.update().set("money_", acc.getMoney()-t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-//                acc.setMoney(acc.getMoney()-t->getAmount());
-//            } else{
-//                tableAcc.update().set("money_", acc.getMoney()+t->getAmount()).where("IBAN_ like :IBAN_").bind("IBAN_", acc.getIBAN_()).execute();
-//                acc.setMoney(acc.getMoney()+t->getAmount());
-//            }
-//
-//            myTable.insert("time_", "from_", "amount_", "isWithdrawal_")
-//                    .values(QDateTime::currentDateTime().date().toString(Qt::ISODate).toStdString(), acc.getIBAN_(), t->getAmount(), t->getIsWithdrawal()).execute();
-//        }
-//    } catch (std::exception& e) {
-//        throw DBException(e.what());
-//    }
-//}
-
 QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
     CARD_NUMBER_T card_n;
     QList<Transaction*> transactions;
@@ -74,8 +22,9 @@ QList<Transaction*> AccountActions::viewHistory(const Account & acc) {
         DBConnection connection;
         mysqlx::Table myTable = connection.getTable("Transactions");
         mysqlx::RowResult myResult = myTable.select("id","time_","from_","to_",	"amount_",	"regularity_",	"isWithdrawal_",	"valueChanged_",	"oldValue_",	"newValue_")
-                .where("from_ like :from_")
-                .bind("from_",acc.getIBAN_()).execute();
+                .where("from_ like :from_ or to_ like :to_")
+                .bind("from_",acc.getIBAN_())
+                .bind("to_", acc.getIBAN_()).execute();
 
         int num = myResult.count();
         for(size_t i = 0; i< num; ++i){
