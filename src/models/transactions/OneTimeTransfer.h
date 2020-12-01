@@ -27,9 +27,9 @@ public:
     QString print() const override {
         QLocale ukr(QLocale::Ukrainian, QLocale::Ukraine);
         QString res = "Time and date: " + ukr.toString(getTime(), "HH:mm dd.MM.yyyy") + "\n";
-        res += "Account from: " + getFrom().print() + "\n";
-        res += "Account to: " + to_.print() + "\n";
-        res += "Transferred " + QString::number(amount_);
+        res += "From " + getFrom().print() + "\n";
+        res += "To " + to_.print() + "\n";
+        res += "Transferred " + QString::number(amount_) + "$";
         return res;
     }
 };

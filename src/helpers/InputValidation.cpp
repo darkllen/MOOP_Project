@@ -36,3 +36,14 @@ bool InputValidation::validateCardNumber(const CARD_NUMBER_T &n) {
         return false;
     }
 }
+
+bool InputValidation::validateSameAccount(const CARD_NUMBER_T &n, const CARD_NUMBER_T &m) {
+    try {
+        const Account* a1 = Bank::getAccount(n);
+        const Account* a2 = Bank::getAccount(m);
+
+        return (a1->getIBAN_() != a2->getIBAN_());
+    } catch (DBException &e) {
+        return false;
+    }
+}

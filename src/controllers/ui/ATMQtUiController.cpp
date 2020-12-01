@@ -100,13 +100,14 @@ void ATMQtUiController::dialPadControlInput(const UIButtonsInput::ControlPad e) 
         } else if (display_->getCurrentScreen() == ReadCardScreen) {
             if (e == UIButtonsInput::Enter) {
                 bool ok = true;
-                unsigned __int64 num = entered_NUM_.toULong(&ok);
-                if (ok && InputValidation::validateCardNumber(num)) {
+                unsigned __int64 num = entered_NUM_.toULongLong(&ok);
+                CARD_NUMBER_T n = dynamic_cast<ATMIO *>(getMediator())->getATM().getCardReader().getCardNum();
+                if (ok && InputValidation::validateCardNumber(num) && InputValidation::validateSameAccount(n, num)) {
                     entered_card_ = entered_NUM_;
                     navigateToNewView(Views::ReadAmountScreen);
                     entered_NUM_ = "";
                 } else {
-                    changeWarning("Card number is invalid!");
+                    changeWarning("Card number is invalid! It does not exist or this is the same account");
                 }
             }
         } else if (display_->getCurrentScreen() == ReadAmountScreen) {
@@ -381,25 +382,37 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             navigateToNewView(Views::DoTransactionScreen);
             display_->setReceipt("");
             atmForm_->changeReceipt(false);
+            entered_card_ = "";
+            entered_amount_ = "";
+            entered_reg_ = "";
         } else if (e == UIButtonsInput::R0) {
-            navigateToNewView(Views::MainMenuScreen);
 
             CARD_NUMBER_T n = dynamic_cast<ATMIO *>(getMediator())->getATM().getCardReader().getCardNum();
 
-            if (isOneTime_) {
-                getMediator()->Notify(*this, EventToATM::OneTimeTransaction(entered_card_.toLongLong(), entered_amount_.toLongLong()));
-                display_->setReceipt(entered_amount_ + "$ was transfered from card " + QString::number(n) + " to card " + entered_card_);
-            } else {
-                getMediator()->Notify(*this,
-                                      EventToATM::RegularTransaction(entered_card_.toLongLong(), entered_amount_.toLongLong(),
-                                                                     entered_reg_.toLong()));
-                display_->setReceipt(
-                        entered_amount_ + "$ will be transfered from card " + QString::number(n) + " to card " + entered_card_ + " every " +
-                        entered_reg_ + " days");
 
-            }
+                if (isOneTime_) {
+                    getMediator()->Notify(*this, EventToATM::OneTimeTransaction(entered_card_.toLongLong(),
+                                                                                entered_amount_.toLongLong()));
+                    display_->setReceipt(
+                            entered_amount_ + "$ was transfered from card " + QString::number(n) + " to card " +
+                            entered_card_);
+                } else {
+                    getMediator()->Notify(*this,
+                                          EventToATM::RegularTransaction(entered_card_.toLongLong(),
+                                                                         entered_amount_.toLongLong(),
+                                                                         entered_reg_.toLong()));
+                    display_->setReceipt(
+                            entered_amount_ + "$ will be transfered from card " + QString::number(n) + " to card " +
+                            entered_card_ + " every " +
+                            entered_reg_ + " days");
 
-            atmForm_->changeReceipt(true);
+                }
+                navigateToNewView(Views::MainMenuScreen);
+
+
+
+                atmForm_->changeReceipt(true);
+
             entered_card_ = "";
             entered_amount_ = "";
             entered_reg_ = "";

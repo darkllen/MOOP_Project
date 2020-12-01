@@ -3,32 +3,41 @@
 //
 
 #include "TransactionManager.h"
+#include "accounts/Account.h"
 #include "accounts/CheckingAccount.h"
 #include "accounts/SavingAccount.h"
 #include "../exceptions/ATMException.h"
 
 OneTimeTransfer TransactionManager::createTransaction(const QDateTime &date, const Account &to, const Account &from, const CASH_AMOUNT_T amount) {
-    if (const auto *t = dynamic_cast<const CheckingAccount *>(&from)) {
-        return OneTimeTransfer(date, to, from, amount);
-    } else if (const auto *t = dynamic_cast<const SavingAccount *>(&from)) {
-        if (t->getMoney() >= t->getLimit() + amount)
+    if (to.getIBAN_() == from.getIBAN_()){
+        throw TransactionException("You can't transfer money to the same account");
+    } else {
+        if (const auto *t = dynamic_cast<const CheckingAccount *>(&from)) {
             return OneTimeTransfer(date, to, from, amount);
-        else
-            throw TransactionException("You can't take this amount of money because of card limit");
-    } else throw TransactionException("Wrong account type");
+        } else if (const auto *t = dynamic_cast<const SavingAccount *>(&from)) {
+            if (t->getMoney() >= t->getLimit() + amount)
+                return OneTimeTransfer(date, to, from, amount);
+            else
+                throw TransactionException("You can't take this amount of money because of card limit");
+        } else throw TransactionException("Wrong account type");
+    }
 
 }
 
 RegularTransfer
 TransactionManager::createTransaction(const QDateTime &date, const Account &to, const Account &from, const CASH_AMOUNT_T amount, const int reg) {
-    if (const auto *t = dynamic_cast<const CheckingAccount *>(&from)) {
-        return RegularTransfer(date, to, from, amount, reg);
-    } else if (const auto *t = dynamic_cast<const SavingAccount *>(&from)) {
-        if (t->getMoney() >= t->getLimit() + amount)
+    if (to.getIBAN_() == from.getIBAN_()){
+        throw TransactionException("You can't transfer money to the same account");
+    } else {
+        if (const auto *t = dynamic_cast<const CheckingAccount *>(&from)) {
             return RegularTransfer(date, to, from, amount, reg);
-        else
-            throw TransactionException("You can't take this amount of money because of card limit");
-    } else throw TransactionException("Wrong account type");
+        } else if (const auto *t = dynamic_cast<const SavingAccount *>(&from)) {
+            if (t->getMoney() >= t->getLimit() + amount)
+                return RegularTransfer(date, to, from, amount, reg);
+            else
+                throw TransactionException("You can't take this amount of money because of card limit");
+        } else throw TransactionException("Wrong account type");
+    }
 }
 
 CashTransaction

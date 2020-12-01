@@ -130,7 +130,7 @@ bool ATMDisplay::waitForLoad(QWebEngineView &view) {
     QObject::connect(&view, SIGNAL(loadFinished(bool)), &loopLoad, SLOT(quit()));
     QObject::connect(&view, SIGNAL(loadFinished(bool)), &timer, SLOT(stop()));
     QObject::connect(&timer, SIGNAL(timeout()), &loopLoad, SLOT(quit()));
-    timer.start(2000);
+    timer.start(5000);
     loopLoad.exec();
     if (timer.isActive()) {
         timer.stop();

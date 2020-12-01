@@ -12,6 +12,8 @@ namespace InputValidation {
     bool validatePin(const QString &);
     bool validateCashSum(const CASH_AMOUNT_T &, const CARD_NUMBER_T &);
     bool validateCardNumber(const CARD_NUMBER_T &);
-};
+    bool validateSameAccount(const CARD_NUMBER_T &, const CARD_NUMBER_T &);
+
+    };
 
 #endif //MOOP_ATM_PROJECT_INPUTVALIDATION_H
