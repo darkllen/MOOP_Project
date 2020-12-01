@@ -341,7 +341,7 @@ void ATMQtUiController::sideDisplayBtnInput(const UIButtonsInput::DisplaySideBut
             }
             display_->runJs("document.getElementById(\"cardreader_status\").innerHTML ='" + cR + "' ;");
 
-        } else if (e == UIButtonsInput::L2) {
+        } else if (e == UIButtonsInput::L1) {
             QString dis;
             if (dynamic_cast<ATMIO *>(getMediator())->getATM().getDispenserStatus()) {
                 dis = "Not working";
