@@ -31,7 +31,7 @@ public:
         QString res = "Time and date: " + ukr.toString(getTime(), "HH:mm dd.MM.yyyy") + "\n";
         res += getFrom().print() + "\n";
         if (isWithdrawal_) {
-            res += "Cash withdrawal of -" + QString::number(amount_) + "$";
+            res += "Amount of cash taken is " + QString::number(amount_) + "$";
         } else {
             res += "Amount of cash put is " + QString::number(amount_) + "$";
         }
