@@ -20,9 +20,9 @@ bool InputValidation::validatePin(const QString &pin) {
 bool InputValidation::validateCashSum(const CASH_AMOUNT_T &amount, const CARD_NUMBER_T &n) {
     Account *account = Bank::getAccount(n);
     if (const auto *t = dynamic_cast<const CheckingAccount *>(account)) {
-        return amount <= t->getMoney();
+        return (amount <= t->getMoney()&&(amount>0));
     } else if (const auto *t = dynamic_cast<const SavingAccount *>(account)) {
-        return amount + t->getLimit() <= t->getMoney();
+        return (amount + t->getLimit() <= t->getMoney() &&(amount>0));
     } else {
         throw TransactionException("Invalid account type");
     }

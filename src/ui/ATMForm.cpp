@@ -10,6 +10,7 @@
 #include "ATMForm.h"
 #include "ui_mainwindow.h"
 #include "../exceptions/ATMException.h"
+#include "../helpers/InputValidation.h"
 
 ATMForm::ATMForm(QMainWindow &mw, ATMQtUiController &atm_io)
         : QWidget(), ui_(new Ui::MainWindowForm), controller_(&atm_io), isWithdrawal(false) {
@@ -171,7 +172,7 @@ void ATMForm::on_dispenser_btn_clicked() {
             if (ok && !text.isEmpty()) {
                 bool convertSuccess;
                 CASH_AMOUNT_T value = text.toUInt(&convertSuccess, 10);
-                if (convertSuccess) {
+                if (convertSuccess && value>0) {
                     try {
                         controller_->dispenserOutput(value);
                         changeDispenser(false);
@@ -199,7 +200,7 @@ void ATMForm::on_dispenser_btn_clicked() {
             if (ok && !text.isEmpty()) {
                 bool convertSuccess;
                 CASH_AMOUNT_T value = text.toUInt(&convertSuccess, 10);
-                if (convertSuccess) {
+                if (convertSuccess && value>0) {
                     try {
                         controller_->dispenserInput(value);
                         changeDispenser(false);
